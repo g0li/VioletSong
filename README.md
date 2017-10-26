@@ -1,1 +1,1 @@
-Algeria UIUX
+Android Apps, Alegria
