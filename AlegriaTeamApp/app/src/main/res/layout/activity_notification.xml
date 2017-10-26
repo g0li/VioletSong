@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="20dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <EditText
+            android:id="@+id/headerNotify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Header"
+            android:inputType="text|textCapCharacters|textCapWords|textCapSentences|textAutoCorrect|textAutoComplete|textLongMessage"
+            android:textColor="#274a4a"
+            android:textColorHint="#274a4a" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:elevation="1dp" />
+
+        <EditText
+            android:id="@+id/bodyNotify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Body"
+            android:inputType="text|textCapSentences|textAutoCorrect|textAutoComplete|textMultiLine|textLongMessage"
+            android:textColor="#274a4a"
+            android:textColorHint="#274a4a" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:elevation="1dp" />
+
+        <Button
+            android:id="@+id/sendNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_orange_light"
+            android:gravity="center"
+            android:text="Send &gt;&gt;"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+</LinearLayout>
