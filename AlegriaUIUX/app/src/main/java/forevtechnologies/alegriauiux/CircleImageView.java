@@ -41,7 +41,7 @@ public class CircleImageView extends ImageView {
             return;
         }
         Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap bitmap = b.copy(Bitmap.Config.ARGB_8888, true);
+        Bitmap bitmap = b.copy(Config.ARGB_8888, true);
 
         int w = getWidth();
         @SuppressWarnings("unused")

@@ -16,101 +16,44 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:label="@string/app_name"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
-        <activity android:name=".CampusActivity"
-            android:label="Campus Map"
+      <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar">
+          <intent-filter>
+              <category android:name="android.intent.category.LAUNCHER"/>
+              <action android:name="android.intent.action.MAIN"/>
+          </intent-filter>
+      </activity>
+      <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
+      <activity
+            android:name=".EmailVerificationActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"/>
+      <activity
             android:name=".Profile"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ContactsActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ConcertActivity" />
-
-        <activity
-            android:name=".Schedule"
-            android:label="@string/title_activity_schedule"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".EventsActivity"
             android:label="Events"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginActivity"
-
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".SendBird.MainActivity"
-            android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <activity
-            android:name=".SendBird.SendBirdOpenChatActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdUserListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdBlockedUserListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdMemberListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdParticipantListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdOpenChannelListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdGroupChatActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <activity
-            android:name=".SendBird.SendBirdGroupChannelListActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="SendBird"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-        <service android:name=".SendBird.fcm.MyFirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <service android:name=".SendBird.fcm.MyFirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
+            android:name=".InfoActivity"
+            android:label="Events"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 

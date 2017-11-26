@@ -2,11 +2,14 @@ package forevtechnologies.alegriauiux.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,8 +20,8 @@ import forevtechnologies.alegriauiux.models.AthleticModel;
 
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
-
     private final List<AthleticModel> mItems = new ArrayList<>();
+
 
     public void addItems(@NonNull Collection<AthleticModel> items) {
         mItems.addAll(items);
@@ -33,6 +36,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
     @Override
     public AthleticHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score, parent, false);
+
         return new AthleticHolder(view);
     }
 
@@ -80,7 +84,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
         return mItems.size();
     }
 
-    class AthleticHolder extends RecyclerView.ViewHolder {
+    class AthleticHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivAthleticFlag;
         TextView tvCountry;
         TextView tvAthleticName;
@@ -89,10 +93,16 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
         AthleticHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             ivAthleticFlag = (ImageView) itemView.findViewById(R.id.ivAthleticFlag);
             tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
             tvScore = (TextView) itemView.findViewById(R.id.tvScore);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("RoshanS", "justClicked " + getLayoutPosition() + " " + tvCountry.getText().toString());
         }
     }
 }

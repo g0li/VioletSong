@@ -83,46 +83,452 @@ public class FullInfoTabFragment extends Fragment {
         switch(categoryCardModel.getCategoryTitle())
         {
             case"Informal":
-                for (int ix=24;ix<=31;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+
+                for (int ix=19;ix<=27;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case FOA:
+                            items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case MMA:
+                            items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case BS:
+                            items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case RF:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case WH:
+                            items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case SNP:
+                            items.add(new AthleticModel("Campus",Events.values()[ix], 23));
+                            break;
+
+                        case FFF:
+                            items.add(new AthleticModel("O-103",Events.values()[ix], 23));
+                            break;
+
+                        case PTVR:
+                            items.add(new AthleticModel("O-102",Events.values()[ix], 23));
+                            break;
+
+                        case FAT:
+                            items.add(new AthleticModel("Quad",Events.values()[ix], 23));
+                            break;
+
+
+                    }
                 }
                 break;
+
+
+
             case"Performing Arts":
-                for (int ix=13;ix<=23;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=6;ix<=18;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case NRIT:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case DH:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case MRO:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case TDV:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case TTB:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case JDN:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case SKZ:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case FC:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case PPA:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case MYM:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case VOA:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case OM:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                        case BB:
+                            items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
+                            break;
+
+                    }
                 }
                 break;
+
+
+
             case"Literary Arts":
-                for (int ix=88;ix<=92;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=82;ix<=87;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case MIBI:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                        case QZ:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                        case CNTSTP:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                        case ILB:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                        case COCO:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                        case HPSC:
+                            items.add(new AthleticModel("O-202",Events.values()[ix], 23));
+                            break;
+
+                    }
                 }
                 break;
+
+
+
+
+
+
+
+
+
             case"Fine Arts":
-                for (int ix=70;ix<=78;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=68;ix<=75;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case PM:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case AF:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case AC:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case IP:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case MME:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case NF:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case BTT:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+
+                        case MNC:
+                            items.add(new AthleticModel("O-203",Events.values()[ix], 23));
+                            break;
+                    }
                 }
                 break;
+
+
+
+
+
+
             case"Management":
-                for (int ix=79;ix<=87;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=76;ix<=81;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case ADMD:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case MQ:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case BM:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case MTH:
+                            items.add(new AthleticModel("Campus",Events.values()[ix], 23));
+                            break;
+
+                        case CSTD:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case LMS:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                    }
                 }
                 break;
+
+
+
+
+
+
+
             case"Sports & Gaming":
-                for (int ix=48;ix<=69;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=45;ix<=67;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case FIFA:
+                            items.add(new AthleticModel("L2",Events.values()[ix], 23));
+                            break;
+
+                        case NFS:
+                            items.add(new AthleticModel("L1",Events.values()[ix], 23));
+                            break;
+
+                        case CS16:
+                            items.add(new AthleticModel("L1",Events.values()[ix], 23));
+                            break;
+
+                        case MM:
+                            items.add(new AthleticModel("O-104",Events.values()[ix], 23));
+                            break;
+
+                        case FB:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case BBL:
+                            items.add(new AthleticModel("Basketball Court",Events.values()[ix], 23));
+                            break;
+
+                        case VB:
+                            items.add(new AthleticModel("Volleyball Court",Events.values()[ix], 23));
+                            break;
+
+                        case BC:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case TOW:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case TTN:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case ARS:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case CHS:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case FCQ:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case CRMS:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case CRMD:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case KBDI:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case NS:
+                            items.add(new AthleticModel("O-302",Events.values()[ix], 23));
+                            break;
+
+                        case BDTG:
+                            items.add(new AthleticModel("Badminton Ground",Events.values()[ix], 23));
+                            break;
+
+                        case BDTB:
+                            items.add(new AthleticModel("Badminton Ground",Events.values()[ix], 23));
+                            break;
+
+                        case NC:
+                            items.add(new AthleticModel("O-303",Events.values()[ix], 23));
+                            break;
+
+                        case CSGO:
+                            items.add(new AthleticModel("L3",Events.values()[ix], 23));
+                            break;
+
+                        case LDO:
+                            items.add(new AthleticModel("O-102",Events.values()[ix], 23));
+                            break;
+
+                        case VRFN:
+                            items.add(new AthleticModel("O-103",Events.values()[ix], 23));
+                            break;
+                    }
                 }
                 break;
+
+
+
             case"Technical Events":
-                for (int ix=0;ix<=12;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=0;ix<=5;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case RC:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case TPP:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case JW:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case CS:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case TR:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case HT:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                    }
                 }
                 break;
+
+
+
+
+
             case"Workshops":
-                for (int ix=33;ix<=47;ix++) {
-                    items.add(new AthleticModel("Pillai Campus Panvel",Events.values()[ix], 23));
+                for (int ix=28;ix<=44;ix++) {
+                    switch(Events.values()[ix]){
+
+                        case TD:
+                            items.add(new AthleticModel("L2",Events.values()[ix], 23));
+                            break;
+
+                        case WD:
+                            items.add(new AthleticModel("L1",Events.values()[ix], 23));
+                            break;
+
+                        case AA:
+                            items.add(new AthleticModel("L1",Events.values()[ix], 23));
+                            break;
+
+                        case IOT:
+                            items.add(new AthleticModel("O-104",Events.values()[ix], 23));
+                            break;
+
+                        case PY:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case DP:
+                            items.add(new AthleticModel("Basketball Court",Events.values()[ix], 23));
+                            break;
+
+                        case KT:
+                            items.add(new AthleticModel("Volleyball Court",Events.values()[ix], 23));
+                            break;
+
+                        case FG:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case TW:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case CG:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case BW:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case SA:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case DJW:
+                            items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
+                            break;
+
+                        case SSA:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case RC:
+                            items.add(new AthleticModel("Gym",Events.values()[ix], 23));
+                            break;
+
+                        case TT:
+                            items.add(new AthleticModel("Ground",Events.values()[ix], 23));
+                            break;
+
+                        case RS:
+                            items.add(new AthleticModel("O-302",Events.values()[ix], 23));
+                            break;
+
+
+                    }
                 }
                 break;
         }
+
 
 
         DayAdapter dayAdapter = new DayAdapter();

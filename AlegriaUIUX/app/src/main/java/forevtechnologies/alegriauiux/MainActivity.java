@@ -3,7 +3,7 @@ package forevtechnologies.alegriauiux;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.*;
 import android.support.v7.app.AppCompatActivity;
 
 
@@ -48,9 +48,6 @@ public class MainActivity extends AppCompatActivity{
                 case R.id.navigation_dashboard:
                     mViewPager.setCurrentItem(1);
                     break;
-                case R.id.navigation_notifications:
-                    mViewPager.setCurrentItem(2);
-                    break;
             }
             return false;
         }
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity{
                                 startActivity(new Intent(MainActivity.this,MainActivity.class));
                                 break;
                             case R.id.concertCircleMenuButton:
-                                startActivity(new Intent(MainActivity.this,ConcertActivity.class));
+
                                 break;
                             case R.id.eventsImageView:
                                 break;
@@ -167,8 +164,6 @@ public class MainActivity extends AppCompatActivity{
                     return new HOUSE();
                 case 1:
                     return new WHATSHOT();
-                case 2:
-                    return new NOTIFICATION();
             }
             return null;
         }
@@ -176,7 +171,7 @@ public class MainActivity extends AppCompatActivity{
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -186,8 +181,6 @@ public class MainActivity extends AppCompatActivity{
                     return "Home";
                 case 1:
                     return "What's Hot";
-                case 2:
-                    return "Notifications";
             }
             return null;
         }

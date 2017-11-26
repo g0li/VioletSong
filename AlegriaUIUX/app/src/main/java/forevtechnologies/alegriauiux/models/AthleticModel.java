@@ -1,7 +1,6 @@
 package forevtechnologies.alegriauiux.models;
 
 public class AthleticModel {
-
     private String location;
     private Events events;
     private int day;

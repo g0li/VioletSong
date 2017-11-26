@@ -152,15 +152,37 @@
             android:textColor="#880E4F"
             android:textColorHint="#880E4F" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="5dp">
+            <Button
+                android:id="@+id/gsigninForEmail"
+                style="@style/roundRect"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:alpha="0.75"
+                android:drawableLeft="@drawable/ic_icons8_google"
+                android:gravity="center"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:text="Sign in with google"
+                android:textColor="#274a4a"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <com.cipherthinkers.shapeflyer.ShapeFlyer
         android:id="@+id/shape_flyer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:enable_alpha="true"
-        app:enable_scale="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        app:enable_alpha="true"
+        app:enable_scale="true" />
 
 </RelativeLayout>

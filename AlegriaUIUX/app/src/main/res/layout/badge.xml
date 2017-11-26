@@ -1,0 +1,17 @@
+<com.steelkiwi.library.view.BadgeHolderLayout android:id="@+id/view"
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_centerInParent="true"
+    app:bhl_default_badge_background="@color/colorAccent"
+    app:bhl_text_color="@android:color/white"
+    app:bhl_text_size="12sp"
+    app:bhl_badge_radius="10dp"
+    app:bhl_text_font="Pacifico.ttf"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_cake"/>
+</com.steelkiwi.library.view.BadgeHolderLayout>

@@ -42,18 +42,18 @@ public class PostFirebaseAdapter extends FirebaseRecyclerAdapter<PostModel,PostF
 
 
     public PostFirebaseAdapter(DatabaseReference ref, String nameUser,String Message,String Team) {
-        super(PostModel.class, R.layout.item_message_left, PostFirebaseAdapter.MyChatViewHolder.class, ref);
+        super(PostModel.class, R.layout.item_message_left, MyChatViewHolder.class, ref);
         this.nameUser = nameUser;
         this.message=Message;
         this.team=Team;
         this.mClickListenerChatFirebase = mClickListenerChatFirebase;
     }
     public PostFirebaseAdapter(DatabaseReference ref, String nameUser) {
-        super(PostModel.class, R.layout.item_message_left, PostFirebaseAdapter.MyChatViewHolder.class, ref);
+        super(PostModel.class, R.layout.item_message_left, MyChatViewHolder.class, ref);
         this.nameUser = nameUser;
     }
     public PostFirebaseAdapter(DatabaseReference ref) {
-        super(PostModel.class, R.layout.item_message_left, PostFirebaseAdapter.MyChatViewHolder.class, ref);
+        super(PostModel.class, R.layout.item_message_left, MyChatViewHolder.class, ref);
     }
 
     @Override

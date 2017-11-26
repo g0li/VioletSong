@@ -20,10 +20,10 @@ import com.fujiyuu75.sequent.Sequent;
  */
 
 public class HOUSE extends Fragment implements View.OnClickListener {
-    CardView profileCardView,contactCardView,eventsCardView,campusCardView,concertCardView,chatCardView,scheduleCardView;
-    TextView profileTextView,contactTextView,eventsTextView,campusTextView,concertTextView,chatTextView,scheduleTextView;
-    ImageView profileImageView,contactImageView,eventsImageView,campusImageView,concertImageView,chatImageView,scheduleImageView;
-    LinearLayout profileLayout,contactLayout,eventsLayout,campusLayout,concertLayout,chatLayout,scheduleLayout;
+    CardView profileCardView,contactCardView,eventsCardView,infoCardView,concertCardView,chatCardView,scheduleCardView;
+    TextView profileTextView,contactTextView,eventsTextView,infoTextView,concertTextView,chatTextView,scheduleTextView;
+    ImageView profileImageView,contactImageView,eventsImageView,infoImageView,concertImageView,chatImageView,scheduleImageView;
+    LinearLayout profileLayout,contactLayout,eventsLayout,infoLayout,concertLayout,chatLayout,scheduleLayout;
     TableLayout TX,TX1;
     @Nullable
     @Override
@@ -57,10 +57,10 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         eventsImageView=(ImageView)v.findViewById(R.id.eventsImageView);
         eventsTextView=(TextView)v.findViewById(R.id.eventsTextView);
 
-        campusCardView=(CardView)v.findViewById(R.id.campusCardView);
-        campusLayout=(LinearLayout)v.findViewById(R.id.campusLayout);
-        campusImageView=(ImageView)v.findViewById(R.id.campusImageView);
-        campusTextView=(TextView)v.findViewById(R.id.campusTextView);
+        infoCardView=(CardView)v.findViewById(R.id.infoCardView);
+        infoLayout=(LinearLayout)v.findViewById(R.id.infoLayout);
+        infoImageView=(ImageView)v.findViewById(R.id.infoImageView);
+        infoTextView=(TextView)v.findViewById(R.id.infoTextView);
 
         concertCardView=(CardView)v.findViewById(R.id.concertCardView);
         concertLayout=(LinearLayout)v.findViewById(R.id.concertLayout);
@@ -95,10 +95,10 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         eventsImageView.setOnClickListener(this);
         eventsTextView.setOnClickListener(this);
 
-        campusCardView.setOnClickListener(this);
-        campusLayout.setOnClickListener(this);
-        campusImageView.setOnClickListener(this);
-        campusTextView.setOnClickListener(this);
+        infoCardView.setOnClickListener(this);
+        infoLayout.setOnClickListener(this);
+        infoImageView.setOnClickListener(this);
+        infoTextView.setOnClickListener(this);
 
         concertCardView.setOnClickListener(this);
         concertLayout.setOnClickListener(this);
@@ -131,8 +131,7 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         case R.id.contactLinearLayout:
         case R.id.contactImageView:
         case R.id.contactTextView:
-            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
-            startActivity(new Intent(getActivity(),ContactsActivity.class));
+
             break;
         case R.id.eventsCardView:
         case R.id.eventsLayout:
@@ -141,26 +140,22 @@ public class HOUSE extends Fragment implements View.OnClickListener {
             startActivity(new Intent(getActivity(), EventsActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
-        case R.id.campusCardView:
-        case R.id.campusLayout:
-        case R.id.campusImageView:
-        case R.id.campusTextView:
-            startActivity(new Intent(getActivity(),CampusActivity.class));
+        case R.id.infoCardView:
+        case R.id.infoLayout:
+        case R.id.infoImageView:
+        case R.id.infoTextView:
+            startActivity(new Intent(getActivity(), InfoActivity.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
         case R.id.concertCardView:
         case R.id.concertLayout:
         case R.id.concertImageView:
         case R.id.concertTextView:
-            startActivity(new Intent(getActivity(),ConcertActivity.class));
-            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
         case R.id.scheduleCardView:
         case R.id.scheduleLayout:
         case R.id.scheduleImageView:
         case R.id.scheduleTextView:
-            startActivity(new Intent(getActivity(), Schedule.class));
-            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
 
 
@@ -168,8 +163,6 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         case R.id.chatLayout:
         case R.id.chatImageView:
         case R.id.chatTextView:
-            startActivity(new Intent(getActivity(), forevtechnologies.alegriauiux.SendBird.MainActivity.class));
-            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
 
 
