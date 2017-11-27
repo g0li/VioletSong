@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-import com.dd.CircularProgressButton;
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,8 +39,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        cpb=(ActionProcessButton)findViewById(R.id.signUp);
-        findViewById(R.id.signUp).setOnClickListener(this);
 
         uEmail=(EditText)findViewById(R.id.user_email);
         uPassword=(EditText)findViewById(R.id.user_password);
@@ -108,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         cpb.setProgress(0);
 
 
-            if (i == R.id.signUp) {
+            {
 
                 if(uEmail.getText().toString().isEmpty()){
                     Toast.makeText(SignUpActivity.this,"Email cannot be left empty",Toast.LENGTH_SHORT).show();

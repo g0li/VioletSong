@@ -50,15 +50,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.dd.CircularProgressButton
-                android:id="@+id/signUp"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:cpb_textIdle="@string/state_idle"
-                app:cpb_textComplete="@string/state_complete"
-                app:cpb_textError="@string/state_error"
-                android:textColor="@color/white"
-                app:cpb_cornerRadius="48dp"/>
 
 
         </LinearLayout>

@@ -23,15 +23,6 @@
             android:gravity="center"
             android:textColor="@color/white"/>
 
-        <com.dd.CircularProgressButton
-            android:id="@+id/verifyAccount"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:cpb_textIdle="Confirm verification"
-            app:cpb_textComplete="Account verified!"
-            app:cpb_textError="Verification failed"
-            android:textColor="@color/white"
-            app:cpb_cornerRadius="48dp"/>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
