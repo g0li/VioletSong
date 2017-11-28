@@ -7,13 +7,24 @@
     android:background="#274a4a"
     android:fitsSystemWindows="true"
     tools:context=".EmailVerificationActivity">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/back_arrow_material"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="15dp"
+        />
+
+
     <LinearLayout
+        android:id="@+id/verificationActivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="16dp">
-
 
         <TextView
             android:id="@+id/displayEmail"
@@ -21,7 +32,28 @@
             android:layout_height="wrap_content"
             android:textSize="23dp"
             android:gravity="center"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/verifyEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/roundRect"
+            android:layout_marginTop="60dp"
+            android:text="Press to confirm verification"
+            android:textSize="15dp"
+            />
+        <Button
+            android:id="@+id/retryButton"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/roundRect"
+            android:text="Send Link again"
+            android:textSize="15dp"
+            android:visibility="invisible"
+            />
 
     </LinearLayout>
 

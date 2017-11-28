@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        /*if (doubleBackToExitPressedOnce) {
             finish();
             return;
         }
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity{
             public void run() {
                 doubleBackToExitPressedOnce=false;
             }
-        }, 2000);
+        }, 2000); */
     }
 
     @Override

@@ -89,7 +89,15 @@ public class LoginActivity extends AppCompatActivity implements
         esignin.setProgress(0);
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null){
-            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            if(currentUser.getProviders().get(0).toString().equals("google")){
+               startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+            else if(currentUser.getProviders().get(0).toString().equals("password") && currentUser.isEmailVerified()){
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+            else if(currentUser.isAnonymous()){
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
         }
     }
     @Override
@@ -156,19 +164,24 @@ public class LoginActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Log.d("LoginAcitivity", "signInWithEmail:success");
-                            esignin.setProgress(100);
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            String mUserName=user.getDisplayName();
-                            String mUserEmail=user.getEmail();
-                            Uri mUserPhoto=user.getPhotoUrl();
+                            if(mAuth.getCurrentUser().isEmailVerified()){
+                                Log.d("LoginAcitivity", "signInWithEmail:success");
+                                esignin.setProgress(100);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                String mUserName=user.getDisplayName();
+                                String mUserEmail=user.getEmail();
+                                Uri mUserPhoto=user.getPhotoUrl();
 
-                            person=new Person();
-                            person.setName(mUserName);
-                            person.setEmail(mUserEmail);
-                            person.setPhoto(mUserPhoto);
+                                person=new Person();
+                                person.setName(mUserName);
+                                person.setEmail(mUserEmail);
+                                person.setPhoto(mUserPhoto);
 
-                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            }
+                            else{
+                                startActivity(new Intent(LoginActivity.this,EmailVerificationActivity.class));
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("LoginAcitivity", "signInWithEmail:failure", task.getException());
