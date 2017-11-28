@@ -20,10 +20,10 @@ import com.fujiyuu75.sequent.Sequent;
  */
 
 public class HOUSE extends Fragment implements View.OnClickListener {
-    CardView profileCardView,contactCardView,eventsCardView,infoCardView,concertCardView,chatCardView,scheduleCardView;
-    TextView profileTextView,contactTextView,eventsTextView,infoTextView,concertTextView,chatTextView,scheduleTextView;
-    ImageView profileImageView,contactImageView,eventsImageView,infoImageView,concertImageView,chatImageView,scheduleImageView;
-    LinearLayout profileLayout,contactLayout,eventsLayout,infoLayout,concertLayout,chatLayout,scheduleLayout;
+    CardView profileCardView,brochureCardView,eventsCardView,infoCardView,concertCardView,chatCardView,scheduleCardView;
+    TextView profileTextView,brochureTextView,eventsTextView,infoTextView,concertTextView,chatTextView,scheduleTextView;
+    ImageView profileImageView,brochureImageView,eventsImageView,infoImageView,concertImageView,chatImageView,scheduleImageView;
+    LinearLayout profileLayout,brochureLayout,eventsLayout,infoLayout,concertLayout,chatLayout,scheduleLayout;
     TableLayout TX,TX1;
     @Nullable
     @Override
@@ -47,10 +47,10 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         profileImageView=(ImageView)v.findViewById(R.id.profileImageView);
         profileTextView=(TextView)v.findViewById(R.id.profileTextView);
 
-        contactCardView=(CardView)v.findViewById(R.id.contactCardView);
-        contactLayout=(LinearLayout)v.findViewById(R.id.contactLinearLayout);
-        contactImageView=(ImageView)v.findViewById(R.id.contactImageView);
-        contactTextView=(TextView)v.findViewById(R.id.contactTextView);
+        brochureCardView=(CardView)v.findViewById(R.id.brochureCardView);
+        brochureLayout=(LinearLayout)v.findViewById(R.id.brochureLinearLayout);
+        brochureImageView=(ImageView)v.findViewById(R.id.brochureImageView);
+        brochureTextView=(TextView)v.findViewById(R.id.brochureTextView);
 
         eventsCardView=(CardView)v.findViewById(R.id.eventsCardView);
         eventsLayout=(LinearLayout)v.findViewById(R.id.eventsLayout);
@@ -85,10 +85,10 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         profileImageView.setOnClickListener(this);
         profileTextView.setOnClickListener(this);
 
-        contactCardView.setOnClickListener(this);
-        contactLayout.setOnClickListener(this);
-        contactImageView.setOnClickListener(this);
-        contactTextView.setOnClickListener(this);
+        brochureCardView.setOnClickListener(this);
+        brochureLayout.setOnClickListener(this);
+        brochureImageView.setOnClickListener(this);
+        brochureTextView.setOnClickListener(this);
 
         eventsCardView.setOnClickListener(this);
         eventsLayout.setOnClickListener(this);
@@ -127,11 +127,12 @@ public class HOUSE extends Fragment implements View.OnClickListener {
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             startActivity(new Intent(getActivity(),Profile.class));
             break;
-        case R.id.contactCardView:
-        case R.id.contactLinearLayout:
-        case R.id.contactImageView:
-        case R.id.contactTextView:
-
+        case R.id.brochureCardView:
+        case R.id.brochureLinearLayout:
+        case R.id.brochureImageView:
+        case R.id.brochureTextView:
+            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
+            startActivity(new Intent(getActivity(),CurlActivity.class));
             break;
         case R.id.eventsCardView:
         case R.id.eventsLayout:
