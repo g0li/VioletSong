@@ -151,6 +151,8 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         case R.id.concertLayout:
         case R.id.concertImageView:
         case R.id.concertTextView:
+            startActivity(new Intent(getActivity(), Tickets.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
+            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
         case R.id.scheduleCardView:
         case R.id.scheduleLayout:

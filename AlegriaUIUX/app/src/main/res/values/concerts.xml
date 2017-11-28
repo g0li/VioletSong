@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="artist">
+        <item>NinaMalik</item>
+        <item>Chetas</item>
+        <item>Artist alpha</item>
+        <item>Artist beta</item>
+        <item>Artist chi</item>
+    </string-array>
+
+    <string-array name="date">
+        <item>7-2-2018</item>
+        <item>8-2-2018</item>
+        <item>9-2-2018</item>
+        <item>10-2-2018</item>
+        <item>11-2-2018</item>
+    </string-array>
+
+    <string-array name="price">
+        <item>Gold ₹ XXX Platinum ₹ XXX</item>
+        <item>Gold ₹ XXX Platinum ₹ XXX</item>
+        <item>Gold ₹ XXX Platinum ₹ XXX</item>
+        <item>Gold ₹ XXX Platinum ₹ XXX</item>
+        <item>Gold ₹ XXX Platinum ₹ XXX</item>
+    </string-array>
+
+    <array name="drawables">
+        <item>@drawable/gullygang59</item>
+        <item>@drawable/gullygang59</item>
+        <item>@drawable/gullygang59</item>
+        <item>@drawable/gullygang59</item>
+        <item>@drawable/gullygang59</item>
+
+    </array>
+
+</resources>

@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux;
 
 import android.content.Intent;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,16 +15,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import android.util.Log;
+import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import forevtechnologies.alegriauiux.SignUpActivity;
-import nl.dionsegijn.konfetti.KonfettiView;
-import nl.dionsegijn.konfetti.models.Shape;
-import nl.dionsegijn.konfetti.models.Size;
 import android.graphics.Color;
 
 
@@ -37,7 +35,6 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
     TextView displayInfo;
     Button confirmButton,retryButton;
     ImageButton imgButton;
-    KonfettiView konfettiView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +50,7 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
         confirmButton.setEnabled(false);
         imgButton=findViewById(R.id.backButton);
         imgButton.setOnClickListener(this);
-        konfettiView=findViewById(R.id.konfettiView);
-        konfettiView.setOnClickListener(this);
+
 
     }
 
@@ -123,22 +119,6 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
              backButtonPressed();
             }
             break;
-
-            case R.id.konfettiView:
-            {
-                konfettiView.build()
-                        .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
-                        .setDirection(0.0, 359.0)
-                        .setSpeed(1f, 5f)
-                        .setFadeOutEnabled(true)
-                        .setTimeToLive(2000L)
-                        .addShapes(Shape.RECT, Shape.CIRCLE)
-                        .addSizes(new Size(12, 5f))
-                        .setPosition(-50f, konfettiView.getWidth() + 50f, -50f, -50f)
-                        .stream(300, 5000L);
-            }
-            break;
-
             default:
         }
     }

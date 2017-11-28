@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -539,7 +540,10 @@ public class FullInfoTabFragment extends Fragment {
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(getContext()));
     }
-
+    public void changeactivity(Bundle b)
+    {
+//        startActivity(new Intent(getAC));
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(EXTRA_CATEGORY_CARD_MODEL, categoryCardModel);

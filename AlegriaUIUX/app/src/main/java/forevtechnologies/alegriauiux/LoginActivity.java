@@ -48,11 +48,46 @@ public class LoginActivity extends AppCompatActivity implements
     private FloatingActionButton fab;
     private ProgressBar pBar;
     private CoordinatorLayout coordinatorLayout;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        if(currentUser!=null){
+            if(currentUser.isAnonymous()){
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+            }
+
+            else{
+                Log.w("provider",""+currentUser.getProviders().get(0).toString());
+                switch (currentUser.getProviders().get(0)){
+                    case "password":
+                    {
+                        if(currentUser.isEmailVerified()){
+                            startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        }
+                        else{
+                            startActivity(new Intent(LoginActivity.this,EmailVerificationActivity.class));
+                        }
+                    }
+                    break;
+                    case "google.com":
+                    {
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                    }
+                    break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+        else{
+
+        }
         //listeners
         findViewById(R.id.GsignInLAyout).setOnClickListener(this);
         findViewById(R.id.Gpic).setOnClickListener(this);
@@ -81,24 +116,14 @@ public class LoginActivity extends AppCompatActivity implements
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-        mAuth = FirebaseAuth.getInstance();
+
+        esignin.setProgress(0);
+
     }
     @Override
     public void onStart() {
         super.onStart();
-        esignin.setProgress(0);
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
-            if(currentUser.getProviders().get(0).toString().equals("google")){
-               startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            }
-            else if(currentUser.getProviders().get(0).toString().equals("password") && currentUser.isEmailVerified()){
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            }
-            else if(currentUser.isAnonymous()){
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-            }
-        }
+
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -136,6 +161,7 @@ public class LoginActivity extends AppCompatActivity implements
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Log.d(TAG,"Authentication failed.");
+
                             setInputs(R.id.Gpic,true);
 
                         }

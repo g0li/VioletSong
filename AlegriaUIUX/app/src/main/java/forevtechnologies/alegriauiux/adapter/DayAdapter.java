@@ -1,5 +1,6 @@
 package forevtechnologies.alegriauiux.adapter;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,7 +22,8 @@ import forevtechnologies.alegriauiux.models.AthleticModel;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
     private final List<AthleticModel> mItems = new ArrayList<>();
-
+    private Bundle b=new Bundle();
+    int BUNDLE_SIZE=0;
 
     public void addItems(@NonNull Collection<AthleticModel> items) {
         mItems.addAll(items);
@@ -99,10 +101,24 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
             tvScore = (TextView) itemView.findViewById(R.id.tvScore);
         }
+        public Bundle getBndl() {
+            return b;
+        }
 
         @Override
         public void onClick(View v) {
-            Log.d("RoshanS", "justClicked " + getLayoutPosition() + " " + tvCountry.getText().toString());
+            ArrayList <String> eventsDataList= new ArrayList<String>();
+            eventsDataList.add(tvCountry.getText().toString());
+            PushData(eventsDataList);        }
+    }
+
+    protected void PushData( ArrayList <String> datalist)
+    {
+        for(int i=0;i<datalist.size();i++)
+        {
+            b.putString("Key "+i,datalist.get(i));
+            BUNDLE_SIZE=i+1;
         }
+
     }
 }
