@@ -47,6 +47,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     Person person;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
+    TextView signInInfo;
 
 
     public void initUI(){
@@ -57,9 +58,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         email=(TextView) findViewById(R.id.email);
         circUser= (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.circUser);
         gbutton=(Button)findViewById(R.id.gsigninForEmail);
+        signInInfo=findViewById(R.id.signInInfo);
         gbutton.setOnClickListener(this);
         eventsLayout.setOnClickListener(this);
         feedsLayout.setOnClickListener(this);
+
 
         if(user.isAnonymous()){
             gbutton.setVisibility(View.VISIBLE);
@@ -67,37 +70,32 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
             email.setText(auth.getCurrentUser().getEmail());
         }
         else{
+            switch (user.getProviders().get(0)){
+                case "google.com":{
+                    Log.w("Provider:",""+user.getProviders().get(0));
+                    signInInfo.setVisibility(View.GONE);
+                    gbutton.setVisibility(View.GONE);
+                    String mName=auth.getCurrentUser().getDisplayName();
+                    String[] namex=mName.split(" ");
+                    mName=namex[0]+"\n"+namex[1];
+                    name.setText(mName);
+                    email.setText(auth.getCurrentUser().getEmail());
+                }
+                    break;
+                case "password":{
+                    Log.w("Provider:",""+user.getProviders().get(0));
+                    gbutton.setVisibility(View.VISIBLE);
+                    String mName=auth.getCurrentUser().getEmail();
+                    String[] namex=mName.split("@");
+                    mName=namex[0];
+                    name.setText(mName);
+                    email.setText(auth.getCurrentUser().getEmail());
+                }
+                    break;
+                default:
+                    break;
 
-            String provider =user.getProviders().get(0).toString().toLowerCase();
-
-            Log.w("Provider","Provider: "+provider);
-            if(provider.equals("password")){
-                gbutton.setVisibility(View.VISIBLE);
-                Log.w("Auth","User signed in using password");
             }
-            else{
-                gbutton.setVisibility(View.INVISIBLE);
-                Log.w("Auth","User hasn't signed in with email");
-            }
-
-
-            try{
-                String mName=auth.getCurrentUser().getDisplayName();
-                String[] namex=mName.split(" ");
-                mName=namex[0]+"\n"+namex[1];
-                name.setText(mName);
-                email.setText(auth.getCurrentUser().getEmail());
-            }
-            catch(Exception e){
-                String mName=auth.getCurrentUser().getEmail();
-                String[] namex=mName.split("@");
-                mName=namex[0];
-                name.setText(mName);
-                email.setText(auth.getCurrentUser().getEmail());
-            }
-
-
-
         }
         
         //google sign in
@@ -132,7 +130,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                             changeFieldValues();
                         }
                         else{
-                            Toast.makeText(Profile.this,"Couldn't link with google",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Profile.this,"Couldn't link with google \n Or using invalid account",Toast.LENGTH_SHORT).show();
                             Log.w("Link","Couldn't link with google");
 
                         }
@@ -219,10 +217,20 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     }
 
     public void changeFieldValues(){
-        user.reload();
-        name.setText(user.getDisplayName());
-        email.setText(user.getEmail());
-        circUser.setImageURI(user.getPhotoUrl());
+        user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.w("Reload:","Successful");
+                    name.setText(user.getDisplayName());
+                    email.setText(user.getEmail());
+                    circUser.setImageURI(user.getPhotoUrl());
+                }
+                else{
+                    Log.w("Reload","Unsuccessful");
+                }
+            }
+        });
     }
 
 }

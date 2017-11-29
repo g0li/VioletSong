@@ -5,6 +5,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -62,13 +63,37 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser!=null){
-            startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+        if(currentUser!=null)
+        {
+            currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        Log.w("Reload","Successful");
+                    }
+                    else{
+                        Log.w("Reload","Unsuccessful");
+                    }
+                }
+            });
         }
 
     }
 
-    public void eSignUp(String email,String password){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uEmail.setEnabled(true);
+        uEmail.setFocusableInTouchMode(true);
+        uEmail.setText("");
+        uPassword.setEnabled(true);
+        uPassword.setFocusableInTouchMode(true);
+        uPassword.setText("");
+        sButton.setEnabled(true);
+        sButton.setFocusableInTouchMode(true);
+    }
+
+    public void eSignUp(String email, String password){
         linearLayout.setAlpha(0.5f);
         setInputs(false);
        pBar.setVisibility(View.VISIBLE);
@@ -137,7 +162,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
             else if(i==R.id.backButton){
                 //startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
-            finish();
+                onBackPressed();
         }
 
     }
