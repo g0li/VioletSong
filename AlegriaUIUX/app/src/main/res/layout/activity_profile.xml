@@ -145,12 +145,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="24dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginBottom="2dp"
             android:drawablePadding="24dp"
             android:gravity="center"
             android:text="yourmailid@domain.com"
+            android:textSize="15dp"
             android:textColor="#880E4F"
             android:textColorHint="#880E4F" />
+        <TextView
+            android:id="@+id/signInInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#880E4F"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:layout_marginLeft="24dp"
+            android:text="(Donot choose an account you have previously signed in with)"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

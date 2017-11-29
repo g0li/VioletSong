@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "631421555582-dplv22p787757j6vum3jp83gtf9l564k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "fb2ea45f873e7e49ff0c0d43e1409a8dd6f92ce0"
+          }
+        },
+        {
           "client_id": "631421555582-bh21ul56d1tv80k1hsm0nfd986t8akb2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

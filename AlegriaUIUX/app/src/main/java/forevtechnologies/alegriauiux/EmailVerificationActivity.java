@@ -62,11 +62,7 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
 
     }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(EmailVerificationActivity.this,LoginActivity.class));
 
-    }
 
     @Override
     public void onClick(View view) {
@@ -116,7 +112,7 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
             break;
             case R.id.backButton:
             {
-             backButtonPressed();
+                backButtonPressed();
             }
             break;
             default:
@@ -144,11 +140,13 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
     }
 
     public void backButtonPressed(){
+
         finish();
     }
 
     @Override
     public void finish() {
+
         super.finish();
     }
 }

@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements
     private ProgressBar pBar;
     private CoordinatorLayout coordinatorLayout;
     private FirebaseUser currentUser;
+    private Button googleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,7 @@ public class LoginActivity extends AppCompatActivity implements
         //listeners
         findViewById(R.id.GsignInLAyout).setOnClickListener(this);
         findViewById(R.id.Gpic).setOnClickListener(this);
+        googleButton=findViewById(R.id.Gpic);
         //findViewById(R.id.GsignInButton).setOnClickListener(this);
         findViewById(R.id.ESignIn).setOnClickListener(this);
         findViewById(R.id.GuestSignIn).setOnClickListener(this);
@@ -107,6 +110,16 @@ public class LoginActivity extends AppCompatActivity implements
         fab=(FloatingActionButton)findViewById(R.id.fab);
         //bind circular progress bars
         esignin=(ActionProcessButton)findViewById(R.id.ESignIn);
+
+        uEmail.setEnabled(true);
+        uEmail.setFocusableInTouchMode(true);
+        uPassword.setEnabled(true);
+        uPassword.setFocusableInTouchMode(true);
+        esignin.setEnabled(true);
+        //set enabled for google sign in button
+        guestTextView.setEnabled(true);
+        fab.setEnabled(true);
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -174,6 +187,23 @@ public class LoginActivity extends AppCompatActivity implements
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uEmail.setEnabled(true);
+        uEmail.setFocusableInTouchMode(true);
+        uPassword.setEnabled(true);
+        uPassword.setFocusableInTouchMode(true);
+        esignin.setEnabled(true);
+        //set enabled for google sign in button
+        guestTextView.setEnabled(true);
+        fab.setEnabled(true);
+        esignin.setProgress(0);
+        googleButton.setEnabled(true);
+        googleButton.setFocusableInTouchMode(true);
+
+
+    }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -256,11 +286,11 @@ public class LoginActivity extends AppCompatActivity implements
 
     */
 
-   public void guestSignIn(){
-       coordinatorLayout.setAlpha(0.5f);
-       pBar.setVisibility(View.VISIBLE);
-       pBar.setProgress(50);
-       try{mAuth.signInAnonymously()
+    public void guestSignIn(){
+        coordinatorLayout.setAlpha(0.5f);
+        pBar.setVisibility(View.VISIBLE);
+        pBar.setProgress(50);
+        try{mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -297,26 +327,26 @@ public class LoginActivity extends AppCompatActivity implements
                         // ...
                     }
                 });}
-       catch (Exception e){
-           Log.w("Anonymous sign in","Failed to sign in",e);
-           setInputs(R.id.GuestSignIn,true);
-           Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
-       }
+        catch (Exception e){
+            Log.w("Anonymous sign in","Failed to sign in",e);
+            setInputs(R.id.GuestSignIn,true);
+            Toast.makeText(LoginActivity.this, "Please try again", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     public void setInputs(int i,Boolean val){
-       uEmail.setEnabled(val);
-       uEmail.setFocusableInTouchMode(val);
-       uPassword.setEnabled(val);
-       uPassword.setFocusableInTouchMode(val);
-       esignin.setEnabled(val);
-       //set enabled for google sign in button
-       guestTextView.setEnabled(val);
-       fab.setEnabled(val);
-       findViewById(R.id.Gpic).setEnabled(false);
+        uEmail.setEnabled(val);
+        uEmail.setFocusableInTouchMode(val);
+        uPassword.setEnabled(val);
+        uPassword.setFocusableInTouchMode(val);
+        esignin.setEnabled(val);
+        //set enabled for google sign in button
+        guestTextView.setEnabled(val);
+        fab.setEnabled(val);
+        googleButton.setEnabled(val);
 
-       findViewById(i).setEnabled(true);
+        findViewById(i).setEnabled(true);
     }
 
 
@@ -330,7 +360,7 @@ public class LoginActivity extends AppCompatActivity implements
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
             }
             return sb.toString();
-            }
+        }
         catch (java.security.NoSuchAlgorithmException e) {
 
         }
@@ -353,41 +383,41 @@ public class LoginActivity extends AppCompatActivity implements
             startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
         }
         else if (i == R.id.GsignInLAyout) {
-                signIn();
+            signIn();
         }
         else if (i == R.id.Gpic) {
-                setInputs(i,false);
-                signIn();
+            setInputs(i,false);
+            signIn();
         }
         else if (i == R.id.ESignIn) {
-                if (uEmail.getText().toString().isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Email cannot be left empty", Toast.LENGTH_SHORT).show();
-                } else if (uPassword.getText().toString().isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Password cannot be left empty", Toast.LENGTH_SHORT).show();
-                } else if (uPassword.getText().toString().length() < 8) {
-                    Toast.makeText(LoginActivity.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
-                }
-                //place function here for email auth
-                if (!(uEmail.getText().toString().isEmpty()) && !(uPassword.getText().toString().isEmpty()) && !(uPassword.getText().toString().length() < 8)) {
-                    setInputs(i,false);
-                    esignin.setProgress(50);
-                    eSignIn(uEmail.getText().toString(), MD5(uPassword.getText().toString()));
-                }
-
+            if (uEmail.getText().toString().isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Email cannot be left empty", Toast.LENGTH_SHORT).show();
+            } else if (uPassword.getText().toString().isEmpty()) {
+                Toast.makeText(LoginActivity.this, "Password cannot be left empty", Toast.LENGTH_SHORT).show();
+            } else if (uPassword.getText().toString().length() < 8) {
+                Toast.makeText(LoginActivity.this, "Password must have at least 8 characters", Toast.LENGTH_SHORT).show();
+            }
+            //place function here for email auth
+            if (!(uEmail.getText().toString().isEmpty()) && !(uPassword.getText().toString().isEmpty()) && !(uPassword.getText().toString().length() < 8)) {
+                setInputs(i,false);
+                esignin.setProgress(50);
+                eSignIn(uEmail.getText().toString(), MD5(uPassword.getText().toString()));
             }
 
         }
 
-        public FirebaseUser getFirebaseUser(){
-            //FirebaseAuth auth=FirebaseAuth.getInstance();
-            //FirebaseUser user=auth.getCurrentUser();
-            return mAuth.getCurrentUser();
-        }
+    }
 
-        public FirebaseAuth getFirebaseAuth(){
-            //FirebaseAuth auth=FirebaseAuth.getInstance();
-            return mAuth;
-        }
+    public FirebaseUser getFirebaseUser(){
+        //FirebaseAuth auth=FirebaseAuth.getInstance();
+        //FirebaseUser user=auth.getCurrentUser();
+        return mAuth.getCurrentUser();
+    }
+
+    public FirebaseAuth getFirebaseAuth(){
+        //FirebaseAuth auth=FirebaseAuth.getInstance();
+        return mAuth;
+    }
 
 
 
