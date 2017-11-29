@@ -1,5 +1,8 @@
 package forevtechnologies.alegriauiux.adapter;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,24 +19,30 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import forevtechnologies.alegriauiux.CartActivity;
+import forevtechnologies.alegriauiux.EventsActivity;
 import forevtechnologies.alegriauiux.R;
+import forevtechnologies.alegriauiux.fragments.FullInfoTabFragment;
 import forevtechnologies.alegriauiux.models.AthleticModel;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
     private final List<AthleticModel> mItems = new ArrayList<>();
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
+    public static     Context context;
 
     public void addItems(@NonNull Collection<AthleticModel> items) {
         mItems.addAll(items);
         notifyItemRangeInserted(mItems.size() - items.size() - 1, items.size());
     }
-
-    public void clear() {
-        mItems.clear();
-        notifyDataSetChanged();
+    public DayAdapter(Context c)
+    {
+        context=c;
     }
+
 
     @Override
     public AthleticHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -81,6 +90,9 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
 
 
+    public Bundle getBndl() {
+        return b;
+    }
     @Override
     public int getItemCount() {
         return mItems.size();
@@ -101,15 +113,15 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
             tvScore = (TextView) itemView.findViewById(R.id.tvScore);
         }
-        public Bundle getBndl() {
-            return b;
-        }
 
         @Override
         public void onClick(View v) {
             ArrayList <String> eventsDataList= new ArrayList<String>();
             eventsDataList.add(tvCountry.getText().toString());
-            PushData(eventsDataList);        }
+            PushData(eventsDataList);
+        }
+
+        
     }
 
     protected void PushData( ArrayList <String> datalist)
@@ -119,6 +131,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             b.putString("Key "+i,datalist.get(i));
             BUNDLE_SIZE=i+1;
         }
-
+        
     }
+
 }

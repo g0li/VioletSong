@@ -1,5 +1,6 @@
 package forevtechnologies.alegriauiux.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -14,13 +15,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import forevtechnologies.alegriauiux.CartActivity;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
 import forevtechnologies.alegriauiux.models.AthleticModel;
@@ -36,6 +42,10 @@ public class FullInfoTabFragment extends Fragment {
     private Toolbar toolbar;
     private ImageView ivPhoto;
     private RecyclerView rvAthletics;
+    public void changeactivity(Activity a, Bundle b)
+    {
+        startActivity(new Intent(a, CartActivity.class).putExtras(b));
+    }
 
     public static FullInfoTabFragment newInstance(CategoryCardModel categoryCardModel) {
         FullInfoTabFragment fragment = new FullInfoTabFragment();
@@ -54,11 +64,13 @@ public class FullInfoTabFragment extends Fragment {
         if (savedInstanceState != null) {
             categoryCardModel = savedInstanceState.getParcelable(EXTRA_CATEGORY_CARD_MODEL);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_full_info, container, false);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
@@ -69,7 +81,22 @@ public class FullInfoTabFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        toolbar.inflateMenu(R.menu.menu_registration);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.cart:
+                        startActivity(new Intent(getActivity(),CartActivity.class));
+                        return true;
+                    case R.id.broch:
+                        Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
+                        return true;
 
+                }
+                return  false;
+            }
+        });
         toolbar.setTitle(categoryCardModel.getCategoryTitle());
         toolbar.setNavigationIcon(R.drawable.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -78,6 +105,7 @@ public class FullInfoTabFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        setHasOptionsMenu(true);
         toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), categoryCardModel.getBackgroundColorResId()));
         ivPhoto.setImageResource(categoryCardModel.getImageResId());
         List<AthleticModel> items = new ArrayList<>();
@@ -532,7 +560,7 @@ public class FullInfoTabFragment extends Fragment {
 
 
 
-        DayAdapter dayAdapter = new DayAdapter();
+        DayAdapter dayAdapter = new DayAdapter(getContext());
         dayAdapter.addItems(items);
 
         rvAthletics.setAdapter(dayAdapter);
@@ -540,10 +568,8 @@ public class FullInfoTabFragment extends Fragment {
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(getContext()));
     }
-    public void changeactivity(Bundle b)
-    {
-//        startActivity(new Intent(getAC));
-    }
+
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(EXTRA_CATEGORY_CARD_MODEL, categoryCardModel);

@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -14,10 +15,14 @@ import android.view.View;
 import forevtechnologies.alegriauiux.adapter.main_fragment.MainFragment;
 
 
+
 public class EventsActivity extends AppCompatActivity {
 
     MainFragment mainFragment;
+    public void changeactivity(Activity a, Bundle b)
+    {        startActivity(new Intent(a, CartActivity.class).putExtras(b));
 
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
