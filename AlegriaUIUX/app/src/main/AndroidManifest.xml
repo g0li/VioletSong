@@ -59,5 +59,4 @@
             android:name=".CartActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tickets"></activity>
     </application>
