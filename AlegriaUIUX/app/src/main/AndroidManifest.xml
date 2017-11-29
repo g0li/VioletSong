@@ -28,7 +28,6 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-<<<<<<< Updated upstream
             <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER" />
 
@@ -36,24 +35,14 @@
             </intent-filter>
         </activity>
         <activity
-=======
-
-      </activity>
-      <activity
->>>>>>> Stashed changes
             android:name=".SignUpActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EmailVerificationActivity"
             android:label="@string/title_activity_main"
-<<<<<<< Updated upstream
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-=======
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-      <activity
->>>>>>> Stashed changes
             android:name=".Profile"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -64,22 +53,11 @@
         <activity
             android:name=".InfoActivity"
             android:label="Events"
-<<<<<<< Updated upstream
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Tickets"></activity>
-=======
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CurlActivity"
-            android:label="Brochure"
-            android:theme="@style/AppTheme.NoActionBar">
-
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
-
->>>>>>> Stashed changes
+        <activity
+            android:name=".CartActivity"
+            android:label="Events"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Tickets"></activity>
     </application>
-
-</manifest>
