@@ -61,5 +61,3 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Tickets"></activity>
     </application>
-
-</manifest>

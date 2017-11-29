@@ -22,6 +22,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< Updated upstream
+=======
+import forevtechnologies.alegriauiux.SignUpActivity;
+>>>>>>> Stashed changes
 import android.graphics.Color;
 
 
@@ -50,7 +54,10 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
         confirmButton.setEnabled(false);
         imgButton=findViewById(R.id.backButton);
         imgButton.setOnClickListener(this);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
     }
 
@@ -115,6 +122,10 @@ public class EmailVerificationActivity extends AppCompatActivity implements View
                 backButtonPressed();
             }
             break;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             default:
         }
     }
