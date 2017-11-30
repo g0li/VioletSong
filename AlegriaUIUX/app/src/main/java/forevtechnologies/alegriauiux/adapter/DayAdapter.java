@@ -121,11 +121,11 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
             tvScore = (TextView) itemView.findViewById(R.id.tvScore);
         }
-
+    int i=0;
         @Override
         public void onClick(View v) {
             //final ArrayList <String> eventsDataList= new ArrayList<String>();
-            eventsDataList.add(tvCountry.getText().toString());
+           b.putString("Key "+i,tvCountry.getText().toString());
             Log.w("event",""+tvCountry.getText().toString());
             Snackbar snackbar = Snackbar
                     .make(v, "Event added", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
@@ -134,11 +134,14 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
                             eventsDataList.remove(tvCountry.getText().toString());
                         }
                     });
-
             snackbar.show();
         }
 
 
+    }
+
+    private void pushBndl(ArrayList<String> eventsDataList) {
+        b.putStringArrayList("List",eventsDataList);
     }
 
 }

@@ -31,21 +31,25 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         Button buttonX = (Button) findViewById(R.id.checkout);
-        Intent intent = getIntent();
         b = getIntent().getExtras();
         List<CartModel> items = new ArrayList<>();
-        List<String> eventNames;
-        eventNames=b.getStringArrayList("EventName");
+        ArrayList<String> eventNames;
+        eventNames=new ArrayList<String>();
+        for(int i=0;i<b.size();i++)
+        {
+        eventNames.add(b.getString("Key "+i));
+        Log.w("EVENTS",b.getString("Key "+i));
+        }
         //Log.w("Event Bundle received",""+eventNames.get(0));
-        for(int n=0;n<eventNames.size();n++){
-            items.add(new CartModel(eventNames.get(n)));
-        }
-        if(!items.isEmpty()){
-            Log.w("Size","items not empty");
-        }
-        else{
-            Log.w("Size","items empty");
-        }
+//        for(int n=0;n<88;n++){
+//            items.add(new CartModel(eventNames.get(n)));
+//        }
+//        if(!items.isEmpty()){
+//            Log.w("Size","items not empty");
+//        }
+//        else{
+//            Log.w("Size","items empty");
+//        }
         /*
         Log.d("TEST",b.getString("TEST"));//this line
         for (int i = 0; i <=b.size(); i++) {
