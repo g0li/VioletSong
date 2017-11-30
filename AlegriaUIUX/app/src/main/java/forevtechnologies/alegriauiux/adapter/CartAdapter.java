@@ -29,16 +29,19 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
 
 
     public CartAdapter(Context c) {
+
         context = c;
+
     }
 
     public void addItems(@NonNull Collection<CartModel> items) {
         cartItem.addAll(items);
         notifyItemRangeInserted(cartItem.size() - items.size() - 1, items.size());
     }
+
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
 
         return new CartHolder(view);
     }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
@@ -33,6 +34,14 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = getIntent();
         b = intent.getExtras();
         List<CartModel> items = new ArrayList<>();
+        List<String> eventNames=new ArrayList<>();
+        eventNames=b.getStringArrayList("EventName");
+        Iterator itemsIterator=items.iterator();
+        Iterator eventNameIterator=eventNames.iterator();
+
+        
+
+
         Log.d("TEST",b.getString("TEST"));//this line
         for (int i = 0; i <=b.size(); i++) {
             items.add(new CartModel(intent.getStringExtra("TEST")));

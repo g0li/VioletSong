@@ -33,6 +33,7 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
     private final List<AthleticModel> mItems = new ArrayList<>();
+    final ArrayList <String> eventsDataList= new ArrayList<String>();
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
     public static     Context context;
@@ -94,6 +95,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
 
     public Bundle getBndl() {
+        b.putStringArrayList("EventName",eventsDataList);
         return b;
     }
     @Override
@@ -121,7 +123,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
         @Override
         public void onClick(View v) {
-            final ArrayList <String> eventsDataList= new ArrayList<String>();
+            //final ArrayList <String> eventsDataList= new ArrayList<String>();
             eventsDataList.add(tvCountry.getText().toString());
             Snackbar snackbar = Snackbar
                     .make(v, "Event added", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {

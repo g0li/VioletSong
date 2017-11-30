@@ -81,14 +81,15 @@ public class FullInfoTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle b= new DayAdapter(view.getContext()).getBndl();
+        final Bundle b= new DayAdapter(view.getContext()).getBndl();
         toolbar.inflateMenu(R.menu.menu_registration);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.cart:
-                        startActivity(new Intent(getActivity(),CartActivity.class).putExtra("TEST","ROSHAN HERE"));
+                        //before:i.putStringExtra("TEST","ROSHAN HERE");
+                        startActivity(new Intent(getActivity(),CartActivity.class).putExtras(b));
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();

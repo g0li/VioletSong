@@ -5,11 +5,17 @@ package forevtechnologies.alegriauiux.models;
  */
 
 public class CartModel {
-    public CartModel(String name){name=name;}
+    String name;
+
+    public CartModel(String name){
+        this.name=name;
+    }
+
     public String getName() {
-        return name;
+
+        return this.name;
     }
 
 
-    String name;
+
 }
