@@ -17,11 +17,9 @@ import android.view.View;
 import android.widget.Button;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
-import forevtechnologies.alegriauiux.fragments.FullInfoTabFragment;
 import forevtechnologies.alegriauiux.models.CartModel;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
