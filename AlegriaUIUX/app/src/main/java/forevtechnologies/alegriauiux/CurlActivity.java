@@ -78,7 +78,6 @@ public class CurlActivity extends Activity {
 
 		// Bitmap resources.
 		private int[] mBitmapIds = { R.drawable.arif, R.drawable.pratik,R.drawable.roshan, R.drawable.sooraj };
-		private int[] mBitmapIds = { R.drawable.arif, R.drawable.pratik,R.drawable.roshan, R.drawable.sooraj };
 
 		@Override
 		public int getPageCount() {

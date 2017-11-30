@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,13 +17,14 @@ import java.util.List;
 
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.models.AthleticModel;
+import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
+import forevtechnologies.alegriauiux.models.EventsPaisa;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
-    private final List<AthleticModel> cartItem = new ArrayList<>();
-    private Bundle b = new Bundle();
-    int BUNDLE_SIZE = 0;
+    private final List<CartModel> cartItem = new ArrayList<>();
+    private Bundle bundle;
     public static Context context;
 
 
@@ -30,7 +32,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
         context = c;
     }
 
-
+    public void addItems(@NonNull Collection<CartModel> items) {
+        cartItem.addAll(items);
+        notifyItemRangeInserted(cartItem.size() - items.size() - 1, items.size());
+    }
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score, parent, false);
@@ -40,26 +45,110 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
 
     @Override
     public void onBindViewHolder(CartHolder holder, int position) {
-    AthleticModel model=cartItem.get(position);
+    CartModel model=cartItem.get(position);
+    holder.cName.setText(model.getName());
 
-    switch (model.getEvents().getEvents())
-    {
-    case Events.
+//        for (int i=0;i<=EventsPaisa.values().length;i++)
+//        {
+//            while (i<=13)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("50");
+//                }
+//            }
+//            while (i<=38 && i>13)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("100");
+//                }
+//            }
+//            while (i<=54 && i>38)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("150");
+//                }
+//            }
+//            while (i<=66&& i> 54)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("200");
+//                }
+//            }
+//            while (i<=70 && i>66)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("250");
+//                }
+//            }
+//            while (i<=78& i>70)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("300");
+//                }
+//            }
+//            while (i==79)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("350");
+//                }
+//            }
+//            while (i==80||i==81)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("500");
+//                }
+//            }
+//            while (i==82)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("600");
+//                }
+//            }
+//            while (i<=85&& i >82)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("1000");
+//                }
+//            }
+//            while (i==86)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("2500");
+//                }
+//            }
+//            while (i==87)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("FREE");
+//                }
+//            }
+//
+//        }
+
     }
-    holder.cName.setText();
-
-    }
 
 
 
-    public Bundle getBndl() {
-        return b;
-    }
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return cartItem.size();
     }
+
+
+
 class CartHolder extends RecyclerView.ViewHolder {
     TextView cName,cPrice;
     public CartHolder(View itemView) {

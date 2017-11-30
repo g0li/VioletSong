@@ -44,7 +44,6 @@ public class FullInfoTabFragment extends Fragment {
     private RecyclerView rvAthletics;
     public void changeactivity(Activity a, Bundle b)
     {
-        startActivity(new Intent(a, CartActivity.class).putExtras(b));
     }
 
     public static FullInfoTabFragment newInstance(CategoryCardModel categoryCardModel) {
@@ -81,13 +80,15 @@ public class FullInfoTabFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Bundle b= new DayAdapter(view.getContext()).getBndl();
         toolbar.inflateMenu(R.menu.menu_registration);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.cart:
-                        startActivity(new Intent(getActivity(),CartActivity.class));
+                        startActivity(new Intent(getActivity(),CartActivity.class).putExtra("TEST","ROSHAN HERE"));
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
@@ -124,19 +125,19 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
                             break;
 
-                        case BS:
+                        case FiP:
                             items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
                             break;
 
-                        case RF:
+                        case FS:
                             items.add(new AthleticModel("Ground",Events.values()[ix], 23));
                             break;
 
-                        case WH:
+                        case TH:
                             items.add(new AthleticModel("Lawn",Events.values()[ix], 23));
                             break;
 
-                        case SNP:
+                        case PhE:
                             items.add(new AthleticModel("Campus",Events.values()[ix], 23));
                             break;
 
@@ -171,39 +172,39 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case MRO:
+                        case BBy:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case TDV:
+                        case FoG:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case TTB:
+                        case WoDJ:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case JDN:
+                        case FSG:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case SKZ:
+                        case SKT:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case FC:
+                        case MA:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case PPA:
+                        case RAP:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case MYM:
+                        case DD:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
-                        case VOA:
+                        case SoSi:
                             items.add(new AthleticModel("Artificial Lawn",Events.values()[ix], 23));
                             break;
 
@@ -225,7 +226,7 @@ public class FullInfoTabFragment extends Fragment {
                 for (int ix=82;ix<=87;ix++) {
                     switch(Events.values()[ix]){
 
-                        case MIBI:
+                        case ELOC:
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
@@ -233,19 +234,19 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
-                        case CNTSTP:
+                        case ESSY:
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
-                        case ILB:
+                        case SB:
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
-                        case COCO:
+                        case EnDe:
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
-                        case HPSC:
+                        case PoWr:
                             items.add(new AthleticModel("O-202",Events.values()[ix], 23));
                             break;
 
@@ -269,31 +270,31 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case AF:
+                        case CP:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case AC:
+                        case RM:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case IP:
+                        case MD:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case MME:
+                        case FP:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case NF:
+                        case NA:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case BTT:
+                        case TsP:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
 
-                        case MNC:
+                        case SkC:
                             items.add(new AthleticModel("O-203",Events.values()[ix], 23));
                             break;
                     }
@@ -352,10 +353,6 @@ public class FullInfoTabFragment extends Fragment {
                             break;
 
                         case NFS:
-                            items.add(new AthleticModel("L1",Events.values()[ix], 23));
-                            break;
-
-                        case CS16:
                             items.add(new AthleticModel("L1",Events.values()[ix], 23));
                             break;
 
@@ -456,7 +453,7 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
                             break;
 
-                        case JW:
+                        case MFW:
                             items.add(new AthleticModel("Conclave",Events.values()[ix], 23));
                             break;
 
@@ -524,7 +521,7 @@ public class FullInfoTabFragment extends Fragment {
                             items.add(new AthleticModel("Gym",Events.values()[ix], 23));
                             break;
 
-                        case BW:
+                        case ZM:
                             items.add(new AthleticModel("Gym",Events.values()[ix], 23));
                             break;
 

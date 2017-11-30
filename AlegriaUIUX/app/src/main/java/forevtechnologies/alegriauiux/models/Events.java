@@ -2,8 +2,8 @@ package forevtechnologies.alegriauiux.models;
 public enum     Events{
     RC("Robo Challenge (Island Robos)"),
     TPP("Technical Paper Presentation (The Mumbai letter)"),
-    JW("Junkyard War ()"),
-    CS("Code Surfer ()"),
+    MFW("Make from waste ()"),
+    CS("Code Surfer (Code Bombay)"),
     TR("Tech Roadies ()"),
     HT("Hackathon"),//0-5TECH
     NRIT("Classical Solo (Nrityasamrat)"),
@@ -13,18 +13,18 @@ public enum     Events{
     WoDJ("War of DJ's (Turntables)"),
     FSG("Free Style Group (Beat pe feat)"),
     SKT("Skit (Skecz)"),
-    FC("Mono Acting"),
-    PPA("Parappa"),
-    MYM("Make Your Move"),
-    VOA("The Voice of Alegria"),
+    MA("Mono Acting"),
+    RAP("Parappa"),
+    DD("Duet Dancing (Gem of the City"),
+    SoSi("Solo Singing (Alegrian Idol)"),
     OM("Open Mic"),
     BB("Beat Boxing"),//6-18PARTS
     FOA("The Face of Alegria"),
     MMA("Mr & Mrs Alegria"),
-    BS("The Big Show"),
-    RF("Ramp on Fire"),
-    WH("The Witch Hunt"),
-    SNP("Snapshot"),
+    FiP("Fitness Physique (Musclemania Mumbai)"),
+    FS("Fashion Show (Fashion Street)"),
+    TH("Treasure Hunt (Gem of the City)"),
+    PhE("Photography (Fotothon)"),
     FFF("Fastest Finger First"),
     PTVR("PTV Roadies"),
     FAT("Food-A-Thon"),//19-27INF
@@ -44,12 +44,13 @@ public enum     Events{
     SSA("Salsa"),
     RCB("Rubiks Cube"),
     TT("Tutting"),
-    PH("Photography"),
+    PH("Photography Workshop"),
     RS("Rifle Shooting"),//28-45WS
     FIFA("FIFA"),
     NFS("NFS Most Wanted"),
-    CS16("CS 1.6"),
     MM("Mini Militia"),
+    VrFN("VR Fruit Ninja"),
+    LuKi("Ludo King"),
     FB("Futsal Boys"),
     BBL("Basketball"),
     VB("Volleyball"),
@@ -94,7 +95,6 @@ public enum     Events{
     private final String event;
 
     Events(String event) {this.event=event;}
-    Events() {event="";}
 
     public String getEvents(){return event;}
 
