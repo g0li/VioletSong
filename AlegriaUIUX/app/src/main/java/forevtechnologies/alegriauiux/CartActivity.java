@@ -32,20 +32,26 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_cart);
         Button buttonX = (Button) findViewById(R.id.checkout);
         Intent intent = getIntent();
-        b = intent.getExtras();
+        b = getIntent().getExtras();
         List<CartModel> items = new ArrayList<>();
-        List<String> eventNames=new ArrayList<>();
+        List<String> eventNames;
         eventNames=b.getStringArrayList("EventName");
-        Iterator itemsIterator=items.iterator();
-        Iterator eventNameIterator=eventNames.iterator();
-
-        
-
-
+        //Log.w("Event Bundle received",""+eventNames.get(0));
+        for(int n=0;n<eventNames.size();n++){
+            items.add(new CartModel(eventNames.get(n)));
+        }
+        if(!items.isEmpty()){
+            Log.w("Size","items not empty");
+        }
+        else{
+            Log.w("Size","items empty");
+        }
+        /*
         Log.d("TEST",b.getString("TEST"));//this line
         for (int i = 0; i <=b.size(); i++) {
             items.add(new CartModel(intent.getStringExtra("TEST")));
         }
+         */
 
         CartAdapter cartAdapter = new CartAdapter(getApplicationContext());
         cartAdapter.addItems(items);

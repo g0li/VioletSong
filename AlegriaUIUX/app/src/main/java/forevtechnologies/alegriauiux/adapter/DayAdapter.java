@@ -96,6 +96,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
     public Bundle getBndl() {
         b.putStringArrayList("EventName",eventsDataList);
+        //tryLog.w("Event bundle",""+eventsDataList.get(0));
         return b;
     }
     @Override
@@ -125,6 +126,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
         public void onClick(View v) {
             //final ArrayList <String> eventsDataList= new ArrayList<String>();
             eventsDataList.add(tvCountry.getText().toString());
+            Log.w("event",""+tvCountry.getText().toString());
             Snackbar snackbar = Snackbar
                     .make(v, "Event added", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                         @Override
