@@ -44,7 +44,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         Log.d("TEST",b.getString("TEST"));//this line
         for (int i = 0; i <=b.size(); i++) {
-            items.add(new CartModel(intent.getStringExtra("TEST")));
+            items.add(new CartModel(eventNames.get(i)));
         }
 
         CartAdapter cartAdapter = new CartAdapter(getApplicationContext());
