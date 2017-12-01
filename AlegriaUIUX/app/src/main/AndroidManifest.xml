@@ -28,11 +28,6 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".SignUpActivity"
@@ -54,10 +49,21 @@
             android:name=".InfoActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tickets"></activity>
+        <activity android:name=".Tickets" />
         <activity
             android:name=".CartActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SelectPaymentActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
+
 </manifest>
