@@ -16,7 +16,7 @@
         android:text="Check Out"
         android:textColor="@color/white" />
 
-    <android.support.v7.widget.RecyclerView
+    <ListView
         android:id="@+id/reg_events"
         android:layout_width="385dp"
         android:layout_height="456dp"

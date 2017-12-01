@@ -39,6 +39,8 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
     }
 
     final ArrayList <String> eventsDataList= new ArrayList<String>();
+    SharedPreferences.Editor editor;
+
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
     public static     Context context;
@@ -50,6 +52,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
     public DayAdapter(Context c)
     {
         context=c;
+        editor=c.getSharedPreferences(c.getString(R.string.shared_preference_cart),Context.MODE_PRIVATE).edit();
     }
 
 
@@ -100,7 +103,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
 
     public Bundle getBndl() {
-        b.putStringArrayList("EventName",eventsDataList);
+        //b.putStringArrayList("EventName",eventsDataList);
         //tryLog.w("Event bundle",""+eventsDataList.get(0));
         return b;
     }
@@ -114,6 +117,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
         TextView tvCountry;
         TextView tvAthleticName;
         TextView tvScore;
+        int i=0;
 
 
         AthleticHolder(View itemView) {
@@ -126,11 +130,11 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
             tvScore = (TextView) itemView.findViewById(R.id.tvScore);
         }
-    int i=0;
+
         @Override
         public void onClick(View v) {
-            //final ArrayList <String> eventsDataList= new ArrayList<String>();
-           b.putString("Key "+i,tvCountry.getText().toString());
+           editor.putString("Key "+i,tvCountry.getText().toString()).commit();
+           i++;
             Log.w("event",""+tvCountry.getText().toString());
             Snackbar snackbar = Snackbar
                     .make(v, "Event added", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
@@ -140,6 +144,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
                         }
                     });
             snackbar.show();
+            new FullInfoTabFragment().initializeIntent(new Intent(v.getContext(),CartActivity.class));
         }
 
 

@@ -44,7 +44,11 @@ public class FullInfoTabFragment extends Fragment {
     private Toolbar toolbar;
     private ImageView ivPhoto;
     private RecyclerView rvAthletics;
-    Bundle bundh;
+    Intent bundh;
+    Intent n;
+    public void changeactivity(Activity a, Bundle b)
+    {
+    }
 
     public static FullInfoTabFragment newInstance(CategoryCardModel categoryCardModel) {
         FullInfoTabFragment fragment = new FullInfoTabFragment();
@@ -74,7 +78,7 @@ public class FullInfoTabFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         rvAthletics = (RecyclerView) view.findViewById(R.id.rvAthletics);
-        bundh=new Bundle();
+        bundh=new Intent(getActivity(),CartActivity.class);
         return view;
     }
 
@@ -82,7 +86,7 @@ public class FullInfoTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final Bundle b= new DayAdapter(view.getContext()).getBndl();
+//        final Bundle b= new DayAdapter(view.getContext()).getBndl();
         toolbar.inflateMenu(R.menu.menu_registration);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -90,7 +94,25 @@ public class FullInfoTabFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.cart:
                         //before:i.putStringExtra("TEST","ROSHAN HERE");
-                        startActivity(new Intent(getActivity(),CartActivity.class).putExtras(bundh));
+                        if(bundh==null){
+                            Log.w("Bundh","Empty");
+                        }
+                        else{
+                            Log.w("Bundh","Not empty");
+                        }
+                        startActivity(bundh);
+//                        Intent i=new Intent(getActivity(),CartActivity.class);
+
+                        /*//for printing content of bundle
+                        List<String> eventNames=new ArrayList<>();
+                        for(int n=0;n<b.size();n++){
+                            eventNames.add(b.getString("Key "+n));
+                        }
+                        for(String name : eventNames){
+                            Log.w("Item",""+name);
+                        }
+                        //end of testing*/
+//                        startActivity(i);
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
@@ -568,7 +590,7 @@ public class FullInfoTabFragment extends Fragment {
                     @Override public void onItemClick(View view, int position) {
                         // TODO Handle item click
                         Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
-                        bundh.putString("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+" " +position);
+                        bundh.putExtra("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+"@"+position);
                     }
                 })
         );
@@ -624,5 +646,10 @@ public class FullInfoTabFragment extends Fragment {
                 mDivider.draw(c);
             }
         }
+    }
+
+
+    public void initializeIntent(Intent intent){
+        n=intent;
     }
 }
