@@ -14,6 +14,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +30,7 @@ import java.util.List;
 import forevtechnologies.alegriauiux.CartActivity;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
+import forevtechnologies.alegriauiux.adapter.RecyclerItemClickListener;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CategoryCardModel;
 import forevtechnologies.alegriauiux.models.Events;
@@ -42,9 +44,7 @@ public class FullInfoTabFragment extends Fragment {
     private Toolbar toolbar;
     private ImageView ivPhoto;
     private RecyclerView rvAthletics;
-    public void changeactivity(Activity a, Bundle b)
-    {
-    }
+    Bundle bundh;
 
     public static FullInfoTabFragment newInstance(CategoryCardModel categoryCardModel) {
         FullInfoTabFragment fragment = new FullInfoTabFragment();
@@ -74,6 +74,7 @@ public class FullInfoTabFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         rvAthletics = (RecyclerView) view.findViewById(R.id.rvAthletics);
+        bundh=new Bundle();
         return view;
     }
 
@@ -89,7 +90,7 @@ public class FullInfoTabFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.cart:
                         //before:i.putStringExtra("TEST","ROSHAN HERE");
-                        startActivity(new Intent(getActivity(),CartActivity.class).putExtras(b));
+                        startActivity(new Intent(getActivity(),CartActivity.class).putExtras(bundh));
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
@@ -558,10 +559,19 @@ public class FullInfoTabFragment extends Fragment {
 
 
 
-        DayAdapter dayAdapter = new DayAdapter(getContext());
+        final DayAdapter dayAdapter = new DayAdapter(getContext());
         dayAdapter.addItems(items);
 
         rvAthletics.setAdapter(dayAdapter);
+        rvAthletics.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
+                        bundh.putString("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+" " +position);
+                    }
+                })
+        );
         rvAthletics.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(getContext()));

@@ -31,15 +31,16 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         Button buttonX = (Button) findViewById(R.id.checkout);
-        b = getIntent().getExtras();
-        List<CartModel> items = new ArrayList<>();
-        ArrayList<String> eventNames;
-        eventNames=new ArrayList<String>();
-        for(int i=0;i<b.size();i++)
-        {
-        eventNames.add(b.getString("Key "+i));
-        Log.w("EVENTS",b.getString("Key "+i));
-        }
+        String s = getIntent().getExtras().getString("Key Informal 0");
+        Log.d("SCENEKYAHAI",s);
+//        List<CartModel> items = new ArrayList<>();
+//        ArrayList<String> eventNames;
+//        eventNames=new ArrayList<String>();
+//        for(int i=0;i<b.size();i++)
+//        {
+//        eventNames.add(b.getString("Key Informal"+i));
+//        Log.w("EVENTS",b.getString("Key "+i));
+//        }
         //Log.w("Event Bundle received",""+eventNames.get(0));
 //        for(int n=0;n<88;n++){
 //            items.add(new CartModel(eventNames.get(n)));
@@ -58,7 +59,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
          */
 
         CartAdapter cartAdapter = new CartAdapter(getApplicationContext());
-        cartAdapter.addItems(items);
+//        cartAdapter.addItems(items);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reg_events);
         recyclerView.setAdapter(cartAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));

@@ -33,6 +33,11 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
     private final List<AthleticModel> mItems = new ArrayList<>();
+
+    public ArrayList<String> getEventsDataList() {
+        return eventsDataList;
+    }
+
     final ArrayList <String> eventsDataList= new ArrayList<String>();
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
@@ -113,7 +118,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
         AthleticHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
 
             String s = Events.AA.getEvents();
             ivAthleticFlag = (ImageView) itemView.findViewById(R.id.ivAthleticFlag);
