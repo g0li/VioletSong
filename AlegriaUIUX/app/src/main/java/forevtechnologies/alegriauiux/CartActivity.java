@@ -47,7 +47,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         if(b==null){
             Log.w("Bundle","Empty");
         }
-        List<CartModel> items=new ArrayList<>(88);
+        ArrayList<CartModel> items=new ArrayList<>(88);
         List<Object> keyNames=new ArrayList<>(88);
 
         Bundle bundle = b.getExtras();
@@ -408,6 +408,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStart() {
         super.onStart();
         Log.w("Running","true");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
