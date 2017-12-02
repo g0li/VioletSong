@@ -19,7 +19,7 @@ import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
-import forevtechnologies.alegriauiux.models.EventsPaisa;
+import forevtechnologies.alegriauiux.PriceMapper;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
@@ -50,97 +50,99 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     public void onBindViewHolder(CartHolder holder, int position) {
     CartModel model=cartItem.get(position);
     holder.cName.setText(model.getName());
+    holder.cPrice.setText(String.valueOf(PriceMapper.getPrice(model.getName())));
 
 
 
-        for (int i=0;i<=EventsPaisa.values().length;i++)
-        {
-            while (i<=13)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("50");
-                }
-            }
-            while (i<=38 && i>13)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("100");
-                }
-            }
-            while (i<=54 && i>38)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("150");
-                }
-            }
-            while (i<=66&& i> 54)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("200");
-                }
-            }
-            while (i<=70 && i>66)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("250");
-                }
-            }
-            while (i<=78& i>70)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("300");
-                }
-            }
-            while (i==79)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("350");
-                }
-            }
-            while (i==80||i==81)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("500");
-                }
-            }
-            while (i==82)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("600");
-                }
-            }
-            while (i<=85&& i >82)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("1000");
-                }
-            }
-            while (i==86)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("2500");
-                }
-            }
-            while (i==87)
-            {
-                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
-                {
-                    holder.cPrice.setText("FREE");
-                }
-            }
 
-        }
+//        for (int i=0;i<=EventsPaisa.values().length;i++)
+//        {
+//            while (i<=13)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("50");
+//                }
+//            }
+//            while (i<=38 && i>13)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("100");
+//                }
+//            }
+//            while (i<=54 && i>38)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("150");
+//                }
+//            }
+//            while (i<=66&& i> 54)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("200");
+//                }
+//            }
+//            while (i<=70 && i>66)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("250");
+//                }
+//            }
+//            while (i<=78& i>70)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("300");
+//                }
+//            }
+//            while (i==79)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("350");
+//                }
+//            }
+//            while (i==80||i==81)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("500");
+//                }
+//            }
+//            while (i==82)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("600");
+//                }
+//            }
+//            while (i<=85&& i >82)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("1000");
+//                }
+//            }
+//            while (i==86)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("2500");
+//                }
+//            }
+//            while (i==87)
+//            {
+//                if(EventsPaisa.values()[i].equals(cartItem.get(position)))
+//                {
+//                    holder.cPrice.setText("FREE");
+//                }
+//            }
+//
+//        }
 
     }
 

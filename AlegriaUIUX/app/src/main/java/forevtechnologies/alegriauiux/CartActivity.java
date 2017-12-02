@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,13 +31,18 @@ import forevtechnologies.alegriauiux.models.Events;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
     Intent b;
-    SharedPreferences prefs;
+    int totalPrice=0;
+    RecyclerView recyclerView;
+    Button checkOutButton;
+    CartAdapter cartAdapter;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        Button buttonX = (Button) findViewById(R.id.checkout);
+        checkOutButton=findViewById(R.id.checkout);
+        textView=findViewById(R.id.totalPrice);
         b=getIntent();
         if(b==null){
             Log.w("Bundle","Empty");
@@ -381,13 +387,21 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         }
          */
 
-        CartAdapter cartAdapter = new CartAdapter(getApplicationContext());
+        cartAdapter = new CartAdapter(getApplicationContext());
         cartAdapter.addItems(items);
-        ListView recyclerView = (ListView) findViewById(R.id.reg_events);
+        recyclerView=findViewById(R.id.reg_events);
         recyclerView.setAdapter(cartAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager mLayoutManager=new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new CartActivity.DividerItemDecoration(getBaseContext()));
+        for(CartModel model: items){
+            totalPrice+=PriceMapper.getPrice(model.getName());
+            Log.w("Price:||",""+totalPrice);
+        }
+        textView.setText("Total price :Rs."+totalPrice+"");
     }
 
     @Override
