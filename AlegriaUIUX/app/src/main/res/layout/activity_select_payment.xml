@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,100 +7,127 @@
     android:orientation="vertical"
     tools:context="forevtechnologies.alegriauiux.SelectPaymentActivity">
 
+    <in.shadowfax.proswipebutton.ProSwipeButton
+        android:id="@+id/payButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        app:bg_color="@android:color/holo_blue_dark"
+        app:btn_text="PAY"
+        app:text_size="18dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="false"
+        android:layout_margin="5dp"
+        android:duplicateParentState="false"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/offlineCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:id="@+id/OfflineCardView"
-            app:cardElevation="20dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            app:cardElevation="5dp">
 
             <LinearLayout
-                android:id="@+id/OfflineLin"
+                android:id="@+id/offlineLin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="left|center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/OfflineTV"
+                <RadioButton
+                    android:id="@+id/offlineRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="3" />
+
+                <LinearLayout
+                    android:id="@+id/offlineLin1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/comfortaa"
-                    android:text="OFFline"
-                    android:textAlignment="viewStart"
-                    android:textAllCaps="true"
-                    android:textSize="30sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/OfflineTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Pay to an Alegria volunteer"
-                    android:textAlignment="viewStart"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/offlineTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Offline"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/offlineTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Request a alegria volunteer" />
+                </LinearLayout>
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="wrap_content" />
-
         <android.support.v7.widget.CardView
+            android:id="@+id/onlineCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="20dp"
-            android:id="@+id/OnlineCardView"
-            app:cardElevation="20dp">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="2dp"
+            android:paddingTop="2dp"
+            app:cardElevation="5dp">
 
             <LinearLayout
-                android:id="@+id/OnlineLin"
+                android:id="@+id/onlineLin"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="left|center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/OnlineTV"
+                <RadioButton
+                    android:id="@+id/onlineRadio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="3" />
+
+                <LinearLayout
+                    android:id="@+id/onlineLin1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/comfortaa"
-                    android:text="Online"
-                    android:textAlignment="viewEnd"
-                    android:textAllCaps="true"
-                    android:textSize="30sp" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/OnlineTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Using Tech Support API"
-                    android:textAlignment="viewEnd"
-                    android:textSize="18sp" />
+                    <TextView
+                        android:id="@+id/onlineTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Online Payment"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/onlineTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Using TechProcess" />
+                </LinearLayout>
+
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="9"
-        android:background="@android:color/holo_orange_dark"
-        android:text="Go to Payment"
-        android:textColor="#dcdcdc" />
-
-</LinearLayout>
+</RelativeLayout>
