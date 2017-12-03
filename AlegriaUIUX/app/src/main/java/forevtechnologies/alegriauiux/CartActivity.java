@@ -42,12 +42,18 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
         checkOutButton=findViewById(R.id.checkout);
+        checkOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));
+            }
+        });
         textView=findViewById(R.id.totalPrice);
         b=getIntent();
         if(b==null){
             Log.w("Bundle","Empty");
         }
-        ArrayList<CartModel> items=new ArrayList<>(88);
+        List<CartModel> items=new ArrayList<>(88);
         List<Object> keyNames=new ArrayList<>(88);
 
         Bundle bundle = b.getExtras();
@@ -401,18 +407,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             totalPrice+=PriceMapper.getPrice(model.getName());
             Log.w("Price:||",""+totalPrice);
         }
-        textView.setText("Total price :Rs."+totalPrice+"");
+        textView.setText("Total Fees :Rs."+totalPrice+"");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.w("Running","true");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
     }
 
     @Override
