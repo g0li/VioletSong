@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -46,6 +47,7 @@ public class FullInfoTabFragment extends Fragment {
     private RecyclerView rvAthletics;
     Intent bundh;
     Intent n;
+    Snackbar snackbar;
     public void changeactivity(Activity a, Bundle b)
     {
     }
@@ -587,10 +589,20 @@ public class FullInfoTabFragment extends Fragment {
         rvAthletics.setAdapter(dayAdapter);
         rvAthletics.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override public void onItemClick(View view, int position) {
+                    @Override public void onItemClick(View view, final int position) {
                         // TODO Handle item click
                         Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
                         bundh.putExtra("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+"@"+position);
+                        snackbar=Snackbar
+                                .make(view,"Event Added.",Snackbar.LENGTH_LONG)
+                                .setAction("Undo", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                    bundh.removeExtra("Key "+toolbar.getTitle()+" "+position);
+                                    }
+                                });
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
                     }
                 })
         );

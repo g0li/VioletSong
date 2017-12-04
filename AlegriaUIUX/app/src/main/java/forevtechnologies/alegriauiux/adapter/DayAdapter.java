@@ -123,8 +123,6 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
         AthleticHolder(View itemView) {
             super(itemView);
             //itemView.setOnClickListener(this);
-
-            String s = Events.AA.getEvents();
             ivAthleticFlag = (ImageView) itemView.findViewById(R.id.ivAthleticFlag);
             tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,10 +48,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     }
 
     @Override
-    public void onBindViewHolder(CartHolder holder, int position) {
-        CartModel model=cartItem.get(position);
-        holder.cName.setText(model.getName());
-        holder.cPrice.setText(String.valueOf(PriceMapper.getPrice(model.getName())));
+    public void onBindViewHolder(CartHolder holder, final int position) {
+    CartModel model=cartItem.get(position);
+    holder.cName.setText(model.getName());
+    holder.cPrice.setText(String.valueOf(PriceMapper.getPrice(model.getName())));
 
 
 
