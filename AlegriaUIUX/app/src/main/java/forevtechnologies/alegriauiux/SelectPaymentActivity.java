@@ -41,21 +41,21 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
 
         offlineCardView=(CardView) findViewById(R.id.offlineCardView);
         onlineCardView=(CardView) findViewById(R.id.onlineCardView);
-
+        
         offlineLin.setOnClickListener(this);
         offlineLin1.setOnClickListener(this);
         onlineLin.setOnClickListener(this);
         onlineLin1.setOnClickListener(this);
-
+        
         offlineTextView.setOnClickListener(this);
         offlineTextView1.setOnClickListener(this);
-
+        
         onlineTextView.setOnClickListener(this);
         onlineTextView1.setOnClickListener(this);
-
+        
         offlineRadio.setOnClickListener(this);
         onlineRadio.setOnClickListener(this);
-
+        
         offlineCardView.setOnClickListener(this);
         onlineCardView.setOnClickListener(this);
 
@@ -89,7 +89,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_payment);
         initUI();
-
+        
     }
 
     @SuppressLint("ResourceAsColor")
@@ -140,7 +140,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
             case R.id.onlineRadio:
                 buttonSceneDecider(0);
                 break;
-
+                
         }
     }
 }

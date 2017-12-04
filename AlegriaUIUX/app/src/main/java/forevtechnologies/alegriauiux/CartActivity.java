@@ -402,7 +402,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new CartActivity.DividerItemDecoration(getBaseContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext()));
         for(CartModel model: items){
             totalPrice+=PriceMapper.getPrice(model.getName());
             Log.w("Price:||",""+totalPrice);

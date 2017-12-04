@@ -7,13 +7,6 @@
     <color name="midnight_blue">#141d26</color>
 
 
-
-
-    <color name="darkblue">#0D47A1</color>
-    <color name="CardColor">@color/darkblue</color>
-    <color name="HeaderTextColor">@color/darkblue</color>
-    <color name="PriceTextColor">@color/darkblue</color>
-
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>
 
