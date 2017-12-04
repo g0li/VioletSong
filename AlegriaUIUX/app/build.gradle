@@ -75,11 +75,14 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.otaliastudios:viewprinter:0.2.1'
     compile 'com.steelkiwi:badge-holder-view:1.1.0'
+    compile 'in.shadowfax:proswipebutton:1.0.1'
     compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
     testCompile 'junit:junit:4.12'
     compile 'com.github.jrvansuita:MaterialAbout:0.1.9'
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:cardview-v7:26.1.0'
+    compile 'me.wangyuwei:shoppoing:1.0.5'
+    compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.github.jrvansuita:IconHandler:v2.0.0'
 }
 

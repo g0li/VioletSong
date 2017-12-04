@@ -4,11 +4,11 @@
     android:id="@+id/content_login_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lappr"
+    android:background="@drawable/index"
     android:fitsSystemWindows="true"
     android:foregroundGravity="center"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     tools:context=".LoginActivity">
 
 
@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:background="#aaaaaaaa"
+        android:background="#aaffffff"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
@@ -121,7 +121,7 @@
                     android:paddingLeft="30dp"
                     android:paddingRight="20dp"
                     android:text="Sign in with google"
-                    android:textColor="#aaffffff" />
+                    android:textColor="#aa000000" />
 
             </LinearLayout>
         </LinearLayout>
