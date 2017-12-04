@@ -42,6 +42,10 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".CurlActivity"
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".EventsActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -54,16 +58,7 @@
             android:name=".CartActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SelectPaymentActivity">
-            <intent-filter>
-                <category android:name="android.intent.category.LAUNCHER" />
-
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter></activity>
-
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
+        <activity android:name=".SelectPaymentActivity"></activity>
     </application>
 
 </manifest>

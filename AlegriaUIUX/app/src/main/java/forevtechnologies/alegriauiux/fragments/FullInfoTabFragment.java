@@ -8,12 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +31,7 @@ import java.util.List;
 import forevtechnologies.alegriauiux.CartActivity;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
+import forevtechnologies.alegriauiux.adapter.RecyclerItemClickListener;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CategoryCardModel;
 import forevtechnologies.alegriauiux.models.Events;
@@ -42,6 +45,9 @@ public class FullInfoTabFragment extends Fragment {
     private Toolbar toolbar;
     private ImageView ivPhoto;
     private RecyclerView rvAthletics;
+    Intent bundh;
+    Intent n;
+    Snackbar snackbar;
     public void changeactivity(Activity a, Bundle b)
     {
     }
@@ -74,6 +80,7 @@ public class FullInfoTabFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         rvAthletics = (RecyclerView) view.findViewById(R.id.rvAthletics);
+        bundh=new Intent(getActivity(),CartActivity.class);
         return view;
     }
 
@@ -81,14 +88,33 @@ public class FullInfoTabFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Bundle b= new DayAdapter(view.getContext()).getBndl();
+//        final Bundle b= new DayAdapter(view.getContext()).getBndl();
         toolbar.inflateMenu(R.menu.menu_registration);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.cart:
-                        startActivity(new Intent(getActivity(),CartActivity.class).putExtra("TEST","ROSHAN HERE"));
+                        //before:i.putStringExtra("TEST","ROSHAN HERE");
+                        if(bundh==null){
+                            Log.w("Bundh","Empty");
+                        }
+                        else{
+                            Log.w("Bundh","Not empty");
+                        }
+                        startActivity(bundh);
+//                        Intent i=new Intent(getActivity(),CartActivity.class);
+
+                        /*//for printing content of bundle
+                        List<String> eventNames=new ArrayList<>();
+                        for(int n=0;n<b.size();n++){
+                            eventNames.add(b.getString("Key "+n));
+                        }
+                        for(String name : eventNames){
+                            Log.w("Item",""+name);
+                        }
+                        //end of testing*/
+//                        startActivity(i);
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
@@ -557,10 +583,29 @@ public class FullInfoTabFragment extends Fragment {
 
 
 
-        DayAdapter dayAdapter = new DayAdapter(getContext());
+        final DayAdapter dayAdapter = new DayAdapter(getContext());
         dayAdapter.addItems(items);
 
         rvAthletics.setAdapter(dayAdapter);
+        rvAthletics.addOnItemTouchListener(
+                new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, final int position) {
+                        // TODO Handle item click
+                        Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
+                        bundh.putExtra("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+"@"+position);
+                        snackbar=Snackbar
+                                .make(view,"Event Added.",Snackbar.LENGTH_LONG)
+                                .setAction("Undo", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                    bundh.removeExtra("Key "+toolbar.getTitle()+" "+position);
+                                    }
+                                });
+                        snackbar.setActionTextColor(getResources().getColor(R.color.white));
+                        snackbar.show();
+                    }
+                })
+        );
         rvAthletics.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(getContext()));
@@ -613,5 +658,10 @@ public class FullInfoTabFragment extends Fragment {
                 mDivider.draw(c);
             }
         }
+    }
+
+
+    public void initializeIntent(Intent intent){
+        n=intent;
     }
 }

@@ -6,6 +6,14 @@
     <color name="clouds">#ecf0f1</color>
     <color name="midnight_blue">#141d26</color>
 
+
+
+
+    <color name="darkblue">#0D47A1</color>
+    <color name="CardColor">@color/darkblue</color>
+    <color name="HeaderTextColor">@color/darkblue</color>
+    <color name="PriceTextColor">@color/darkblue</color>
+
     <color name="grey_100">#F5F5F5</color>
     <color name="grey_300">#E0E0E0</color>
 
@@ -22,7 +30,7 @@
     <color name="titleBadgeTitle">#adafb1</color>
     <color name="titleBadgeText">#adafb1</color>
     <color name="mainTextColor">#343d43</color>
-    <color name="btnRequest">#ffbf12</color>
+    <color name="btnRequest">#827717</color>
 
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>

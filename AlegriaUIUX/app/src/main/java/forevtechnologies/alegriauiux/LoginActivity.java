@@ -393,7 +393,7 @@ public class LoginActivity extends AppCompatActivity implements
             signIn();
         }
         else if (i == R.id.Gpic) {
-            setInputs(i,false);
+            //setInputs(i,false);
             signIn();
         }
         else if (i == R.id.ESignIn) {

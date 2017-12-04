@@ -1,30 +1,16 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:gravity="center"
-    android:orientation="vertical">
+    tools:context=".MainActivity">
 
-    <FrameLayout
+    <android.support.v7.widget.RecyclerView
+        android:overScrollMode="never"
+        android:fadeScrollbars="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_main">
+        android:id="@+id/recyclerview"
+        android:scrollbars="horizontal" />
 
-        <forevtechnologies.alegriauiux.utl.NonScrollableViewPager
-            android:id="@+id/vp_main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:background="@drawable/overlay_top"
-            android:cacheColorHint="#00000000"/>
-
-    </FrameLayout>
-
-</LinearLayout>
+</RelativeLayout>

@@ -33,6 +33,14 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {
     private final List<AthleticModel> mItems = new ArrayList<>();
+
+    public ArrayList<String> getEventsDataList() {
+        return eventsDataList;
+    }
+
+    final ArrayList <String> eventsDataList= new ArrayList<String>();
+    SharedPreferences.Editor editor;
+
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
     public static     Context context;
@@ -44,6 +52,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
     public DayAdapter(Context c)
     {
         context=c;
+        editor=c.getSharedPreferences(c.getString(R.string.shared_preference_cart),Context.MODE_PRIVATE).edit();
     }
 
 
@@ -94,6 +103,8 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
 
     public Bundle getBndl() {
+        //b.putStringArrayList("EventName",eventsDataList);
+        //tryLog.w("Event bundle",""+eventsDataList.get(0));
         return b;
     }
     @Override
@@ -106,13 +117,12 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
         TextView tvCountry;
         TextView tvAthleticName;
         TextView tvScore;
+        int i=0;
 
 
         AthleticHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-
-            String s = Events.AA.getEvents();
+            //itemView.setOnClickListener(this);
             ivAthleticFlag = (ImageView) itemView.findViewById(R.id.ivAthleticFlag);
             tvCountry = (TextView) itemView.findViewById(R.id.tvCountry);
             tvAthleticName = (TextView) itemView.findViewById(R.id.tvAthleticName);
@@ -121,8 +131,9 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
 
         @Override
         public void onClick(View v) {
-            final ArrayList <String> eventsDataList= new ArrayList<String>();
-            eventsDataList.add(tvCountry.getText().toString());
+           editor.putString("Key "+i,tvCountry.getText().toString()).commit();
+           i++;
+            Log.w("event",""+tvCountry.getText().toString());
             Snackbar snackbar = Snackbar
                     .make(v, "Event added", Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
                         @Override
@@ -130,11 +141,15 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
                             eventsDataList.remove(tvCountry.getText().toString());
                         }
                     });
-
             snackbar.show();
+            new FullInfoTabFragment().initializeIntent(new Intent(v.getContext(),CartActivity.class));
         }
 
 
+    }
+
+    private void pushBndl(ArrayList<String> eventsDataList) {
+        b.putStringArrayList("List",eventsDataList);
     }
 
 }

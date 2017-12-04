@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
-import forevtechnologies.alegriauiux.models.EventsPaisa;
+import forevtechnologies.alegriauiux.PriceMapper;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
@@ -29,24 +30,31 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
 
 
     public CartAdapter(Context c) {
+
         context = c;
+
     }
 
     public void addItems(@NonNull Collection<CartModel> items) {
         cartItem.addAll(items);
         notifyItemRangeInserted(cartItem.size() - items.size() - 1, items.size());
     }
+
     @Override
     public CartHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_score, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
 
         return new CartHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CartHolder holder, int position) {
+    public void onBindViewHolder(CartHolder holder, final int position) {
     CartModel model=cartItem.get(position);
     holder.cName.setText(model.getName());
+    holder.cPrice.setText(String.valueOf(PriceMapper.getPrice(model.getName())));
+
+
+
 
 //        for (int i=0;i<=EventsPaisa.values().length;i++)
 //        {
@@ -149,14 +157,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
 
 
 
-class CartHolder extends RecyclerView.ViewHolder {
-    TextView cName,cPrice;
-    public CartHolder(View itemView) {
-        super(itemView);
-        cName=(TextView)itemView.findViewById(R.id.cartItemName);
-        cPrice=(TextView)itemView.findViewById(R.id.cartItemPrice);
+    class CartHolder extends RecyclerView.ViewHolder {
+        TextView cName,cPrice;
+        public CartHolder(View itemView) {
+            super(itemView);
+            cName=(TextView)itemView.findViewById(R.id.cartItemName);
+            cPrice=(TextView)itemView.findViewById(R.id.cartItemPrice);
+
+        }
 
     }
-
-}
 }

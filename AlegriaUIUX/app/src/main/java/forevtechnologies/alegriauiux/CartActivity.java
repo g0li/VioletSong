@@ -2,9 +2,11 @@ package forevtechnologies.alegriauiux;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,38 +17,404 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
 import forevtechnologies.alegriauiux.models.CartModel;
+import forevtechnologies.alegriauiux.models.Events;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
-    Bundle b;
+    Intent b;
+    int totalPrice=0;
+    RecyclerView recyclerView;
+    Button checkOutButton;
+    CartAdapter cartAdapter;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-        Button buttonX = (Button) findViewById(R.id.checkout);
-        Intent intent = getIntent();
-        b = intent.getExtras();
-        List<CartModel> items = new ArrayList<>();
-        Log.d("TEST",b.getString("TEST"));//this line
-        for (int i = 0; i <=b.size(); i++) {
-            items.add(new CartModel(intent.getStringExtra("TEST")));
+        checkOutButton=findViewById(R.id.checkout);
+        checkOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));
+            }
+        });
+        textView=findViewById(R.id.totalPrice);
+        b=getIntent();
+        if(b==null){
+            Log.w("Bundle","Empty");
+        }
+        List<CartModel> items=new ArrayList<>(88);
+        List<Object> keyNames=new ArrayList<>(88);
+
+        Bundle bundle = b.getExtras();
+        if (bundle != null) {
+            for (String key : bundle.keySet()) {
+                Object value = bundle.get(key);
+                keyNames.add(bundle.get(key));
+                Log.d("CartExtras", String.format("%s %s (%s)", key,
+                        value.toString(), value.getClass().getName()));
+            }
         }
 
-        CartAdapter cartAdapter = new CartAdapter(getApplicationContext());
+        for(Object name :keyNames){
+            String[] splitter=String.valueOf(name).split("@");
+            int position=Integer.parseInt(splitter[1]);
+            Integer.parseInt(splitter[1]);
+            switch (splitter[0]){
+                case "Informal":
+                    switch (position){
+                        case 0:
+                            items.add(new CartModel(Events.FOA.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.MMA.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.FiP.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.FS.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.TH.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.PhE.getEvents()));
+                            break;
+                        case 6:
+                            items.add(new CartModel(Events.FFF.getEvents()));
+                            break;
+                        case 7:
+                            items.add(new CartModel(Events.PTVR.getEvents()));
+                            break;
+                        case 8:
+                            items.add(new CartModel(Events.FAT.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Performing Arts":
+                    switch (position){
+                        case 0:
+                            items.add(new CartModel(Events.NRIT.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.DH.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.BBy.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.FoG.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.WoDJ.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.FSG.getEvents()));
+                            break;
+                        case 6:
+                            items.add(new CartModel(Events.SKT.getEvents()));
+                            break;
+                        case 7:
+                            items.add(new CartModel(Events.MA.getEvents()));
+                            break;
+                        case 8:
+                            items.add(new CartModel(Events.RAP.getEvents()));
+                            break;
+                        case 9:
+                            items.add(new CartModel(Events.DD.getEvents()));
+                            break;
+                        case 10:
+                            items.add(new CartModel(Events.SoSi.getEvents()));
+                            break;
+                        case 11:
+                            items.add(new CartModel(Events.OM.getEvents()));
+                            break;
+                        case 12:
+                            items.add(new CartModel(Events.BB.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Literary Arts":
+                    switch (position) {
+                        case 0:
+                            items.add(new CartModel(Events.ELOC.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.QZ.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.ESSY.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.SB.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Management":
+                    switch (position) {
+                        case 0:
+                            items.add(new CartModel(Events.ADMD.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.MQ.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.BM.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.MTH.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Sports & Gaming":
+                    switch (position){
+                        case 0:
+                            items.add(new CartModel(Events.FIFA.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.NFS.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.MM.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.FB.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.BBL.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.VB.getEvents()));
+                            break;
+                        case 6:
+                            items.add(new CartModel(Events.BC.getEvents()));
+                            break;
+                        case 7:
+                            items.add(new CartModel(Events.TOW.getEvents()));
+                            break;
+                        case 8:
+                            items.add(new CartModel(Events.TTN.getEvents()));
+                            break;
+                        case 9:
+                            items.add(new CartModel(Events.ARS.getEvents()));
+                            break;
+                        case 10:
+                            items.add(new CartModel(Events.CHS.getEvents()));
+                            break;
+                        case 11:
+                            items.add(new CartModel(Events.FCQ.getEvents()));
+                            break;
+                        case 12:
+                            items.add(new CartModel(Events.CRMS.getEvents()));
+                            break;
+                        case 13:
+                            items.add(new CartModel(Events.CRMD.getEvents()));
+                            break;
+                        case 14:
+                            items.add(new CartModel(Events.KBDI.getEvents()));
+                            break;
+                        case 15:
+                            items.add(new CartModel(Events.NS.getEvents()));
+                            break;
+                        case 16:
+                            items.add(new CartModel(Events.BDTG.getEvents()));
+                            break;
+                        case 17:
+                            items.add(new CartModel(Events.BDTB.getEvents()));
+                            break;
+                        case 18:
+                            items.add(new CartModel(Events.NC.getEvents()));
+                            break;
+                        case 19:
+                            items.add(new CartModel(Events.CSGO.getEvents()));
+                            break;
+                        default:
+                            items.add(new CartModel(Events.AA.getEvents()));
+                            break;
+                    }
+                    break;
+                case "Fine Arts":
+                    switch (position){
+                        case 0:
+                            items.add(new CartModel(Events.PM.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.CP.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.RM.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.MD.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.FP.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.NA.getEvents()));
+                            break;
+                        case 6:
+                            items.add(new CartModel(Events.AA.getEvents()));
+                            break;
+                        default:
+                            items.add(new CartModel(Events.AA.getEvents()));
+                            break;
+                    }
+                    break;
+                case "Technical Events":
+                    switch (position){
+                        case 0:
+                            items.add(new CartModel(Events.RC.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.TPP.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.MFW.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.CS.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.TR.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.HT.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "Workshops":
+                    switch(position){
+                        case 0:
+                            items.add(new CartModel(Events.TD.getEvents()));
+                            break;
+                        case 1:
+                            items.add(new CartModel(Events.WD.getEvents()));
+                            break;
+                        case 2:
+                            items.add(new CartModel(Events.AA.getEvents()));
+                            break;
+                        case 3:
+                            items.add(new CartModel(Events.IOT.getEvents()));
+                            break;
+                        case 4:
+                            items.add(new CartModel(Events.PY.getEvents()));
+                            break;
+                        case 5:
+                            items.add(new CartModel(Events.DP.getEvents()));
+                            break;
+                        case 6:
+                            items.add(new CartModel(Events.KT.getEvents()));
+                            break;
+                        case 7:
+                            items.add(new CartModel(Events.FG.getEvents()));
+                            break;
+                        case 8:
+                            items.add(new CartModel(Events.TW.getEvents()));
+                            break;
+                        case 9:
+                            items.add(new CartModel(Events.CG.getEvents()));
+                            break;
+                        case 10:
+                            items.add(new CartModel(Events.ZM.getEvents()));
+                            break;
+                        case 11:
+                            items.add(new CartModel(Events.SA.getEvents()));
+                            break;
+                        case 12:
+                            items.add(new CartModel(Events.DJW.getEvents()));
+                            break;
+                        case 13:
+                            items.add(new CartModel(Events.SSA.getEvents()));
+                            break;
+                        case 14:
+                            items.add(new CartModel(Events.RCB.getEvents()));
+                            break;
+                        case 15:
+                            items.add(new CartModel(Events.TT.getEvents()));
+                            break;
+                        case 16:
+                            items.add(new CartModel(Events.PH.getEvents()));
+                            break;
+                        case 17:
+                            items.add(new CartModel(Events.RS.getEvents()));
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+//        List<CartModel> items = new ArrayList<>();
+//        ArrayList<String> eventNames;
+//        eventNames=new ArrayList<String>();
+//        for(int i=0;i<b.size();i++)
+//        {
+//        eventNames.add(b.getString("Key Informal"+i));
+//        Log.w("EVENTS",b.getString("Key "+i));
+//        }
+        //Log.w("Event Bundle received",""+eventNames.get(0));
+//        for(int n=0;n<88;n++){
+//            items.add(new CartModel(eventNames.get(n)));
+//        }
+//        if(!items.isEmpty()){
+//            Log.w("Size","items not empty");
+//        }
+//        else{
+//            Log.w("Size","items empty");
+//        }
+        /*
+        Log.d("TEST",b.getString("TEST"));//this line
+        for (int i = 0; i <=b.size(); i++) {
+            items.add(new CartModel(eventNames.get(i)));
+        }
+         */
+
+        cartAdapter = new CartAdapter(getApplicationContext());
         cartAdapter.addItems(items);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reg_events);
+        recyclerView=findViewById(R.id.reg_events);
         recyclerView.setAdapter(cartAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        LinearLayoutManager mLayoutManager=new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new CartActivity.DividerItemDecoration(getBaseContext()));
+        for(CartModel model: items){
+            totalPrice+=PriceMapper.getPrice(model.getName());
+            Log.w("Price:||",""+totalPrice);
+        }
+        textView.setText("Total Fees :Rs."+totalPrice+"");
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.w("Running","true");
+    }
 
     @Override
     public void onClick(View view) {
