@@ -47,7 +47,7 @@ public class CurlActivity extends Activity {
 		mCurlView.setPageProvider(new PageProvider());
 		mCurlView.setSizeChangedObserver(new SizeChangedObserver());
 		mCurlView.setCurrentIndex(index);
-		mCurlView.setBackgroundColor(0xFF202830);
+		mCurlView.setBackgroundColor(getResources().getColor(R.color.white));
 
 		// This is something somewhat experimental. Before uncommenting next
 		// line, please see method comments in CurlView.
@@ -77,7 +77,7 @@ public class CurlActivity extends Activity {
 	private class PageProvider implements CurlView.PageProvider {
 
 		// Bitmap resources.
-		private int[] mBitmapIds = { R.drawable.arif, R.drawable.pratik,R.drawable.roshan, R.drawable.sooraj };
+		private int[] mBitmapIds = { R.drawable.page1, R.drawable.page2,R.drawable.page3, R.drawable.page4, R.drawable.page5 };
 
 		@Override
 		public int getPageCount() {
@@ -137,7 +137,7 @@ public class CurlActivity extends Activity {
 			// Second case is image on back side, solid colored front.
 			case 1: {
 				Bitmap back = loadBitmap(width, height, 2);
-				page.setTexture(back, CurlPage.SIDE_BACK);
+				page.setTexture(back, CurlPage.SIDE_FRONT);
 				page.setColor(Color.rgb(127, 140, 180), CurlPage.SIDE_FRONT);
 				break;
 			}
@@ -146,7 +146,7 @@ public class CurlActivity extends Activity {
 				Bitmap front = loadBitmap(width, height, 1);
 				Bitmap back = loadBitmap(width, height, 3);
 				page.setTexture(front, CurlPage.SIDE_FRONT);
-				page.setTexture(back, CurlPage.SIDE_BACK);
+				page.setTexture(back, CurlPage.SIDE_FRONT);
 				break;
 			}
 			// Fourth case is images on both sides - plus they are blend against
@@ -155,19 +155,19 @@ public class CurlActivity extends Activity {
 				Bitmap front = loadBitmap(width, height, 2);
 				Bitmap back = loadBitmap(width, height, 1);
 				page.setTexture(front, CurlPage.SIDE_FRONT);
-				page.setTexture(back, CurlPage.SIDE_BACK);
+				page.setTexture(back, CurlPage.SIDE_FRONT);
 				page.setColor(Color.argb(127, 170, 130, 255),
 						CurlPage.SIDE_FRONT);
-				page.setColor(Color.rgb(255, 190, 150), CurlPage.SIDE_BACK);
+				page.setColor(Color.rgb(255, 190, 150), CurlPage.SIDE_FRONT);
 				break;
 			}
 			// Fifth case is same image is assigned to front and back. In this
 			// scenario only one texture is used and shared for both sides.
 			case 4:
 				Bitmap front = loadBitmap(width, height, 0);
-				page.setTexture(front, CurlPage.SIDE_BOTH);
+				page.setTexture(front, CurlPage.SIDE_FRONT);
 				page.setColor(Color.argb(127, 255, 255, 255),
-						CurlPage.SIDE_BACK);
+						CurlPage.SIDE_FRONT);
 				break;
 			}
 		}

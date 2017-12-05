@@ -85,6 +85,8 @@ dependencies {
     compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
     compile 'com.koushikdutta.ion:ion:2.+'
     compile 'com.github.jrvansuita:IconHandler:v2.0.0'
+    compile 'com.marshalchen.ultimaterecyclerview:library:0.7.0'
+    compile 'app.num.numandroidpagecurleffect:numandroidpagecurleffect:1.0'
 }
 
 

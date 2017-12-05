@@ -132,7 +132,8 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         case R.id.brochureImageView:
         case R.id.brochureTextView:
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
-            startActivity(new Intent(getActivity(),CurlActivity.class));
+//            startActivity(new Intent(getActivity(),CurlActivity.class));
+            startActivity(new Intent(getActivity(),PageCurl.class));
             break;
         case R.id.eventsCardView:
         case R.id.eventsLayout:

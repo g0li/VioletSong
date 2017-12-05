@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
@@ -8,17 +9,22 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.marshalchen.ultimaterecyclerview.SwipeableUltimateRecyclerview;
+import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -53,7 +59,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         if(b==null){
             Log.w("Bundle","Empty");
         }
-        List<CartModel> items=new ArrayList<>(88);
+        final List<CartModel> items=new ArrayList<>(88);
         List<Object> keyNames=new ArrayList<>(88);
 
         Bundle bundle = b.getExtras();
@@ -368,30 +374,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
         }
-//        List<CartModel> items = new ArrayList<>();
-//        ArrayList<String> eventNames;
-//        eventNames=new ArrayList<String>();
-//        for(int i=0;i<b.size();i++)
-//        {
-//        eventNames.add(b.getString("Key Informal"+i));
-//        Log.w("EVENTS",b.getString("Key "+i));
-//        }
-        //Log.w("Event Bundle received",""+eventNames.get(0));
-//        for(int n=0;n<88;n++){
-//            items.add(new CartModel(eventNames.get(n)));
-//        }
-//        if(!items.isEmpty()){
-//            Log.w("Size","items not empty");
-//        }
-//        else{
-//            Log.w("Size","items empty");
-//        }
-        /*
-        Log.d("TEST",b.getString("TEST"));//this line
-        for (int i = 0; i <=b.size(); i++) {
-            items.add(new CartModel(eventNames.get(i)));
-        }
-         */
 
         cartAdapter = new CartAdapter(getApplicationContext());
         cartAdapter.addItems(items);
@@ -399,15 +381,92 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setAdapter(cartAdapter);
         LinearLayoutManager mLayoutManager=new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext()));
+
         for(CartModel model: items){
             totalPrice+=PriceMapper.getPrice(model.getName());
             Log.w("Price:||",""+totalPrice);
         }
         textView.setText("Total Fees :Rs."+totalPrice+"");
+
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition(); //get position which is swipe
+
+                if (direction == ItemTouchHelper.LEFT) {    //if swipe left
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
+                    builder.setMessage("Are you sure to delete?");    //set message
+
+                    builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            totalPrice=totalPrice-PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
+                            cartAdapter.cartItem.remove(position);
+                            cartAdapter.notifyItemRemoved(position);
+                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                            textView.setText("Total Fees :Rs."+totalPrice+"");
+                            return;
+                        }
+                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cartAdapter.notifyItemRemoved(position+1);
+                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                            return;
+                        }
+                    }).show();  //show alert dialog
+                }
+                if(direction == ItemTouchHelper.RIGHT){  //if swipe right
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
+                    builder.setMessage("Are you sure to delete?");    //set message
+
+                    builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            totalPrice=totalPrice-PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
+                            cartAdapter.cartItem.remove(position);
+                            cartAdapter.notifyItemRemoved(position);
+                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                            textView.setText("Total Fees :Rs."+totalPrice+"");
+                            return;
+                        }
+                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cartAdapter.notifyItemRemoved(position+1);
+                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                            return;
+                        }
+                    }).show();  //show alert dialog
+                }
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView); //set swipe to recylcerview
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 
     @Override

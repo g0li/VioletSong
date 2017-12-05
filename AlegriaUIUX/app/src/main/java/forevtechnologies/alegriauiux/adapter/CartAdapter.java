@@ -24,7 +24,7 @@ import forevtechnologies.alegriauiux.PriceMapper;
 
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
-    private final List<CartModel> cartItem = new ArrayList<>();
+    public final List<CartModel> cartItem = new ArrayList<>();
     private Bundle bundle;
     public static Context context;
 
