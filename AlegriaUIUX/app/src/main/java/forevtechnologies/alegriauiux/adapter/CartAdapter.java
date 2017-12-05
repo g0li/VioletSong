@@ -1,4 +1,4 @@
-package forevtechnologies.alegriauiux.adapter;
+    package forevtechnologies.alegriauiux.adapter;
 
 import android.content.Context;
 import android.content.Intent;

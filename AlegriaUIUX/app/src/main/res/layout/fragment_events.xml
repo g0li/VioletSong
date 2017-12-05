@@ -3,7 +3,7 @@
     android:id="@+id/fragment_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     tools:context=".adapter.main_fragment.MainFragment">
 
     <android.support.v7.widget.Toolbar
@@ -17,9 +17,7 @@
         android:id="@+id/logoBg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:alpha="0.05"
-        android:src="@drawable/logo" />
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:id="@+id/logo"

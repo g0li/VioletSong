@@ -1,6 +1,5 @@
 package forevtechnologies.alegriauiux.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,23 +11,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.CartActivity;
-import forevtechnologies.alegriauiux.EventsActivity;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.fragments.FullInfoTabFragment;
 import forevtechnologies.alegriauiux.models.AthleticModel;
-import forevtechnologies.alegriauiux.models.Events;
 
-import static android.support.v4.content.ContextCompat.startActivity;
 
 
 public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> {

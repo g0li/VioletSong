@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:paddingBottom="5dp">
-    <TextView
-        android:id="@+id/cartItemName"
+    android:paddingBottom="5dp"
+    app:cardElevation="10dp">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:textAlignment="textStart"
-        android:text="EventName"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        android:orientation="horizontal"
+        android:padding="15dp"
+        android:paddingBottom="5dp">
 
-    <TextView
-        android:id="@+id/cartItemPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:text="Entry Fee"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold|italic" />
+        <TextView
+            android:id="@+id/cartItemName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="EventName"
+            android:textAlignment="textStart"
+            android:textSize="24sp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/cartItemPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Entry Fee"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -11,7 +11,7 @@ public class UIHelper {
     }
 
     public static int getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager)context.getSystemService("window");
+        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
@@ -30,7 +30,7 @@ public class UIHelper {
     }
 
     public static int getScreenWidth(Context context) {
-        WindowManager wm = (WindowManager)context.getSystemService("window");
+        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
