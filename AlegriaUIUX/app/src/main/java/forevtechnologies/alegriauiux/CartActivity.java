@@ -7,9 +7,10 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -22,9 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.marshalchen.ultimaterecyclerview.SwipeableUltimateRecyclerview;
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,17 +31,21 @@ import java.util.List;
 import java.util.Map;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
+import forevtechnologies.alegriauiux.adapter.SwipeAdapter;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
+import forevtechnologies.alegriauiux.utl.RecyclerUtils;
 
-public class CartActivity extends AppCompatActivity implements View.OnClickListener {
+public class CartActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
     Intent b;
     int totalPrice=0;
-    RecyclerView recyclerView;
     Button checkOutButton;
     CartAdapter cartAdapter;
     TextView textView;
 
+    private SuperRecyclerView mRecycler;
+    private SwipeAdapter mAdapter;
+    private Handler mHandler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -377,96 +380,19 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         cartAdapter = new CartAdapter(getApplicationContext());
         cartAdapter.addItems(items);
-        recyclerView=findViewById(R.id.reg_events);
-        recyclerView.setAdapter(cartAdapter);
+//        recyclerView=findViewById(R.id.reg_events);
+//        recyclerView.setAdapter(cartAdapter);
         LinearLayoutManager mLayoutManager=new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getBaseContext()));
-
         for(CartModel model: items){
             totalPrice+=PriceMapper.getPrice(model.getName());
             Log.w("Price:||",""+totalPrice);
         }
         textView.setText("Total Fees :Rs."+totalPrice+"");
-
-
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position = viewHolder.getAdapterPosition(); //get position which is swipe
-
-                if (direction == ItemTouchHelper.LEFT) {    //if swipe left
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
-                    builder.setMessage("Are you sure to delete?");    //set message
-
-                    builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            totalPrice=totalPrice-PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
-                            cartAdapter.cartItem.remove(position);
-                            cartAdapter.notifyItemRemoved(position);
-                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
-                            textView.setText("Total Fees :Rs."+totalPrice+"");
-                            return;
-                        }
-                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            cartAdapter.notifyItemRemoved(position+1);
-                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
-                            return;
-                        }
-                    }).show();  //show alert dialog
-                }
-                if(direction == ItemTouchHelper.RIGHT){  //if swipe right
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
-                    builder.setMessage("Are you sure to delete?");    //set message
-
-                    builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            totalPrice=totalPrice-PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
-                            cartAdapter.cartItem.remove(position);
-                            cartAdapter.notifyItemRemoved(position);
-                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
-                            textView.setText("Total Fees :Rs."+totalPrice+"");
-                            return;
-                        }
-                    }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            cartAdapter.notifyItemRemoved(position+1);
-                            cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
-                            return;
-                        }
-                    }).show();  //show alert dialog
-                }
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView); //set swipe to recylcerview
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     @Override
@@ -520,5 +446,28 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 mDivider.draw(c);
             }
         }
+    }
+    @Override
+    public void onRefresh() {
+        Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
+
+        mAdapter.closeAllExcept(null);
+
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                mAdapter.insert("New stuff", 0);
+            }
+        }, 1000);
+    }
+
+    @Override
+    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
+        Toast.makeText(this, "More", Toast.LENGTH_LONG).show();
+
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                mAdapter.add("More asked, more served");
+            }
+        }, 300);
     }
 }

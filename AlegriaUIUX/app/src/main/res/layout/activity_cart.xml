@@ -14,10 +14,16 @@
         android:background="@color/orange"
         android:text="Check Out"
         android:textColor="@color/white" />
-    <android.support.v7.widget.RecyclerView
+    <com.malinskiy.superrecyclerview.SuperRecyclerView
         android:id="@+id/reg_events"
-        android:layout_width="385dp"
-        android:layout_height="456dp"
+        app:layout_empty="@layout/emptyview"
+        app:layout_moreProgress="@layout/view_more_progress"
+        app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
+        app:recyclerClipToPadding="false"
+        app:recyclerPadding="16dp"
+        app:scrollbarStyle="insideInset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/checkout"
         android:focusableInTouchMode="false" />
