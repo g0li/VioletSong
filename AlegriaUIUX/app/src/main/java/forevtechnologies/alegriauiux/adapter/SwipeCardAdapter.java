@@ -118,6 +118,7 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
         public void onClick(View view) {
 
             TicketDialogClass tdc = new TicketDialogClass(itemView.getContext());
+            tdc.setArtistName(this.txtProductName.getText().toString());
             tdc.show();
 
 

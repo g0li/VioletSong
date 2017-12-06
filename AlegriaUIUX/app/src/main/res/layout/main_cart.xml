@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/inclued_layout"
+        layout="@layout/activity_cart"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/checkout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
+
+    <Button
+        android:id="@+id/checkout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#55177e"
+        android:drawableRight="@drawable/arrow_right"
+        android:text="Select Payment Method"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:paddingRight="71dp"
+        android:paddingLeft="89dp"
+        android:layout_below="@id/totalPrice"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white" />
+</RelativeLayout>

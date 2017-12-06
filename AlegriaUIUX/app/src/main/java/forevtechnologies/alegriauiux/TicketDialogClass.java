@@ -3,6 +3,7 @@ package forevtechnologies.alegriauiux;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,17 +28,21 @@ public class TicketDialogClass extends Dialog implements
     private Button cancel,next;
     private ShoppingView platinum,gold,student;
     private TextView tots;
+    private Intent intent;
+    private int numGold, numPlatinum, numStudent;
+    private String artistName;
 
     void initUI()
     {
         totalcash=0;
+        numGold=numPlatinum=numStudent=0;
         cancel=(Button)findViewById(R.id.cancel);
         next=(Button)findViewById(R.id.next);
         platinum=(ShoppingView)findViewById(R.id.platinum);
         gold=(ShoppingView)findViewById(R.id.gold);
         student=(ShoppingView)findViewById(R.id.student);
         tots=(TextView) findViewById(R.id.tots);
-
+        intent=new Intent(getContext(),CartActivity.class);
         cancel.setOnClickListener(this);
         next.setOnClickListener(this);
 
@@ -45,12 +50,14 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+1000;
+                numPlatinum++;
                 tots.setText(String.valueOf(totalcash));
             }
 
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-1000;
+                if(numPlatinum!=0){numPlatinum--;}
                 tots.setText(String.valueOf(totalcash));
             }
         });
@@ -58,12 +65,14 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+500;
+                numGold++;
                 tots.setText(String.valueOf(totalcash));
             }
 
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-500;
+                if(numGold!=0){numGold--;}
                 tots.setText(String.valueOf(totalcash));
             }
         });
@@ -71,12 +80,14 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+100;
+                numStudent++;
                 tots.setText(String.valueOf(totalcash));
             }
 
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-100;
+                if(numStudent!=0){numStudent--;}
                 tots.setText(String.valueOf(totalcash));
             }
         });
@@ -105,9 +116,21 @@ public class TicketDialogClass extends Dialog implements
 
     }
 
+    public void setArtistName(String name){
+        this.artistName=name;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case(R.id.next):
+                intent.putExtra("actName","Tickets");
+                intent.putExtra("artistName",this.artistName);
+                intent.putExtra("stuPass",numStudent);
+                intent.putExtra("goldPass",numGold);
+                intent.putExtra("plaPass",numPlatinum);
+                v.getContext().startActivity(intent);
+                break;
         }
         dismiss();
     }

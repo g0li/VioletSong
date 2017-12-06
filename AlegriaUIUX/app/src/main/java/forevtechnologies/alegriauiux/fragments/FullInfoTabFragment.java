@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -48,6 +50,8 @@ public class FullInfoTabFragment extends Fragment {
     Intent bundh;
     Intent n;
     Snackbar snackbar;
+    Vibrator myVib;
+    MediaPlayer mPlayer;
     public void changeactivity(Activity a, Bundle b)
     {
     }
@@ -81,6 +85,8 @@ public class FullInfoTabFragment extends Fragment {
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         rvAthletics = (RecyclerView) view.findViewById(R.id.rvAthletics);
         bundh=new Intent(getActivity(),CartActivity.class);
+        myVib=(Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        mPlayer=MediaPlayer.create(view.getContext(),R.raw.open_lighter);
         return view;
     }
 
@@ -102,6 +108,7 @@ public class FullInfoTabFragment extends Fragment {
                         else{
                             Log.w("Bundh","Not empty");
                         }
+                        bundh.putExtra("actName","Reg");
                         startActivity(bundh);
 //                        Intent i=new Intent(getActivity(),CartActivity.class);
 
@@ -592,6 +599,8 @@ public class FullInfoTabFragment extends Fragment {
                     @Override public void onItemClick(View view, final int position) {
                         // TODO Handle item click
                         Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
+                        myVib.vibrate(70);
+                        mPlayer.start();
                         bundh.putExtra("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+"@"+position);
                         snackbar=Snackbar
                                 .make(view,"Event Added.",Snackbar.LENGTH_LONG)
