@@ -14,11 +14,11 @@ import java.util.Collection;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.R;
-import forevtechnologies.alegriauiux.models.ZiyadCartModel;
+import forevtechnologies.alegriauiux.models.TicketCartModel;
 
 
 public class TicketCartAdapter extends RecyclerView.Adapter<TicketCartAdapter.TicketCartHolder> {
-    public final List<ZiyadCartModel> cartItem = new ArrayList<>();
+    public final List<TicketCartModel> cartItem = new ArrayList<>();
     private Bundle bundle;
     public static Context context;
 
@@ -29,7 +29,7 @@ public class TicketCartAdapter extends RecyclerView.Adapter<TicketCartAdapter.Ti
 
     }
 
-    public void addItems(@NonNull Collection<ZiyadCartModel> items) {
+    public void addItems(@NonNull Collection<TicketCartModel> items) {
         cartItem.addAll(items);
         notifyItemRangeInserted(cartItem.size() - items.size() - 1, items.size());
     }
@@ -43,7 +43,7 @@ public class TicketCartAdapter extends RecyclerView.Adapter<TicketCartAdapter.Ti
 
     @Override
     public void onBindViewHolder(TicketCartHolder holder, final int position) {
-        ZiyadCartModel model=cartItem.get(position);
+        TicketCartModel model=cartItem.get(position);
         holder.cName.setText(model.getName());
         holder.cPrice.setText(String.valueOf(model.getPrice()));
 

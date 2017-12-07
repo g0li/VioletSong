@@ -4,12 +4,12 @@ package forevtechnologies.alegriauiux.models;
  * Created by jojosexbomb69 on 6/12/17.
  */
 
-public class ZiyadCartModel {
+public class TicketCartModel {
     public String name;
     public int price;
 
 
-    public ZiyadCartModel(String name, int price) {
+    public TicketCartModel(String name, int price) {
         this.name = name;
         this.price = price;
 

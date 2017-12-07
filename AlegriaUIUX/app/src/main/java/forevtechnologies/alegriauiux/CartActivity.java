@@ -27,7 +27,7 @@ import forevtechnologies.alegriauiux.adapter.CartAdapter;
 import forevtechnologies.alegriauiux.adapter.TicketCartAdapter;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
-import forevtechnologies.alegriauiux.models.ZiyadCartModel;
+import forevtechnologies.alegriauiux.models.TicketCartModel;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener {
     Intent b;
@@ -55,7 +55,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             Log.w("Bundle","Empty");
         }
         final List<CartModel> items=new ArrayList<>(88);
-        final List<ZiyadCartModel> tItems=new ArrayList<>();
+        final List<TicketCartModel> tItems=new ArrayList<>();
         List<Object> keyNames=new ArrayList<>(88);
         Bundle bundle;
         int numStudent,numPlatinum,numGold;
@@ -69,18 +69,18 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         if(b.getStringExtra("actName").equals("Tickets")){ //if calling activity is Ticket activity
             numStudent=b.getIntExtra("stuPass",0); //100
             numPlatinum=b.getIntExtra("plaPass",0); //1000
-            numGold=b.getIntExtra("goldPass",0); //800
+            numGold=b.getIntExtra("goldPass",0); //500
             artistName=b.getStringExtra("artistName");
-            tItems.add(new ZiyadCartModel(artistName+"(Student)",numStudent*100));
-            tItems.add(new ZiyadCartModel(artistName+"(Gold)",numGold*800));
-            tItems.add(new ZiyadCartModel(artistName+"(Platinum)",numPlatinum*1000));
+            tItems.add(new TicketCartModel(artistName+"(Student)",numStudent*100));
+            tItems.add(new TicketCartModel(artistName+"(Gold)",numGold*500));
+            tItems.add(new TicketCartModel(artistName+"(Platinum)",numPlatinum*1000));
             final TicketCartAdapter ticketCartAdapter= new TicketCartAdapter(getApplicationContext());
             ticketCartAdapter.addItems(tItems);
             recyclerView=findViewById(R.id.reg_events);
             recyclerView.setAdapter(ticketCartAdapter);
 
 
-            for(ZiyadCartModel model: tItems){
+            for(TicketCartModel model: tItems){
                 totalPrice+=model.getPrice();
                 Log.w("Price:||",""+totalPrice);
             }

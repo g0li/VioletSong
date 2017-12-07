@@ -18,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,7 +26,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,9 +54,12 @@ public class FullInfoTabFragment extends Fragment {
     private RecyclerView rvAthletics;
     Intent bundh;
     Intent n;
+    TextView tv;
+    int cartCount=0;
     Snackbar snackbar;
     Vibrator myVib;
     MediaPlayer mPlayer;
+    RelativeLayout badgeLayout;
     public void changeactivity(Activity a, Bundle b)
     {
     }
@@ -93,13 +101,35 @@ public class FullInfoTabFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-//        final Bundle b= new DayAdapter(view.getContext()).getBndl();
         toolbar.inflateMenu(R.menu.menu_registration);
+        //Testing for cart counter
+        Menu m=toolbar.getMenu();
+        MenuItem mItem=m.findItem(R.id.badge);
+        mItem.setActionView(R.layout.cart_badge);
+        View v=mItem.getActionView();
+        if(v==null){
+            Log.w("View","Null");
+        }
+        tv=(TextView)v.findViewById(R.id.actionbar_notifcation_textview);
+        mItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(bundh==null){
+                    Log.w("Bundh","Empty");
+                }
+                else{
+                    Log.w("Bundh","Not empty");
+                }
+                bundh.putExtra("actName","Reg");
+                startActivity(bundh);
+                return true;
+            }
+        });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
+                    case R.id.badge:
                     case R.id.cart:
                         //before:i.putStringExtra("TEST","ROSHAN HERE");
                         if(bundh==null){
@@ -601,13 +631,19 @@ public class FullInfoTabFragment extends Fragment {
                         Log.d("ITEMSCENE",String.valueOf(toolbar.getTitle())+" " +position);
                         myVib.vibrate(70);
                         mPlayer.start();
+                        if(!bundh.hasExtra("Key "+toolbar.getTitle()+" "+position)) {
+                            cartCount++;
+                        }
+                        tv.setText(String.valueOf(cartCount));
                         bundh.putExtra("Key "+toolbar.getTitle()+" "+position,String.valueOf(toolbar.getTitle())+"@"+position);
                         snackbar=Snackbar
                                 .make(view,"Event Added.",Snackbar.LENGTH_LONG)
                                 .setAction("Undo", new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                    bundh.removeExtra("Key "+toolbar.getTitle()+" "+position);
+                                        cartCount--;
+                                        tv.setText(String.valueOf(cartCount));
+                                        bundh.removeExtra("Key "+toolbar.getTitle()+" "+position);
                                     }
                                 });
                         snackbar.setActionTextColor(getResources().getColor(R.color.white));
