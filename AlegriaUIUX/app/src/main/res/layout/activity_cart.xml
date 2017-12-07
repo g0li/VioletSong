@@ -6,41 +6,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="forevtechnologies.alegriauiux.CartActivity">
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="forevtechnologies.alegriauiux.CartActivity">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dcdcdc">
 
-    <Button
-        android:id="@+id/checkout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/orange"
-        android:text="Check Out"
-        android:textColor="@color/white" />
-    <com.malinskiy.superrecyclerview.SuperRecyclerView
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/reg_events"
-        app:layout_empty="@layout/emptyview"
-        app:layout_moreProgress="@layout/view_more_progress"
-        app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
-        app:recyclerClipToPadding="false"
-        app:recyclerPadding="16dp"
-        app:scrollbarStyle="insideInset"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/checkout"
         android:focusableInTouchMode="false" />
-    <TextView
-        android:id="@+id/totalPrice"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TotalPrice"
-        android:textSize="23dp"
-        android:gravity="center"
-        android:textColor="@color/white"
+        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/totalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TotalPrice :"
+        android:textSize="20dp"
+        android:gravity="left"
+        android:layout_weight="1"
+        android:textColor="@color/black"
+        android:textStyle="italic"
         android:paddingBottom="6dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/reg_events"
+        android:paddingTop="6dp"/>
+    <TextView
+        android:id="@+id/price_display"
+        android:layout_weight="3"
+        android:layout_toRightOf="@id/totalPrice"
+        android:layout_below="@id/reg_events"
+        android:layout_above="@id/checkout"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:text="Rs. xoxo"
+        android:textSize="20dp"
         android:paddingTop="6dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/orange"/>
+        android:paddingRight="7dp"
+        android:layout_marginTop="7dp"
+        android:textColor="#274a4a"
+        android:textStyle="italic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 
-
-
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
 </RelativeLayout>
