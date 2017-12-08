@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/CardViewBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -8,7 +9,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/paddingExtraSmall"
             android:background="@drawable/ic_art_bg">
 
                 <RelativeLayout
@@ -40,22 +40,48 @@
                     android:layout_below="@+id/rel_img_product" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/txt_product_desc"
                     style="@style/TextStyle"
-                    android:layout_below="@+id/txt_product_name"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/txt_product_name" />
+
+                <TextView
                     android:id="@+id/txt_price"
                     style="@style/PriceTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true" />
+
+                <TextView
+                    android:id="@+id/txt_venue"
+                    style="@style/TextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@+id/txt_price"
+                    android:layout_toRightOf="@id/imageView3"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="15dp"
+                    android:text="Main Stage area \n10th Feb '17" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@+id/txt_price"
+                    android:paddingBottom="15dp"
+                    android:paddingLeft="5dp"
+                    app:srcCompat="@drawable/ic_rock_and_roll" />
 
         </RelativeLayout>
 

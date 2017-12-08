@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -84,6 +85,7 @@ public class FullInfoTabFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    RelativeLayout gow;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class FullInfoTabFragment extends Fragment {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         rvAthletics = (RecyclerView) view.findViewById(R.id.rvAthletics);
+        gow=(RelativeLayout)view.findViewById(R.id.gow);
         bundh=new Intent(getActivity(),CartActivity.class);
         myVib=(Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         mPlayer=MediaPlayer.create(view.getContext(),R.raw.open_lighter);
@@ -177,6 +180,7 @@ public class FullInfoTabFragment extends Fragment {
         {
             case"Informal":
 
+                gow.setBackgroundColor(Color.parseColor("#9D50BB"));
                 for (int ix=19;ix<=27;ix++) {
                     switch(Events.values()[ix]){
 
@@ -224,6 +228,8 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Performing Arts":
+
+                gow.setBackgroundColor(Color.parseColor("#FF6B6B"));
                 for (int ix=6;ix<=18;ix++) {
                     switch(Events.values()[ix]){
 
@@ -286,6 +292,8 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Literary Arts":
+                gow.setBackgroundColor(Color.parseColor("#FDFC47"));
+
                 for (int ix=82;ix<=87;ix++) {
                     switch(Events.values()[ix]){
 
@@ -317,15 +325,9 @@ public class FullInfoTabFragment extends Fragment {
                 }
                 break;
 
-
-
-
-
-
-
-
-
             case"Fine Arts":
+                gow.setBackgroundColor(Color.parseColor("#0b8793"));
+
                 for (int ix=68;ix<=75;ix++) {
                     switch(Events.values()[ix]){
 
@@ -363,13 +365,9 @@ public class FullInfoTabFragment extends Fragment {
                     }
                 }
                 break;
-
-
-
-
-
-
             case"Management":
+                gow.setBackgroundColor(Color.parseColor("#fcb045"));
+
                 for (int ix=76;ix<=81;ix++) {
                     switch(Events.values()[ix]){
 
@@ -408,6 +406,8 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Sports & Gaming":
+                gow.setBackgroundColor(Color.parseColor("#833ab4"));
+
                 for (int ix=45;ix<=67;ix++) {
                     switch(Events.values()[ix]){
 
@@ -505,6 +505,8 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Technical Events":
+                gow.setBackgroundColor(Color.parseColor("#70e1f5"));
+
                 for (int ix=0;ix<=5;ix++) {
                     switch(Events.values()[ix]){
 

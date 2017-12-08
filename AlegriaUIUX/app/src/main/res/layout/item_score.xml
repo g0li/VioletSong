@@ -22,6 +22,7 @@
             android:id="@+id/tvCountry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#ffffff"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -30,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCountry"
+            android:textColor="#ffffff"
             android:textSize="18sp" />
 
     </RelativeLayout>
@@ -37,11 +39,12 @@
     <TextView
         android:id="@+id/tvScore"
         android:layout_width="wrap_content"
-        android:padding="16dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:padding="16dp"
+        android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold" />
 </RelativeLayout>

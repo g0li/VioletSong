@@ -18,7 +18,7 @@ public class EvenCardUtils {
                     .withCategoryTitle("Informal")
 
                     .withCategoryRound("Preliminaries")
-                    .withImageResId(R.drawable.arif)
+                    .withImageResId(R.drawable.card_inf)
                     .withBackgroundColorResId(R.color.indigo)
                     .build());
 
@@ -29,7 +29,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Performing Arts")
                     .withCategoryRound("Qualification")
-                    .withImageResId(R.drawable.pratik)
+                    .withImageResId(R.drawable.card_pa)
                     .withBackgroundColorResId(R.color.pink)
                     .build());
 
@@ -40,7 +40,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Literary Arts")
                     .withCategoryRound("Heats")
-                    .withImageResId(R.drawable.shrey)
+                    .withImageResId(R.drawable.card_la)
                     .withBackgroundColorResId(R.color.yellow)
                     .build());
 
@@ -51,7 +51,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Management")
                     .withCategoryRound("Round of 16")
-                    .withImageResId(R.drawable.shubhang)
+                    .withImageResId(R.drawable.card_mgmt)
                     .withBackgroundColorResId(R.color.orange)
                     .build());
 
@@ -73,7 +73,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Fine Arts")
                     .withCategoryRound("Group A")
-                    .withImageResId(R.drawable.roshan)
+                    .withImageResId(R.drawable.card_fa)
                     .withBackgroundColorResId(R.color.blue)
                     .build());
 
@@ -84,7 +84,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Technical Events")
                     .withCategoryRound("Group A")
-                    .withImageResId(R.drawable.arif)
+                    .withImageResId(R.drawable.card_tech)
                     .withBackgroundColorResId(R.color.teal)
                     .build());
 
