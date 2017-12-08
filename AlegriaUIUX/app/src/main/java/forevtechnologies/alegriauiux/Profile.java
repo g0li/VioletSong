@@ -30,6 +30,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import forevtechnologies.alegriauiux.LoginActivity;
 import forevtechnologies.alegriauiux.model.Person;
@@ -40,6 +41,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     de.hdodenhof.circleimageview.CircleImageView circUser;
     LinearLayout eventsLayout,feedsLayout;
     TextView name,email;
+    TextView events,eventsTitle;
     Button gbutton;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
@@ -48,7 +50,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     TextView signInInfo;
-
+    int[] icons={R.drawable.iccon1,R.drawable.iccon2,R.drawable.iccon3};// icon pool
 
     public void initUI(){
         backView=findViewById(R.id.backview);
@@ -56,13 +58,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         feedsLayout=(LinearLayout)findViewById(R.id.feedsLayout);
         name=(TextView) findViewById(R.id.name);
         email=(TextView) findViewById(R.id.email);
+        events=findViewById(R.id.events);
+        eventsTitle=findViewById(R.id.eventsTitle);
         circUser= (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.circUser);
+        circUser.setImageDrawable(getDrawable(getIcon()));//generating random icon from pool
         gbutton=(Button)findViewById(R.id.gsigninForEmail);
         signInInfo=findViewById(R.id.signInInfo);
         gbutton.setOnClickListener(this);
         eventsLayout.setOnClickListener(this);
+        events.setOnClickListener(this);
+        events.setText("0");
+        eventsTitle.setOnClickListener(this);
         feedsLayout.setOnClickListener(this);
-
 
         if(user.isAnonymous()){
             gbutton.setVisibility(View.VISIBLE);
@@ -109,6 +116,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
+    }
+
+
+    //function to generate random icon index
+    public int getIcon(){
+        int randomNum = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+        return icons[randomNum];
     }
 
     @Override
@@ -211,6 +225,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
             case R.id.gsigninForEmail:
                 signIn();
                 break;
+            case R.id.events:
+            case R.id.eventsTitle:
+            case R.id.eventsLayout:
+                startActivity(new Intent(Profile.this,MyEvents.class));
+                break;
             default:
                 break;
         }
@@ -224,7 +243,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                     Log.w("Reload:","Successful");
                     name.setText(user.getDisplayName());
                     email.setText(user.getEmail());
-                    circUser.setImageURI(user.getPhotoUrl());
+//                    circUser.setImageURI(user.getPhotoUrl());
                 }
                 else{
                     Log.w("Reload","Unsuccessful");

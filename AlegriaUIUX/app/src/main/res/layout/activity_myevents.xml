@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#4e7e8c"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_marginTop="13dp"
+        android:id="@+id/MyEventsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Events"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="30dp"/>
+    <Space
+        android:layout_below="@id/MyEventsText"
+        android:id="@+id/MyEventsSpace"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <LinearLayout
+        android:layout_below="@id/MyEventsSpace"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/myEventsRecycler"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:foregroundGravity="bottom">
+
+
+    </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+</RelativeLayout>

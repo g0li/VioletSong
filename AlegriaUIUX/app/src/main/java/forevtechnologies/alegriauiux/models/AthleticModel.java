@@ -1,5 +1,7 @@
 package forevtechnologies.alegriauiux.models;
 
+import java.net.URI;
+
 public class AthleticModel {
     private String location;
     private Events events;

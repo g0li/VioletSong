@@ -114,20 +114,7 @@ public class FullInfoTabFragment extends Fragment {
             Log.w("View","Null");
         }
         tv=(TextView)v.findViewById(R.id.actionbar_notifcation_textview);
-        mItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                if(bundh==null){
-                    Log.w("Bundh","Empty");
-                }
-                else{
-                    Log.w("Bundh","Not empty");
-                }
-                bundh.putExtra("actName","Reg");
-                startActivity(bundh);
-                return true;
-            }
-        });
+        tv.setText("0");
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -174,6 +161,7 @@ public class FullInfoTabFragment extends Fragment {
         });
         setHasOptionsMenu(true);
         toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), categoryCardModel.getBackgroundColorResId()));
+        tv.setTextColor(ContextCompat.getColor(getContext(),categoryCardModel.getBackgroundColorResId()));
         ivPhoto.setImageResource(categoryCardModel.getImageResId());
         List<AthleticModel> items = new ArrayList<>();
         switch(categoryCardModel.getCategoryTitle())

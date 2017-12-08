@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -13,6 +14,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
@@ -25,6 +32,39 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     protected void initUI()
     {
         payButton=(ProSwipeButton)findViewById(R.id.payButton);
+        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+        final FirebaseUser user=mAuth.getCurrentUser();
+        user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.w("Reload","successful");
+
+                    if(user.isAnonymous()){
+                        payButton.setEnabled(false);
+                        payButton.setFocusableInTouchMode(false);
+                    }
+                    else{
+                        switch (user.getProviders().get(0)){
+                            case "google.com":
+                                break;
+                            case "password":
+                                if(!user.isEmailVerified()){
+                                    payButton.setEnabled(false);
+                                    payButton.setFocusableInTouchMode(false);
+                                }
+                                break;
+                        }
+                    }
+
+                }
+                else{
+                    Log.w("Reload","unsuccessful");
+                    Toast.makeText(SelectPaymentActivity.this,"Try checking your internet connection.",Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
 
         offlineLin=(LinearLayout)findViewById(R.id.offlineLin);
         offlineLin1=(LinearLayout)findViewById(R.id.offlineLin1);
@@ -142,5 +182,10 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 break;
                 
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
     }
 }
