@@ -37,16 +37,14 @@ import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.TicketCartModel;
 
-public class CartActivity extends AppCompatActivity implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener, OnMoreListener {
+public class CartActivity extends AppCompatActivity implements View.OnClickListener{
     Intent b;
     int totalPrice=0;
     Button checkOutButton;
     CartAdapter cartAdapter;
     TextView textView;
 
-    private RecyclerView recyclerView;
-    private SwipeAdapter mAdapter;
-    private Handler mHandler;
+    public RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +82,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             tItems.add(new TicketCartModel(artistName+"(Student)",numStudent*100));
             tItems.add(new TicketCartModel(artistName+"(Gold)",numGold*500));
             tItems.add(new TicketCartModel(artistName+"(Platinum)",numPlatinum*1000));
+
+
             final TicketCartAdapter ticketCartAdapter= new TicketCartAdapter(getApplicationContext());
             ticketCartAdapter.addItems(tItems);
             recyclerView=findViewById(R.id.reg_events);
@@ -145,12 +145,40 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }).show();  //show alert dialog
                     }
+                    if (direction == ItemTouchHelper.RIGHT) {    //if swipe right
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
+                        builder.setMessage("Are you sure to delete?");    //set message
+
+                        builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                totalPrice-=ticketCartAdapter.cartItem.get(position).getPrice();
+                                if(totalPrice<=0){
+                                    checkOutButton.setEnabled(false);
+                                    checkOutButton.setFocusableInTouchMode(false);
+                                }
+                                ticketCartAdapter.cartItem.remove(position);
+                                ticketCartAdapter.notifyItemRemoved(position);
+                                ticketCartAdapter.notifyItemRangeChanged(position, ticketCartAdapter.getItemCount());
+                                textView.setText("Rs. "+totalPrice+"/-");
+                                return;
+                            }
+                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                checkOutButton.setEnabled(true);
+                                checkOutButton.setFocusableInTouchMode(true);
+                                ticketCartAdapter.notifyItemRemoved(position+1);
+                                ticketCartAdapter.notifyItemRangeChanged(position, ticketCartAdapter.getItemCount());
+                                return;
+                            }
+                        }).show();  //show alert dialog
+                    }
                 }
             };
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView); //set swipe to recylcerview
-
-
 
         }
 
@@ -476,10 +504,12 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
 
+
+            recyclerView=findViewById(R.id.reg_events);
             cartAdapter = new CartAdapter(getApplicationContext());
             cartAdapter.addItems(items);
-            recyclerView=findViewById(R.id.reg_events);
             recyclerView.setAdapter(cartAdapter);
+
 
 
             for(CartModel model: items){
@@ -514,7 +544,37 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                totalPrice=totalPrice-PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
+                                totalPrice-=PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
+                                if(totalPrice<=0){
+                                    checkOutButton.setEnabled(false);
+                                    checkOutButton.setFocusableInTouchMode(false);
+                                }
+                                cartAdapter.cartItem.remove(position);
+                                cartAdapter.notifyItemRemoved(position);
+                                cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                                textView.setText("Rs. "+totalPrice+"/-");
+                                return;
+                            }
+                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {  //not removing items if cancel is done
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                checkOutButton.setEnabled(true);
+                                checkOutButton.setFocusableInTouchMode(true);
+                                cartAdapter.notifyItemRemoved(position+1);
+                                cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
+                                return;
+                            }
+                        }).show();  //show alert dialog
+                    }
+                    if (direction == ItemTouchHelper.RIGHT) {    //if swipe right
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CartActivity.this); //alert for confirm to delete
+                        builder.setMessage("Are you sure to delete?");    //set message
+
+                        builder.setPositiveButton("REMOVE", new DialogInterface.OnClickListener() { //when click on DELETE
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                totalPrice-=PriceMapper.getPrice(cartAdapter.cartItem.get(position).getName());
                                 if(totalPrice<=0){
                                     checkOutButton.setEnabled(false);
                                     checkOutButton.setFocusableInTouchMode(false);
@@ -540,12 +600,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             };
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView); //set swipe to recylcerview
+
         }
 
-        cartAdapter = new CartAdapter(getApplicationContext());
-        cartAdapter.addItems(items);
-//        recyclerView=findViewById(R.id.reg_events);
-//        recyclerView.setAdapter(cartAdapter);
         LinearLayoutManager mLayoutManager=new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false));
@@ -608,28 +665,5 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 mDivider.draw(c);
             }
         }
-    }
-    @Override
-    public void onRefresh() {
-        Toast.makeText(this, "Refresh", Toast.LENGTH_LONG).show();
-
-        mAdapter.closeAllExcept(null);
-
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.insert("New stuff", 0);
-            }
-        }, 1000);
-    }
-
-    @Override
-    public void onMoreAsked(int numberOfItems, int numberBeforeMore, int currentItemPos) {
-        Toast.makeText(this, "More", Toast.LENGTH_LONG).show();
-
-        mHandler.postDelayed(new Runnable() {
-            public void run() {
-                mAdapter.add("More asked, more served");
-            }
-        }, 300);
     }
 }

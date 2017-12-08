@@ -45,11 +45,13 @@ public class TicketDialogClass extends Dialog implements
         intent=new Intent(getContext(),CartActivity.class);
         cancel.setOnClickListener(this);
         next.setOnClickListener(this);
+        setButton();
 
         platinum.setOnShoppingClickListener(new ShoppingView.ShoppingClickListener() {
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+1000;
+                setButton();
                 numPlatinum++;
                 tots.setText(String.valueOf(totalcash));
             }
@@ -57,6 +59,7 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-1000;
+                setButton();
                 if(numPlatinum!=0){numPlatinum--;}
                 tots.setText(String.valueOf(totalcash));
             }
@@ -65,6 +68,7 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+500;
+                setButton();
                 numGold++;
                 tots.setText(String.valueOf(totalcash));
             }
@@ -72,6 +76,7 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-500;
+                setButton();
                 if(numGold!=0){numGold--;}
                 tots.setText(String.valueOf(totalcash));
             }
@@ -80,6 +85,7 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onAddClick(int num) {
                 totalcash=totalcash+100;
+                setButton();
                 numStudent++;
                 tots.setText(String.valueOf(totalcash));
             }
@@ -87,10 +93,13 @@ public class TicketDialogClass extends Dialog implements
             @Override
             public void onMinusClick(int num) {
                 totalcash=totalcash-100;
+                setButton();
                 if(numStudent!=0){numStudent--;}
                 tots.setText(String.valueOf(totalcash));
             }
         });
+
+        setButton();
 
     }
     public TicketDialogClass(@NonNull Context context) {
@@ -133,6 +142,17 @@ public class TicketDialogClass extends Dialog implements
                 break;
         }
         dismiss();
+    }
+
+    public void setButton(){
+        if(totalcash<=0){
+            next.setEnabled(false);
+            next.setFocusableInTouchMode(false);
+        }
+        else if(totalcash>0){
+            next.setEnabled(true);
+            next.setFocusableInTouchMode(true);
+        }
     }
 
 }
