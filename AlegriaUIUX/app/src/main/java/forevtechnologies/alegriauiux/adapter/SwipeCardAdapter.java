@@ -9,6 +9,7 @@ package forevtechnologies.alegriauiux.adapter;
 //
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,6 +103,7 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
             this.txtProductName = (TextView)itemView.findViewById(R.id.txt_product_name);
             this.txtProductDesc = (TextView)itemView.findViewById(R.id.txt_product_desc);
             this.txtPrice = (TextView)itemView.findViewById(R.id.txt_price);
+
         }
 
         public void setItem(forevtechnologies.alegriauiux.models.SwipeCardModel productItem) {
@@ -112,6 +114,7 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
             if(this.chosen.getPhotoUrl() != null && !this.chosen.getPhotoUrl().equals("")) {
                 ((B)Ion.with(SwipeCardAdapter.this.context).load(this.chosen.getPhotoUrl())).intoImageView(this.imgProduct);
             }
+            imgProduct.setBackgroundColor(Color.TRANSPARENT);
 
         }
 

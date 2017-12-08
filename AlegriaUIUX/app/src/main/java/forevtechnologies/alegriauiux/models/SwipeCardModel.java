@@ -10,6 +10,7 @@ package forevtechnologies.alegriauiux.models;
 
 public class SwipeCardModel {
 
+
     public String title;
     public String description;
     public String price;

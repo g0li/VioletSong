@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 
@@ -22,6 +24,10 @@ public class Tickets extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // remove title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_tickets);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         Log.w("DISPLAY","Working");
@@ -29,7 +35,12 @@ public class Tickets extends AppCompatActivity {
 
         Log.w("DISPLAY","Working");
 
-
+            findViewById(R.id.imageButton).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
         SwipeCardModel swipeCardModel = new SwipeCardModel();
         swipeCardModel.setTitle("Ritviz");
         swipeCardModel.setDescription("Udd gaye");

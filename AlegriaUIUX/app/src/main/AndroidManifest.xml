@@ -61,7 +61,8 @@
             android:name=".InfoActivity"
             android:label="Events"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Tickets" />
+        <activity android:name=".Tickets"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".CartActivity"
             android:theme="@style/AppTheme" />

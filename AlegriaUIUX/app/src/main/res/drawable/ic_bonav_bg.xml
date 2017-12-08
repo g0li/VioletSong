@@ -1,7 +1,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="false">
         <shape android:shape = "rectangle">
-            <gradient android:angle="90" android:endColor="#000000" android:gradientRadius="130dp" android:startColor="#e74c3c" android:type="linear" />
+            <gradient android:angle="90" android:endColor="#ffffff" android:gradientRadius="130dp" android:startColor="#ECE9E6" android:type="linear" />
     </shape>
 </item>
 </selector>

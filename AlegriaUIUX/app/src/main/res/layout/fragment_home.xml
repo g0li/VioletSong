@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorControlHighlight"
     android:orientation="vertical">
 
     <LinearLayout
@@ -47,7 +46,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_weight="5"
-                            android:background="@color/colorAccent"
+                            android:background="@drawable/ic_prof_bg"
                             app:srcCompat="@drawable/ic_face_black_24dp" />
 
                         <TextView
@@ -81,7 +80,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_weight="6"
-                            android:background="@android:color/holo_blue_light"
+                            android:background="@drawable/ic_tikt_bg"
                             app:srcCompat="@drawable/ic_confirmation_number_black_24dp" />
 
                         <TextView
@@ -125,7 +124,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_weight="1"
-                            android:background="@color/teal"
+                            android:background="@drawable/ic_reg_bg"
                             android:padding="5dp"
                             app:srcCompat="@drawable/ic_fingerprint_black_24dp" />
 
@@ -337,7 +336,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_weight="5"
-                            android:background="#5C6BC0"
+                            android:background="@drawable/ic_info_bg"
                             android:padding="10dp"
                             android:src="@drawable/ic_info_black_24dp" />
 
@@ -407,10 +406,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_weight="5"
-                            android:background="#FF1744"
+                            android:background="@drawable/ic_bro_bg"
                             android:padding="5dp"
-                            android:src="@drawable/ic_fingerprint_black_24dp"
-                            app:srcCompat="@drawable/ic_events_black_24dp" />
+                            app:srcCompat="@drawable/ic_brochure_24dp" />
 
                         <TextView
                             android:id="@+id/brochureTextView"

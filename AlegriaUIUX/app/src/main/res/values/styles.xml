@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#dcdcdc</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -149,14 +149,24 @@
     <style name="roundRect">
         <item name="android:background">@drawable/round_rect</item>
     </style>
+
     <style name="CardViewBackground" parent="CardView">
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">@dimen/CardCorner</item>
         <item name="cardElevation">@dimen/cardElevation</item>
     </style>
-
+    <style name="alegriaLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+    </style>
     <style name="HeaderTextStyle">
-        <item name="android:textColor">@color/HeaderTextColor</item>
+        <item name="android:textColor">#dcdcdc</item>
         <item name="android:textSize">@dimen/HeaderTextSize</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">@dimen/formMarginTop</item>
@@ -165,13 +175,13 @@
 
 
     <style name="TextStyle">
-        <item name="android:textColor">@color/HeaderTextColor</item>
+        <item name="android:textColor">#dcdcdc</item>
         <item name="android:textSize">@dimen/TextSize</item>
         <item name="android:layout_marginLeft">@dimen/formMarginTop</item>
     </style>
 
     <style name="PriceTextStyle">
-        <item name="android:textColor">@color/PriceTextColor</item>
+        <item name="android:textColor">#dcdcdc</item>
         <item name="android:textSize">@dimen/PriceTextSize</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginRight">@dimen/PriceRightMargin</item>
