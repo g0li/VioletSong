@@ -67,9 +67,6 @@
             android:name=".CartActivity"
             android:theme="@style/AppTheme" />
         <activity android:name=".SelectPaymentActivity"></activity>
-        <activity android:name=".PageCurl">
-
-        </activity>
         <activity android:name=".MyEvents"
             android:theme="@style/AppTheme.NoActionBar"/>
 

@@ -35,7 +35,7 @@ public class PostFirebaseAdapter extends FirebaseRecyclerAdapter<PostModel,PostF
     private static final int RIGHT_MSG_IMG = 2;
     private static final int LEFT_MSG_IMG = 3;
 
-    private ClickListenerChatFirebase mClickListenerChatFirebase;
+
 
     private String nameUser,message,team;
 
@@ -46,7 +46,6 @@ public class PostFirebaseAdapter extends FirebaseRecyclerAdapter<PostModel,PostF
         this.nameUser = nameUser;
         this.message=Message;
         this.team=Team;
-        this.mClickListenerChatFirebase = mClickListenerChatFirebase;
     }
     public PostFirebaseAdapter(DatabaseReference ref, String nameUser) {
         super(PostModel.class, R.layout.item_message_left, MyChatViewHolder.class, ref);

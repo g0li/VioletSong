@@ -12,7 +12,6 @@ import android.widget.TextView;
 import forevtechnologies.alegriauiux.GlazyCard;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.Utils;
-import forevtechnologies.alegriauiux.views.GlazyImageView;
 
 public class GlazyCardFragment extends Fragment {
 
