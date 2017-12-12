@@ -77,7 +77,7 @@ public class DayAdapter extends RecyclerView.Adapter<DayAdapter.AthleticHolder> 
             holder.ivAthleticFlag.setImageResource(R.drawable.ic_ws);
         }else if(49<=position && position>=70)
         {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_sng);
+            holder.ivAthleticFlag.setImageResource(R.drawable.ic_ws);
         }else if(71<=position && position>=79)
         {
             holder.ivAthleticFlag.setImageResource(R.drawable.ic_la);

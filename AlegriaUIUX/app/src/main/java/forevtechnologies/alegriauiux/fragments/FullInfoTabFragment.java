@@ -531,6 +531,8 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Workshops":
+//                gow.setBackgroundColor(Color.parseColor("#70e1f5"));
+
                 for (int ix=28;ix<=44;ix++) {
                     switch(Events.values()[ix]){
 

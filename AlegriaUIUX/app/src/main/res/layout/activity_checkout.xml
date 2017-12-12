@@ -2,9 +2,5 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
-<app.num.numandroidpagecurleffect.PageCurlView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/page_curl"
-    android:background="@drawable/page1"/>
+
 </android.support.constraint.ConstraintLayout>

@@ -62,7 +62,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Sports & Gaming")
                     .withCategoryRound("Group A")
-                    .withImageResId(R.drawable.sooraj)
+                    .withImageResId(R.drawable.card_fa)
                     .withBackgroundColorResId(R.color.purple)
                     .build());
 
@@ -94,7 +94,7 @@ public class EvenCardUtils {
                     .newBuilder()
                     .withCategoryTitle("Workshops")
                     .withCategoryRound("Group A")
-                    .withImageResId(R.drawable.roshan)
+                    .withImageResId(R.drawable.card_fa)
                     .withBackgroundColorResId(R.color.red)
                     .build());
 

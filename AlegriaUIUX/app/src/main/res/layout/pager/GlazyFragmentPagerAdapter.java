@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import java.util.ArrayList;
 
 import forevtechnologies.alegriauiux.GlazyCard;
-import forevtechnologies.alegriauiux.fragments.GlazyCardFragment;
 
 public class GlazyFragmentPagerAdapter extends AbstractFragmentPagerAdapter {
 
