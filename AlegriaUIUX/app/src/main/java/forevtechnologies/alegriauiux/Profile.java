@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     FirebaseUser user = auth.getCurrentUser();
     TextView signInInfo;
     int[] icons={R.drawable.iccon1,R.drawable.iccon2,R.drawable.iccon3};// icon pool
+    private ShapeFlyer mShapeFlyer;
 
     public void initUI(){
         backView=findViewById(R.id.backview);
@@ -70,7 +73,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         events.setText("0");
         eventsTitle.setOnClickListener(this);
         feedsLayout.setOnClickListener(this);
-
+        mShapeFlyer= findViewById(R.id.shape_flyer);
+        mShapeFlyer.setOnClickListener(this);
         if(user.isAnonymous()){
             gbutton.setVisibility(View.VISIBLE);
             name.setText("Guest user");
@@ -191,10 +195,14 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                 });
     }*/
 
-    private ShapeFlyer mShapeFlyer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // remove title
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_profile);
         initUI();
 
@@ -229,6 +237,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
             case R.id.eventsTitle:
             case R.id.eventsLayout:
                 startActivity(new Intent(Profile.this,MyEvents.class));
+                break;
+            case R.id.shape_flyer:
+                finish();
                 break;
             default:
                 break;

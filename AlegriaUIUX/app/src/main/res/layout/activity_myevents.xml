@@ -4,15 +4,24 @@
     android:background="#4e7e8c"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+    <ImageView
+        android:layout_alignParentStart="true"
+        android:id="@+id/backButton"
+        android:src="@drawable/ic_back_arrow_myevents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="13dp"
+        android:layout_marginLeft="7dp"/>
+
+    <TextView
         android:id="@+id/MyEventsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Your Events"
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
-        android:textSize="30dp"/>
+        android:layout_marginTop="13dp"
+        android:text="Your Events"
+        android:textSize="30dp"
+        android:textStyle="bold" />
     <Space
         android:layout_below="@id/MyEventsText"
         android:id="@+id/MyEventsSpace"

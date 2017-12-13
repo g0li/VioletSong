@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,6 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_events, container, false);
-
         return(v);
     }
 
@@ -107,7 +107,12 @@ public class MainFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         recyclerView.setChildDrawingOrderCallback(new FanChildDrawingOrderCallback(fanLayoutManager));
-
+        (view.findViewById(R.id.backButton)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().finish();
+            }
+        });
         (view.findViewById(R.id.logo)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

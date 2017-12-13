@@ -109,6 +109,32 @@ public class FullInfoTabFragment extends Fragment {
         Menu m=toolbar.getMenu();
         MenuItem mItem=m.findItem(R.id.badge);
         mItem.setActionView(R.layout.cart_badge);
+        mItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                if(bundh==null){
+                    Log.w("Bundh","Empty");
+                }
+                else{
+                    Log.w("Bundh","Not empty");
+                }
+                bundh.putExtra("actName","Reg");
+                startActivity(bundh);
+//                        Intent i=new Intent(getActivity(),CartActivity.class);
+
+                        /*//for printing content of bundle
+                        List<String> eventNames=new ArrayList<>();
+                        for(int n=0;n<b.size();n++){
+                            eventNames.add(b.getString("Key "+n));
+                        }
+                        for(String name : eventNames){
+                            Log.w("Item",""+name);
+                        }
+                        //end of testing*/
+//                        startActivity(i);
+                return true;
+            }
+        });
         View v=mItem.getActionView();
         if(v==null){
             Log.w("View","Null");
@@ -531,7 +557,7 @@ public class FullInfoTabFragment extends Fragment {
 
 
             case"Workshops":
-//                gow.setBackgroundColor(Color.parseColor("#70e1f5"));
+                gow.setBackgroundColor(Color.parseColor("#d32f2f"));
 
                 for (int ix=28;ix<=44;ix++) {
                     switch(Events.values()[ix]){

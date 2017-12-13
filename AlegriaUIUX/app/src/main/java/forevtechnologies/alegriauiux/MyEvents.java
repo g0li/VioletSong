@@ -12,6 +12,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +32,16 @@ import forevtechnologies.alegriauiux.models.Events;
 public class MyEvents extends AppCompatActivity {
     RecyclerView rvAthletics;
     DayAdapter dayAdapter;
+    ImageView backButton;
     List<AthleticModel> items=new ArrayList<>();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
+        backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
         items.add(new AthleticModel("Lawn", Events.values()[10],23));
         items.add(new AthleticModel("Lawn", Events.values()[10],23));
@@ -47,6 +56,12 @@ public class MyEvents extends AppCompatActivity {
         dayAdapter=new DayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         rvAthletics.setLayoutManager(linearLayoutManager);
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
