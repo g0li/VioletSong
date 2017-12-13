@@ -10,6 +10,7 @@ package forevtechnologies.alegriauiux.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import com.cipherthinkers.shapeflyer.ShapeFlyer;
+import com.intrusoft.library.FrissonView;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.builder.Builders.Any.B;
 
@@ -52,7 +55,7 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
         int ROW_MARGIN = 200;
         view.setLayoutParams(new RecyclerView.LayoutParams(UIHelper.getScreenWidth(this.context) - ROW_MARGIN, UIHelper.getContainerHeight(this.context) - ROW_MARGIN));
         ViewGroup.MarginLayoutParams marginParams = new ViewGroup.MarginLayoutParams(view.getLayoutParams());
-        ImageView imageView = (ImageView)view.findViewById(R.id.img_product);
+        FrissonView imageView = (FrissonView) view.findViewById(R.id.img_product);
         imageView.getLayoutParams().height = UIHelper.getContainerHeight(this.context) / 2;
         if(viewType == 0) {
             marginParams.setMargins(ROW_MARGIN / 4, 0, 0, 0);
@@ -94,15 +97,17 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
         TextView txtProductName;
         TextView txtProductDesc;
         TextView txtPrice;
-        ImageView imgProduct;
+        FrissonView imgProduct;
+        View myView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
-            this.imgProduct = (ImageView)itemView.findViewById(R.id.img_product);
+            this.imgProduct =(FrissonView) itemView.findViewById(R.id.img_product);
             this.txtProductName = (TextView)itemView.findViewById(R.id.txt_product_name);
             this.txtProductDesc = (TextView)itemView.findViewById(R.id.txt_product_desc);
             this.txtPrice = (TextView)itemView.findViewById(R.id.txt_price);
+            this.myView=itemView;
 
         }
 
@@ -111,10 +116,12 @@ public class SwipeCardAdapter extends RecyclerView.Adapter<SwipeCardAdapter.MyVi
             this.txtProductName.setText(this.chosen.getTitle());
             this.txtProductDesc.setText(this.chosen.getDescription());
             this.txtPrice.setText(this.chosen.getPrice());
-            if(this.chosen.getPhotoUrl() != null && !this.chosen.getPhotoUrl().equals("")) {
-                ((B)Ion.with(SwipeCardAdapter.this.context).load(this.chosen.getPhotoUrl())).intoImageView(this.imgProduct);
-            }
-            imgProduct.setBackgroundColor(Color.TRANSPARENT);
+
+//            if(this.chosen.getPhotoUrl() != null && !this.chosen.getPhotoUrl().equals("")) {
+//                ((B)Ion.with(SwipeCardAdapter.this.context).load(this.chosen.getPhotoUrl())).intoImageView(this.imgProduct);
+//            }
+            this.imgProduct.setImageSource(this.chosen.getPhotoUrl());
+//            imgProduct.setBackgroundColor(Color.TRANSPARENT);
 
         }
 

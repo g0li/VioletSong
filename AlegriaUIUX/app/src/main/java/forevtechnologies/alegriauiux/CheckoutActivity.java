@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by jojosexbomb69 on 12/12/17.
+ * class is still incomplete, don't link with any activities
  */
 
 public class CheckoutActivity extends Activity {
@@ -67,6 +68,9 @@ public class CheckoutActivity extends Activity {
                 "1234-6666-6789-56");
 // Requested Payment Mode
         authIntent.putExtra(PaymentActivity.EXTRA_REQUESTED_PAYMENT_MODE,PaymentActivity.PAYMENT_METHOD_CASHCARDS);
+
+
+//        calling payment webview
         startActivityForResult(authIntent, PaymentActivity.REQUEST_CODE);
     }
 
@@ -75,6 +79,9 @@ public class CheckoutActivity extends Activity {
         super.startActivityForResult(intent, requestCode);
     }
 
+
+
+//callback from payment webview
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
             if(requestCode==PaymentActivity.REQUEST_CODE){

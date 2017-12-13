@@ -39,25 +39,25 @@ public class Tickets extends AppCompatActivity {
                     onBackPressed();
                 }
             });
-        SwipeCardModel swipeCardModel = new SwipeCardModel();
-        swipeCardModel.setTitle("Ritviz");
-        swipeCardModel.setDescription("Udd gaye");
-        swipeCardModel.setPrice("Buy");
-        swipeCardModel.setPhotoUrl("https://content2.jdmagicbox.com/events/A415471/A415471_gal_20151103122451.jpg");
-        swipeCardModels.add(swipeCardModel);
+//        SwipeCardModel swipeCardModel = new SwipeCardModel();
+//        swipeCardModel.setTitle("Ritviz");
+//        swipeCardModel.setDescription("Udd gaye");
+//        swipeCardModel.setPrice("Buy");
+//        swipeCardModel.setPhotoUrl("https://content2.jdmagicbox.com/events/A415471/A415471_gal_20151103122451.jpg");
+//        swipeCardModels.add(swipeCardModel);
 
         SwipeCardModel swipeCardModel1 = new SwipeCardModel();
         swipeCardModel1.setTitle("Dj Chetas");
         swipeCardModel1.setDescription("Bollywood Night");
         swipeCardModel1.setPrice("Buy");
-        swipeCardModel1.setPhotoUrl("https://content4.jdmagicbox.com/events/A005155/A005155_gal_20160812161510.jpg");
+        swipeCardModel1.setPhotoUrl(R.drawable.chetas);
         swipeCardModels.add(swipeCardModel1);
 
         SwipeCardModel swipeCardModel2 = new SwipeCardModel();
         swipeCardModel2.setTitle("Nina & Malika");
         swipeCardModel2.setDescription("The Electrovertz");
         swipeCardModel2.setPrice("Buy");
-        swipeCardModel2.setPhotoUrl("https://scontent.fbom3-1.fna.fbcdn.net/v/t1.0-9/24176745_1883585278336307_5667713121562281264_n.png?oh=f130f274aa5835df46af1522a9511db4&oe=5ACC0930");
+        swipeCardModel2.setPhotoUrl(R.drawable.nina_malika);
         swipeCardModels.add(swipeCardModel2);
 
         SwipeCardAdapter swipeCardAdapter = new SwipeCardAdapter(this, swipeCardModels, new RecyclerViewClickListener() {

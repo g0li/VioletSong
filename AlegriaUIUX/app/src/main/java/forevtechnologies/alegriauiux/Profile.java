@@ -73,8 +73,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         events.setText("0");
         eventsTitle.setOnClickListener(this);
         feedsLayout.setOnClickListener(this);
-        mShapeFlyer= findViewById(R.id.shape_flyer);
-        mShapeFlyer.setOnClickListener(this);
+        View v=findViewById(R.id.backview);
+        v.setOnClickListener(this);
+
         if(user.isAnonymous()){
             gbutton.setVisibility(View.VISIBLE);
             name.setText("Guest user");
@@ -238,7 +239,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
             case R.id.eventsLayout:
                 startActivity(new Intent(Profile.this,MyEvents.class));
                 break;
-            case R.id.shape_flyer:
+            case R.id.backview:
                 finish();
                 break;
             default:
@@ -263,4 +264,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         });
     }
 
+    @Override
+    public void finish() {
+        Log.w("OnFinish","True");
+        super.finish();
+    }
 }
