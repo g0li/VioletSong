@@ -1,0 +1,131 @@
+{
+  "project_info": {
+    "project_number": "631421555582",
+    "firebase_url": "https://violet-song.firebaseio.com",
+    "project_id": "violet-song",
+    "storage_bucket": "violet-song.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631421555582:android:3916dc5f511b9bdd",
+        "android_client_info": {
+          "package_name": "forevtechnologies.alegriauiux"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631421555582-kd5emhgeuco7lcksckjicchsts21qd13.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "84af1fb1ceed63cb9256e4860a2cc36c67d7baf0"
+          }
+        },
+        {
+          "client_id": "631421555582-dplv22p787757j6vum3jp83gtf9l564k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "fb2ea45f873e7e49ff0c0d43e1409a8dd6f92ce0"
+          }
+        },
+        {
+          "client_id": "631421555582-bh21ul56d1tv80k1hsm0nfd986t8akb2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "98c23e43538db7d7b9c7d91fbeda6a34f2b938b2"
+          }
+        },
+        {
+          "client_id": "631421555582-jnpdsf54tn6o5qtdeqdsfro7dbvvlsaa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "fc4145cce51a342cb495e4d4292a46f3234f767b"
+          }
+        },
+        {
+          "client_id": "631421555582-5qcr740h8g62sov6pt2bh28mspdo3r1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriauiux",
+            "certificate_hash": "02ec92c9a7ce92da31b02432735e96a72bd9574d"
+          }
+        },
+        {
+          "client_id": "631421555582-nt82m641g9o9emeinb3ihvvl3ph8jjeb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxx42iWLGWEj7VnNH9Fg3PliBxZmZHhQM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631421555582-nt82m641g9o9emeinb3ihvvl3ph8jjeb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:631421555582:android:bd6733a6f882d791",
+        "android_client_info": {
+          "package_name": "forevtechnologies.alegriateamapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "631421555582-2v7t1lmrlblvre7847oeovbqjq9sbo5r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "forevtechnologies.alegriateamapp",
+            "certificate_hash": "02ec92c9a7ce92da31b02432735e96a72bd9574d"
+          }
+        },
+        {
+          "client_id": "631421555582-nt82m641g9o9emeinb3ihvvl3ph8jjeb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxx42iWLGWEj7VnNH9Fg3PliBxZmZHhQM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "631421555582-nt82m641g9o9emeinb3ihvvl3ph8jjeb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

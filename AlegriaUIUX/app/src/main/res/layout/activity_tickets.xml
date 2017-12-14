@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:background="#00ffffff"
         android:scaleType="fitXY"
-        app:srcCompat="@drawable/back_arrow_material" />
+        app:srcCompat="@drawable/ic_arrow_back_tickets"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"

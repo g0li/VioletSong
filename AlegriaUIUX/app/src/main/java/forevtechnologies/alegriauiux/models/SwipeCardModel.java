@@ -14,7 +14,7 @@ public class SwipeCardModel {
     public String title;
     public String description;
     public String price;
-    public String photoUrl;
+    public int photoUrl;
 
     public SwipeCardModel() {
     }
@@ -44,11 +44,11 @@ public class SwipeCardModel {
         this.price = price;
     }
 
-    public String getPhotoUrl() {
+    public int getPhotoUrl() {
         return this.photoUrl;
     }
 
-    public void setPhotoUrl(String photoUrl) {
+    public void setPhotoUrl(int photoUrl) {
         this.photoUrl = photoUrl;
     }
 }

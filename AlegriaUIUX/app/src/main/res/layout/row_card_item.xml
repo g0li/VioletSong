@@ -18,15 +18,19 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:background="@drawable/radius_white_box">
+                    android:background="#3f4c6b">
 
-                        <ImageView
+                        <com.intrusoft.library.FrissonView
+                            xmlns:frisson="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/img_product"
+                            frisson:gradient_endColor="#22000000"
+                            frisson:gradient_startColor="#44ffffff"
+                            frisson:gradientType="radial"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            android:background="#00ffffff"
-                            android:scaleType="fitXY" />
+                            android:layout_height="400dp"
+                            frisson:scaleType="centerCrop"
+                            frisson:tideCount="3"
+                            frisson:tideHeight="50dp" />
 
                 </RelativeLayout>
 
