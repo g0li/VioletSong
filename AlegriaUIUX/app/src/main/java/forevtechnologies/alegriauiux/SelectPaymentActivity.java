@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
-public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener{
+public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
     LinearLayout offlineLin, offlineLin1, onlineLin, onlineLin1;
     TextView offlineTextView,offlineTextView1, onlineTextView, onlineTextView1;
     RadioButton offlineRadio, onlineRadio;
@@ -43,6 +46,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     if(user.isAnonymous()){
                         payButton.setEnabled(false);
                         payButton.setFocusableInTouchMode(false);
+                        //add alert box to redirect to profile
                     }
                     else{
                         switch (user.getProviders().get(0)){
@@ -81,6 +85,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
 
         offlineCardView=(CardView) findViewById(R.id.offlineCardView);
         onlineCardView=(CardView) findViewById(R.id.onlineCardView);
+
         
         offlineLin.setOnClickListener(this);
         offlineLin1.setOnClickListener(this);
@@ -187,5 +192,21 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void finish() {
         super.finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (view.getId()){
+            case R.id.payment_method_spinner:
+                Toast.makeText(this,"Value selected"+adapterView.getItemAtPosition(i),Toast.LENGTH_LONG).show();
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

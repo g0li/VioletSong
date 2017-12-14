@@ -20,6 +20,7 @@
         app:text_size="18dp" />
 
     <LinearLayout
+        android:id="@+id/cardsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="false"
@@ -131,5 +132,15 @@
 
 
     </LinearLayout>
+
+    <Spinner
+        android:id="@+id/payment_method_spinner"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:tooltipText="Select Online payment method"
+        android:autofillHints="Select Online payment method"
+        android:layout_below="@id/cardsContainer"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

@@ -96,6 +96,7 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'io.card:android-sdk:5.4.2'
+    compile 'com.github.vipulasri:timelineview:1.0.5'
     compile files('libs/paynimo_v3.2_uat.jar')
 }
 
