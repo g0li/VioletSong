@@ -1,4 +1,8 @@
 <resources>
+    <string name="horizontal_timeline">Horizontal Timeline</string>
+    <string name="vertical_timeline">Vertical Timeline</string>
+    <string name="horizontal_timeline_w_padding">Horizontal Timeline With Line Padding</string>
+    <string name="vertical_timeline_w_padding">Vertical Timeline With Line Padding</string>
     <string name="app_name">Violet Song</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Whats Hot</string>
@@ -19,15 +23,6 @@
     <string name="sender_badge" translatable="false">SENDER</string>
     <string name="client_name_mock" translatable="false">Edward Norton</string>
     <string name="rating_mock" translatable="false">(26)</string>
-
-
-    <string-array name="payment_method">
-            <item>Net Banking</item>
-            <item>mVisa</item>
-            <item>Wallet</item>
-    </string-array>
-
-
     <string name="from_badge" translatable="false">FROM</string>
     <string name="to_badge" translatable="false">TO</string>
     <string name="delivery_date_badge" translatable="false">DELIVERY DATE</string>
