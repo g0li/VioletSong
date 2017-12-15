@@ -5,12 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-import forevtechnologies.alegriauiux.adapter.TimeLineAdapter;
+import forevtechnologies.alegriauiux.adapter.RecyclerItemClickListener;
 import forevtechnologies.alegriauiux.models.OrderStatus;
 import forevtechnologies.alegriauiux.models.Orientation;
 import forevtechnologies.alegriauiux.models.TimeLineModel;
@@ -61,10 +65,16 @@ public class TimeLineActivity extends AppCompatActivity {
         setDataListItems();
         mTimeLineAdapter = new TimeLineAdapter(mDataList, mOrientation, mWithLinePadding);
         mRecyclerView.setAdapter(mTimeLineAdapter);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, final int position) {
+                Log.w("Position:",""+position);
+            }
+        }));
     }
-    //function to set data inside the timeline view
+
     private void setDataListItems(){
-        mDataList.add(new TimeLineModel("Item successfully delivered", "", OrderStatus.INACTIVE));
+        mDataList.add(new TimeLineModel("Item Ziyad delivered", "", OrderStatus.INACTIVE));
         mDataList.add(new TimeLineModel("Courier is out to delivery your order", "2017-02-12 08:00", OrderStatus.ACTIVE));
         mDataList.add(new TimeLineModel("Item has reached courier facility at New Delhi", "2017-02-11 21:00", OrderStatus.COMPLETED));
         mDataList.add(new TimeLineModel("Item has been given to the courier", "2017-02-11 18:00", OrderStatus.COMPLETED));

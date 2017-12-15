@@ -2,16 +2,15 @@ package forevtechnologies.alegriauiux.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.github.vipulasri.timelineview.Utils.*;
 
 /**
  * Created by HP-HP on 05-12-2015.
  */
 public class TimeLineModel implements Parcelable {
 
-    private String mMessage;
-    private String mDate;
-    private OrderStatus mStatus;
+    public String mMessage;
+    public String mDate;
+    public OrderStatus mStatus;
 
     public TimeLineModel() {
     }
