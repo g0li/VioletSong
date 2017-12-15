@@ -26,7 +26,6 @@
     <dimen name="textSizeNormal">18sp</dimen>
     <dimen name="textSizeLarge">20sp</dimen>
 
-
     <dimen name="buttonCorner">@dimen/radiusMini</dimen>
     <dimen name="CardCorner">@dimen/radiusNormal</dimen>
     <dimen name="cardElevation">@dimen/shadow</dimen>

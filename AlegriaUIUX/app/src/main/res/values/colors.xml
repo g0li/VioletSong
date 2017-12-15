@@ -11,7 +11,7 @@
     <color name="grey_300">#E0E0E0</color>
 
     <color name="darkblue">#0D47A1</color>
-
+    <color name="colorBackground">#eeeeee</color>
     <color name="CardColor">@color/darkblue</color>
     <color name="HeaderTextColor">@color/darkblue</color>
     <color name="PriceTextColor">@color/darkblue</color>
