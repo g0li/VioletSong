@@ -8,16 +8,26 @@ import android.os.Parcelable;
  */
 public class TimeLineModel implements Parcelable {
 
-    public String mMessage;
-    public String mDate;
-    public OrderStatus mStatus;
+    public String mMessage;  //event name
+    public String mDate;     //event date and time
+    public OrderStatus mStatus; //icon status
+    public String mLocation; //location of event
+    public String mTime;        //Written time for event
+    public int mPicture;     //id of drawable
 
     public TimeLineModel() {
+        this.mMessage="";
+        this.mDate="";
+        this.mStatus=OrderStatus.ACTIVE;
+        this.mLocation="";
+        this.mTime="";
+        this.mPicture=0;
     }
 
-    public TimeLineModel(String mMessage, String mDate, OrderStatus mStatus) {
+    public TimeLineModel(String mMessage, String mDate, String mLocation, OrderStatus mStatus) {
         this.mMessage = mMessage;
         this.mDate = mDate;
+        this.mLocation=mLocation;
         this.mStatus = mStatus;
     }
 
@@ -25,7 +35,7 @@ public class TimeLineModel implements Parcelable {
         return mMessage;
     }
 
-    public void semMessage(String message) {
+    public void setMessage(String message) {
         this.mMessage = message;
     }
 
@@ -43,6 +53,29 @@ public class TimeLineModel implements Parcelable {
 
     public void setStatus(OrderStatus mStatus) {
         this.mStatus = mStatus;
+    }
+    public void setLocation(String mLocation){
+        this.mLocation=mLocation;
+    }
+
+    public String getLocation(){
+        return this.mLocation;
+    }
+
+    public void setPicture(int IDofPicture){
+        this.mPicture=IDofPicture;
+    }
+
+    public int getPicture(){
+        return this.mPicture;
+    }
+
+    public void setTime(String mTime){
+        this.mTime=mTime;
+    }
+
+    public String getTime(){
+        return this.mTime;
     }
 
     @Override
