@@ -18,6 +18,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -101,6 +102,8 @@ public class FullInfoTabFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,27 +123,44 @@ public class FullInfoTabFragment extends Fragment {
                 }
                 bundh.putExtra("actName","Reg");
                 startActivity(bundh);
-//                        Intent i=new Intent(getActivity(),CartActivity.class);
-
-                        /*//for printing content of bundle
-                        List<String> eventNames=new ArrayList<>();
-                        for(int n=0;n<b.size();n++){
-                            eventNames.add(b.getString("Key "+n));
-                        }
-                        for(String name : eventNames){
-                            Log.w("Item",""+name);
-                        }
-                        //end of testing*/
-//                        startActivity(i);
                 return true;
             }
         });
+//        mItem.setVisible(false);
+
         View v=mItem.getActionView();
+        ImageView imageView=(ImageView)v.findViewById(R.id.cartIcon);
         if(v==null){
             Log.w("View","Null");
         }
         tv=(TextView)v.findViewById(R.id.actionbar_notifcation_textview);
         tv.setText("0");
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bundh==null){
+                    Log.w("Bundh","Empty");
+                }
+                else{
+                    Log.w("Bundh","Not empty");
+                }
+                bundh.putExtra("actName","Reg");
+                startActivity(bundh);
+            }
+        });
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(bundh==null){
+                    Log.w("Bundh","Empty");
+                }
+                else{
+                    Log.w("Bundh","Not empty");
+                }
+                bundh.putExtra("actName","Reg");
+                startActivity(bundh);
+            }
+        });
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -156,18 +176,6 @@ public class FullInfoTabFragment extends Fragment {
                         }
                         bundh.putExtra("actName","Reg");
                         startActivity(bundh);
-//                        Intent i=new Intent(getActivity(),CartActivity.class);
-
-                        /*//for printing content of bundle
-                        List<String> eventNames=new ArrayList<>();
-                        for(int n=0;n<b.size();n++){
-                            eventNames.add(b.getString("Key "+n));
-                        }
-                        for(String name : eventNames){
-                            Log.w("Item",""+name);
-                        }
-                        //end of testing*/
-//                        startActivity(i);
                         return true;
                     case R.id.broch:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();

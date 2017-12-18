@@ -1,9 +1,12 @@
 package forevtechnologies.alegriauiux;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -47,15 +50,56 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     Button gbutton;
     private GoogleApiClient mGoogleApiClient;
     private static final int RC_SIGN_IN = 9001;
+    public static  final String GENDER_USER="GENDER_USER";
     private static final String TAG = "GoogleActivity";
+    private static final String GENDER = "GENDER";
     Person person;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     TextView signInInfo;
     int[] icons={R.drawable.iccon1,R.drawable.iccon2,R.drawable.iccon3};// icon pool
     private ShapeFlyer mShapeFlyer;
+    SharedPreferences sp;
 
     public void initUI(){
+        sp=getSharedPreferences(GENDER_USER,MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sp.edit();
+
+        //check if user has provided gender prior
+
+        if(sp.contains(GENDER)){
+            //do nothing
+        }
+        else{
+            AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
+            alertDialog.setMessage("Please specify your gender.");
+            alertDialog.setCancelable(false);
+            alertDialog.setPositiveButton("Male", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    editor.putString(GENDER,"MALE");
+                    editor.apply();
+                }
+            });
+            alertDialog.setNeutralButton("Other", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    editor.putString(GENDER,"OTHER");
+                    editor.apply();
+                }
+            });
+            alertDialog.setNegativeButton("Female", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    editor.putString(GENDER, "FEMALE");
+                    editor.apply();
+                }
+            });
+            alertDialog.show();
+
+        }
+
+
         backView=findViewById(R.id.backview);
         eventsLayout=(LinearLayout)findViewById(R.id.eventsLayout);
         feedsLayout=(LinearLayout)findViewById(R.id.feedsLayout);
