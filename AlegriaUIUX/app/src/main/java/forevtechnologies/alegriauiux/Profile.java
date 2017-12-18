@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -57,7 +58,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     TextView signInInfo;
-    int[] icons={R.drawable.iccon1,R.drawable.iccon2,R.drawable.iccon3};// icon pool
+    int[] iconsMale={R.drawable.male1,R.drawable.male2,R.drawable.male3,R.drawable.male4,R.drawable.male5};// icon pool male
+    int[] iconsFemale={R.drawable.female1,R.drawable.female2,R.drawable.female3,R.drawable.female4,R.drawable.female5};//icon pool female
     private ShapeFlyer mShapeFlyer;
     SharedPreferences sp;
 
@@ -69,6 +71,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
 
         if(sp.contains(GENDER)){
             //do nothing
+            circUser.setImageResource(getIcon(sp.getString(GENDER,"")));
         }
         else{
             AlertDialog.Builder alertDialog= new AlertDialog.Builder(this);
@@ -78,27 +81,29 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     editor.putString(GENDER,"MALE");
-                    editor.apply();
+                    editor.commit();
+                    circUser.setImageResource(getIcon(sp.getString(GENDER,"")));
                 }
             });
             alertDialog.setNeutralButton("Other", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     editor.putString(GENDER,"OTHER");
-                    editor.apply();
+                    editor.commit();
+                    circUser.setImageResource(getIcon(sp.getString(GENDER,"")));
                 }
             });
             alertDialog.setNegativeButton("Female", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     editor.putString(GENDER, "FEMALE");
-                    editor.apply();
+                    editor.commit();
+                    circUser.setImageResource(getIcon(sp.getString(GENDER,"")));
                 }
             });
             alertDialog.show();
 
         }
-
 
         backView=findViewById(R.id.backview);
         eventsLayout=(LinearLayout)findViewById(R.id.eventsLayout);
@@ -108,7 +113,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         events=findViewById(R.id.events);
         eventsTitle=findViewById(R.id.eventsTitle);
         circUser= (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.circUser);
-        circUser.setImageDrawable(getDrawable(getIcon()));//generating random icon from pool
         gbutton=(Button)findViewById(R.id.gsigninForEmail);
         signInInfo=findViewById(R.id.signInInfo);
         gbutton.setOnClickListener(this);
@@ -169,9 +173,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
 
 
     //function to generate random icon index
-    public int getIcon(){
-        int randomNum = ThreadLocalRandom.current().nextInt(0, 2 + 1);
-        return icons[randomNum];
+    public int getIcon(String gender){
+        if(gender.equals("MALE")){
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 4 + 1);//upto 5(-1)
+            return iconsMale[randomNum];
+        }
+        else if(gender.equals("FEMALE")){
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 4 + 1);//upto 5(-1)
+            return iconsFemale[randomNum];
+        }
+        else if(gender.equals("OTHER")){
+            int randomNum = ThreadLocalRandom.current().nextInt(0, 9 + 1);//upto 10(-1)
+            List<Integer> icons=new ArrayList<>();
+            for(int x : iconsMale){
+                icons.add(x);
+            }
+            for(int x : iconsFemale){
+                icons.add(x);
+            }
+            return icons.get(randomNum);
+
+        }
+        return  0;
     }
 
     @Override
@@ -204,41 +227,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
             }
         }
     }
-
-   /* private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        auth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-
-                            //ask for user password
-
-                            AuthCredential credential= EmailAuthProvider.getCredential(user.getEmail(),user.);
-                            user.linkWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if(task.isSuccessful()){
-                                        Log.w("Linking","Link with Google successful");
-                                        user=task.getResult().getUser();
-                                    }
-                                    else{
-                                        Log.w("Linking","Failed to link with google");
-                                        Toast.makeText(Profile.this,"Failed to link account",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                        } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            Log.d(TAG,"Authentication failed.");
-
-                        }
-
-                    }
-                });
-    }*/
 
 
     @Override
@@ -302,7 +290,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
 //                    circUser.setImageURI(user.getPhotoUrl());
                 }
                 else{
-                    Log.w("Reload","Unsuccessful");
+                    Log.w("Reload:","Unsuccessful");
                 }
             }
         });

@@ -15,7 +15,7 @@ Events{
     FSG("Free Style Group (Beat pe feat)"),
     SKT("Skit (Skecz)"),
     MA("Mono Acting"),
-    RAP("Parappa"),
+    RAP("Parappa"), //is it parappa or rap or are they both the same
     DD("Duet Dancing (Gem of the City"),
     SoSi("Solo Singing (Alegrian Idol)"),
     OM("Open Mic"),
@@ -50,7 +50,7 @@ Events{
     FIFA("FIFA"),
     NFS("NFS Most Wanted"),
     MM("Mini Militia"),
-    VrFN("VR Fruit Ninja"),
+    VrFN("VR Fruit Ninja"), //two entries for fruit ninja
     LuKi("Ludo King"),
     FB("Futsal Boys"),
     BBL("Basketball"),
@@ -69,7 +69,7 @@ Events{
     BDTB("Badminton Boys"),
     NC("Neo Cricket"),
     CSGO("Counter Strike Global Offensive"),
-    LDO("Ludo"),
+    LDO("Ludo"),  //two entries for ludo
     VRFN("VR Fruit Ninja"),//46-68SNG
     PM("Poster Mania (Phata Poster)"),
     CP("Canvas Painting (Rang De Mumbai)"),
