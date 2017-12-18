@@ -48,11 +48,11 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
 
-                <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--</intent-filter>-->
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SignUpActivity"
@@ -126,11 +126,6 @@
         <activity android:name="io.card.payment.DataEntryActivity" />
         <activity android:name=".TimeLineActivity"
             android:theme="@style/AppThemeTimeLine">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <receiver

@@ -1,5 +1,6 @@
 package forevtechnologies.alegriauiux.models;
-public enum     Events{
+public enum
+Events{
     RC("Robo Challenge (Island Robos)"),
     TPP("Technical Paper Presentation (The Mumbai letter)"),
     MFW("Make from waste ()"),
