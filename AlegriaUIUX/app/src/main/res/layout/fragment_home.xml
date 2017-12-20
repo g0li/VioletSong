@@ -106,6 +106,41 @@
                 android:layout_weight="2">
 
                 <android.support.v7.widget.CardView
+                    android:id="@+id/campusCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"
+                    android:layout_weight="4">
+
+                    <LinearLayout
+                        android:id="@+id/campusLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/campusImageView"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_weight="5"
+                            android:background="@drawable/ic_timeline_bg"
+                            android:padding="5dp"
+                            app:srcCompat="@drawable/ic_timeline" />
+
+                        <TextView
+                            android:id="@+id/campusTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Campus Map"
+                            android:textAlignment="center"
+                            android:textAppearance="@android:style/TextAppearance.Material.Large"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:id="@+id/eventsCardView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -131,7 +166,7 @@
                         <TextView
                             android:id="@+id/eventsTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="5"
                             android:text="Events Registration"
                             android:textAlignment="center"
@@ -267,48 +302,6 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             tools:context="forevtechnologies.alegriauiux.MainActivity$PlaceholderFragment">
 
-
-            <TableRow
-                android:id="@+id/T4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:layout_weight="1"
-                android:visibility="gone">
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/campusCardView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="2dp"
-                    android:layout_weight="4">
-
-                    <LinearLayout
-                        android:id="@+id/campusLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/campusImageView"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_weight="5"
-                            android:background="#FFF176"
-                            app:srcCompat="@drawable/ic_map_black_24dp" />
-
-                        <TextView
-                            android:id="@+id/campusTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Campus Map"
-                            android:textAlignment="center"
-                            android:textAppearance="@android:style/TextAppearance.Material.Large" />
-                    </LinearLayout>
-
-                </android.support.v7.widget.CardView>
-            </TableRow>
 
             <TableRow
                 android:id="@+id/T5"
