@@ -47,7 +47,8 @@
                             android:layout_height="100dp"
                             android:layout_weight="5"
                             android:background="@drawable/ic_prof_bg"
-                            app:srcCompat="@drawable/ic_face_black_24dp" />
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/ic_profile" />
 
                         <TextView
                             android:id="@+id/profileTextView"
@@ -81,7 +82,8 @@
                             android:layout_height="100dp"
                             android:layout_weight="6"
                             android:background="@drawable/ic_tikt_bg"
-                            app:srcCompat="@drawable/ic_confirmation_number_black_24dp" />
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/ic_tickets" />
 
                         <TextView
                             android:id="@+id/concertTextView"
@@ -124,7 +126,7 @@
                             android:layout_height="100dp"
                             android:layout_weight="5"
                             android:background="@drawable/ic_timeline_bg"
-                            android:padding="5dp"
+                            android:padding="16dp"
                             app:srcCompat="@drawable/ic_timeline" />
 
                         <TextView
@@ -132,7 +134,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Campus Map"
+                            android:text="Schedule"
                             android:textAlignment="center"
                             android:textAppearance="@android:style/TextAppearance.Material.Large"
                             android:textSize="16sp" />
@@ -160,8 +162,8 @@
                             android:layout_height="100dp"
                             android:layout_weight="1"
                             android:background="@drawable/ic_reg_bg"
-                            android:padding="5dp"
-                            app:srcCompat="@drawable/ic_fingerprint_black_24dp" />
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/ic_running_silhouettes" />
 
                         <TextView
                             android:id="@+id/eventsTextView"
@@ -330,8 +332,8 @@
                             android:layout_height="100dp"
                             android:layout_weight="5"
                             android:background="@drawable/ic_info_bg"
-                            android:padding="10dp"
-                            android:src="@drawable/ic_info_black_24dp" />
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/ic_info" />
 
                         <TextView
                             android:id="@+id/infoTextView"
@@ -400,8 +402,8 @@
                             android:layout_height="100dp"
                             android:layout_weight="5"
                             android:background="@drawable/ic_bro_bg"
-                            android:padding="5dp"
-                            app:srcCompat="@drawable/ic_brochure_24dp" />
+                            android:padding="16dp"
+                            app:srcCompat="@drawable/ic_brochure" />
 
                         <TextView
                             android:id="@+id/brochureTextView"
