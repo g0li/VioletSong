@@ -2,10 +2,10 @@
 
     <string name="paynimo_trigger_default">Pay</string>
     <!-- AlertDialog connection Error -->
-    <string name="paynimo_alert_dialog_connection_error_heading">No Internet Connection</string>
+    <string name="paynimo_alert_dialog_connection_error_heading">Internet Unavailable</string>
     <string name="paynimo_connection_error">Unable to load content. Check your network connection.</string>
     <!-- Loader text -->
-    <string name="paynimo_loader_label">Please wait...</string>
+    <string name="paynimo_loader_label">Loading</string>
     <!-- Font Style Path -->
     <string name="paynimo_fontpath">fonts/roboto_regular_webfont.ttf</string>
     <string name="paynimo_rupee_fontpath">fonts/rupee_foradian.ttf</string>
@@ -14,7 +14,7 @@
 
     <!-- PAYMENT MODES -->
     <string name="paynimo_payment_mode_label">PAYMENT OPTIONS</string>
-    <string name="paynimo_payment_mode_amount_label">Amount ` </string>
+    <string name="paynimo_payment_mode_amount_label">Amount  </string>
     <string name="paynimo_alert_delete_card">Are you sure you want to delete this card?</string>
     <string name="paynimo_alert_yes">Yes</string>
     <string name="paynimo_alert_no">No</string>

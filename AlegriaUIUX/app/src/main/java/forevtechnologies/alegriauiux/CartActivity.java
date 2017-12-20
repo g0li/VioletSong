@@ -4,14 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -23,15 +20,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.malinskiy.superrecyclerview.OnMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
-import forevtechnologies.alegriauiux.adapter.SwipeAdapter;
 import forevtechnologies.alegriauiux.adapter.TicketCartAdapter;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
@@ -39,7 +32,7 @@ import forevtechnologies.alegriauiux.models.TicketCartModel;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener{
     Intent b;
-    int totalPrice=0;
+    private int totalPrice=0;
     Button checkOutButton;
     CartAdapter cartAdapter;
     TextView textView;
@@ -54,6 +47,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         checkOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences prefs = getSharedPreferences(
+                        getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
+                prefs.edit().putInt("totalPrice",totalPrice).apply();
                 startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));
             }
         });

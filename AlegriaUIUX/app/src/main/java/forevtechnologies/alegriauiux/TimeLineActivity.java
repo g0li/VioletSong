@@ -72,6 +72,7 @@ public class TimeLineActivity extends AppCompatActivity {
         setTitle(mOrientation == Orientation.HORIZONTAL ? getResources().getString(R.string.horizontal_timeline) : getResources().getString(R.string.vertical_timeline));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
         mRecyclerView.setLayoutManager(getLinearLayoutManager());
         mRecyclerView.setHasFixedSize(true);
 
