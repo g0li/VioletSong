@@ -212,7 +212,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                         if(task.isSuccessful()){
                             Toast.makeText(Profile.this,"Linked with google",Toast.LENGTH_SHORT).show();
                             Log.w("Link","Linked with google successfully");
-                            gbutton.setVisibility(View.GONE);
                             changeFieldValues();
                         }
                         else{
@@ -287,6 +286,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                     Log.w("Reload:","Successful");
                     name.setText(user.getDisplayName());
                     email.setText(user.getEmail());
+                    gbutton.setVisibility(View.GONE);
 //                    circUser.setImageURI(user.getPhotoUrl());
                 }
                 else{
