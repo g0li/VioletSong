@@ -20,18 +20,16 @@ import com.fujiyuu75.sequent.Sequent;
  */
 
 public class HOUSE extends Fragment implements View.OnClickListener {
-    CardView profileCardView,brochureCardView,eventsCardView,infoCardView,concertCardView,chatCardView,scheduleCardView;
-    TextView profileTextView,brochureTextView,eventsTextView,infoTextView,concertTextView,chatTextView,scheduleTextView;
-    ImageView profileImageView,brochureImageView,eventsImageView,infoImageView,concertImageView,chatImageView,scheduleImageView;
-    LinearLayout profileLayout,brochureLayout,eventsLayout,infoLayout,concertLayout,chatLayout,scheduleLayout;
+    CardView profileCardView,brochureCardView,eventsCardView,infoCardView,concertCardView,chatCardView,campusCardView;
+    TextView profileTextView,brochureTextView,eventsTextView,infoTextView,concertTextView,chatTextView,campusTextView;
+    ImageView profileImageView,brochureImageView,eventsImageView,infoImageView,concertImageView,chatImageView,campusImageView;
+    LinearLayout profileLayout,brochureLayout,eventsLayout,infoLayout,concertLayout,chatLayout,campusLayout;
     TableLayout TX,TX1;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
         initui(view);
-
         Sequent.origin(TX).anim(getActivity(), R.anim.bounce_in).start();
         Sequent.origin(TX1).anim(getActivity(), R.anim.bounce_in).start();
 
@@ -67,15 +65,15 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         concertImageView=(ImageView)v.findViewById(R.id.concertImageView);
         concertTextView=(TextView)v.findViewById(R.id.concertTextView);
 
-        chatCardView=(CardView)v.findViewById(R.id.scheduleCardView);
-        chatLayout=(LinearLayout)v.findViewById(R.id.scheduleLayout);
-        chatImageView=(ImageView)v.findViewById(R.id.scheduleImageView);
-        chatTextView=(TextView)v.findViewById(R.id.scheduleTextView);
+        chatCardView=(CardView)v.findViewById(R.id.campusCardView);
+        chatLayout=(LinearLayout)v.findViewById(R.id.campusLayout);
+        chatImageView=(ImageView)v.findViewById(R.id.campusImageView);
+        chatTextView=(TextView)v.findViewById(R.id.campusTextView);
 
-        scheduleCardView=(CardView)v.findViewById(R.id.chatCardView);
-        scheduleLayout=(LinearLayout)v.findViewById(R.id.chatLayout);
-        scheduleImageView=(ImageView)v.findViewById(R.id.chatImageView);
-        scheduleTextView=(TextView)v.findViewById(R.id.chatTextView);
+        campusCardView=(CardView)v.findViewById(R.id.chatCardView);
+        campusLayout=(LinearLayout)v.findViewById(R.id.chatLayout);
+        campusImageView=(ImageView)v.findViewById(R.id.chatImageView);
+        campusTextView=(TextView)v.findViewById(R.id.chatTextView);
 
         TX=(TableLayout) v.findViewById(R.id.TX);
         TX1=(TableLayout) v.findViewById(R.id.TX1);
@@ -105,10 +103,10 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         concertImageView.setOnClickListener(this);
         concertTextView.setOnClickListener(this);
 
-        scheduleCardView.setOnClickListener(this);
-        scheduleLayout.setOnClickListener(this);
-        scheduleImageView.setOnClickListener(this);
-        scheduleTextView.setOnClickListener(this);
+        campusCardView.setOnClickListener(this);
+        campusLayout.setOnClickListener(this);
+        campusImageView.setOnClickListener(this);
+        campusTextView.setOnClickListener(this);
 
         chatCardView.setOnClickListener(this);
         chatLayout.setOnClickListener(this);
@@ -127,13 +125,12 @@ public class HOUSE extends Fragment implements View.OnClickListener {
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             startActivity(new Intent(getActivity(),Profile.class));
             break;
-        case R.id.brochureCardView:
-        case R.id.brochureLinearLayout:
-        case R.id.brochureImageView:
-        case R.id.brochureTextView:
-//            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
-//            startActivity(new Intent(getActivity(),CurlActivity.class));
-//            startActivity(new Intent(getActivity(),PageCurl.class));
+        case R.id.campusCardView:
+        case R.id.campusLayout:
+        case R.id.campusImageView:
+        case R.id.campusTextView:
+            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
+            startActivity(new Intent(getActivity(),TimeLineActivity.class));
             break;
         case R.id.eventsCardView:
         case R.id.eventsLayout:
@@ -156,13 +153,6 @@ public class HOUSE extends Fragment implements View.OnClickListener {
             startActivity(new Intent(getActivity(), Tickets.class).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT));
             getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
             break;
-        case R.id.scheduleCardView:
-        case R.id.scheduleLayout:
-        case R.id.scheduleImageView:
-        case R.id.scheduleTextView:
-            break;
-
-
         case R.id.chatCardView:
         case R.id.chatLayout:
         case R.id.chatImageView:
