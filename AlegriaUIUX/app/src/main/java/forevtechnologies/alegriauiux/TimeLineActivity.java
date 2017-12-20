@@ -1,6 +1,10 @@
 package forevtechnologies.alegriauiux;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.dd.processbutton.iml.ActionProcessButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +31,8 @@ import forevtechnologies.alegriauiux.models.OrderStatus;
 import forevtechnologies.alegriauiux.models.Orientation;
 import forevtechnologies.alegriauiux.models.TimeLineModel;
 
+import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
+
 /**
  * Created by HP-HP on 05-12-2015.
  */
@@ -35,16 +43,23 @@ public class TimeLineActivity extends AppCompatActivity {
     private List<TimeLineModel> mDataList = new ArrayList<>();
     private Orientation mOrientation;
     private boolean mWithLinePadding;
+//    shared preference to check which event user needs notifications for
+//    String USER_NOTIFICATIONS="USER_NOTIFICATION";
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
     public EventDay eDay;
     CardView cardView;
     ImageView eventPicture;
+    int itemPosition;
     TextView eventName,eventLocation,eventDate;
+    ActionProcessButton processButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-
+        sp=getSharedPreferences(SharedPreferenceStringTags.USER_NOTIFICATIONS,MODE_PRIVATE);
+        editor=sp.edit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,6 +76,28 @@ public class TimeLineActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         cardView=findViewById(R.id.eventDescription);
+        processButton=findViewById(R.id.notifyButton);
+        processButton.setProgress(0);
+        processButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!sp.contains(mDataList.get(itemPosition).getMessage())){
+                    editor.putString(mDataList.get(itemPosition).getMessage(),mDataList.get(itemPosition).getMessage());
+                    editor.commit();
+                    Log.w("Notify:","Added");
+                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+                }
+                else{
+                    Log.w("Notify:","Added");
+                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+                }
+
+                processButton.setProgress(50);
+                processButton.setProgress(100);
+                processButton.setEnabled(false);
+            }
+
+        });
         cardView.setVisibility(View.GONE);
 
         initView();
@@ -69,7 +106,8 @@ public class TimeLineActivity extends AppCompatActivity {
     private LinearLayoutManager getLinearLayoutManager() {
         if (mOrientation == Orientation.HORIZONTAL) {
             return new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        } else {
+        }
+        else {
             return new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         }
     }
@@ -83,7 +121,8 @@ public class TimeLineActivity extends AppCompatActivity {
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                Log.w("Position:",""+position);
+                Log.w("Position:",String.valueOf(position));
+                itemPosition=position;
                 changeCardDescription(position,eDay);
             }
         }));
@@ -106,7 +145,14 @@ public class TimeLineActivity extends AppCompatActivity {
                     //event date displayed in yyyy-MM-dd Hh:Mm
                     eventList.get(i).setDate("2018-06-02 8:00");
                     //event drawable
-                    eventList.get(i).setPicture(R.drawable.card_tech);
+                    eventList.get(i).setPicture(
+                            getResources()
+                            .getIdentifier
+                            (DayWiseEvents.values()[i].toString().toLowerCase(),
+                                    "drawable",
+                                    getPackageName()
+                            )
+                    );
                     //location of event displayed in description card
                     eventList.get(i).setLocation("O-303");
                     /*Info regarding the event at given time
@@ -203,8 +249,16 @@ public class TimeLineActivity extends AppCompatActivity {
     }
 
     public void changeDescriptionModel(int eventPictureId, String eventName, String eventLocation, String eventTime){
-
         cardView.setVisibility(View.VISIBLE);
+        if(sp.contains(eventName)){
+            processButton.setProgress(100);
+            processButton.setEnabled(false);
+            processButton.setText("Already Added");
+        }
+        else{
+            processButton.setProgress(0);
+            processButton.setEnabled(true);
+        }
         this.eventName=findViewById(R.id.eventName);
         this.eventName.setText(eventName);
         this.eventLocation=findViewById(R.id.eventLocation);

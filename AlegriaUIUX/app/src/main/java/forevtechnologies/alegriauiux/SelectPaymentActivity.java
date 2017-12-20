@@ -24,14 +24,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import org.angmarch.views.NiceSpinner;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
-public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
+public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener{
     LinearLayout offlineLin, offlineLin1, onlineLin, onlineLin1;
     TextView offlineTextView,offlineTextView1, onlineTextView, onlineTextView1;
     RadioButton offlineRadio, onlineRadio;
     CardView offlineCardView, onlineCardView;
     ProSwipeButton payButton;
+    NiceSpinner spinner;
     protected void initUI()
     {
         payButton=(ProSwipeButton)findViewById(R.id.payButton);
@@ -104,6 +113,21 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         offlineCardView.setOnClickListener(this);
         onlineCardView.setOnClickListener(this);
 
+        spinner=(NiceSpinner)findViewById(R.id.paymentSpinner);
+        List<String> payMethod= new LinkedList<>(Arrays.asList("Net Banking","Debit Card", "Paytm"));
+        spinner.attachDataSource(payMethod);
+        final Intent payz =new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                payz.putExtra("method",adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         payButton.setOnSwipeListener(new ProSwipeButton.OnSwipeListener() {
             @Override
             public void onSwipeConfirm() {
@@ -121,7 +145,13 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void run() {
                         finish();
-                        //startActivity(new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class));
+                        if(payz.hasExtra("method")){
+                            startActivity(payz);
+                        }
+                        else
+                        {
+                            Toast.makeText(SelectPaymentActivity.this, "Select a method", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }, 5000);
 
@@ -192,21 +222,5 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void finish() {
         super.finish();
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        switch (view.getId()){
-            case R.id.payment_method_spinner:
-                Toast.makeText(this,"Value selected"+adapterView.getItemAtPosition(i),Toast.LENGTH_LONG).show();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 }

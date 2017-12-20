@@ -74,7 +74,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Request a alegria volunteer" />
+                        android:text="Request an Alegria volunteer" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -88,7 +88,7 @@
             android:layout_marginTop="5dp"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            app:cardElevation="5dp">>
+            app:cardElevation="5dp">
             <LinearLayout
                 android:id="@+id/onlineLin"
                 android:layout_width="match_parent"
@@ -133,14 +133,13 @@
 
     </LinearLayout>
 
-    <Spinner
-        android:id="@+id/payment_method_spinner"
+    <org.angmarch.views.NiceSpinner
+        android:padding="16dp"
+        android:id="@+id/paymentSpinner"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:tooltipText="Select Online payment method"
-        android:autofillHints="Select Online payment method"
+        android:layout_height="wrap_content"
         android:layout_below="@id/cardsContainer"
-        android:layout_height="wrap_content" />
+        android:visibility="gone" />
 
 
 </RelativeLayout>

@@ -30,26 +30,26 @@ public class CheckoutActivity extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkout.setMerchantIdentifier("T1234");  //where T1234 is the MERCHANT CODE, update it with Merchant Code provided by TPSL
+        checkout.setMerchantIdentifier("T142944");  //where T1234 is the MERCHANT CODE, update it with Merchant Code provided by TPSL
         checkout.setTransactionIdentifier("TXN001"); //where TXN001 is the Merchant Transaction Identifier, it should be different for each transaction (alphanumeric value, no special character allowed)
         checkout.setTransactionReference ("ORD0001"); //where ORD0001 is the Merchant Transaction Reference number
-        checkout.setTransactionType (PaymentActivity.TRANSACTION_TYPE_SALE); //Transaction Type
-        checkout.setTransactionSubType (PaymentActivity.TRANSACTION_SUBTYPE_DEBIT); //Transaction Subtype
+        checkout.setTransactionType ("Sale"); //Transaction Type
+        checkout.setTransactionSubType ("Debit"); //Transaction Subtype
         checkout.setTransactionCurrency ("INR"); //Currency Type
-        checkout.setTransactionAmount ("1.00"); //Transaction Amount
+        checkout.setTransactionAmount ("5.00"); //Transaction Amount
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c.getTime());
-        checkout.setTransactionDateTime (formattedDate); //Transaction Date
+        checkout.setTransactionDateTime ("2017-12-16"); //Transaction Date
 // setting Consumer fields values
-        checkout.setConsumerIdentifier (""); //Consumer Identifier, default value "", set this value as application user name if you want Instrument Vaulting, SI on Cards. Consumer ID should be alpha-numeric value with no space
+        checkout.setConsumerIdentifier ("USER1"); //Consumer Identifier, default value "", set this value as application user name if you want Instrument Vaulting, SI on Cards. Consumer ID should be alpha-numeric value with no space
         checkout.setConsumerEmailID ("test@gmail.com"); //Consumer Email ID
-        checkout.setConsumerMobileNumber ("7620656789"); //Consumer Mobile Number
-        checkout.setConsumerAccountNo ("");//Account Number, default value "". For eMandate, you can set this value here or can be set later in SDK.
-        checkout.addCartItem("ProductID",
-                "1.00",
+        checkout.setConsumerMobileNumber ("9930920642"); //Consumer Mobile Number
+        checkout.setConsumerAccountNo ("58275827");//Account Number, default value "". For eMandate, you can set this value here or can be set later in SDK.
+        checkout.addCartItem("TEST",
+                "5.00",
                 "0.00",
                 "0.00",
                 " ",
@@ -70,7 +70,7 @@ public class CheckoutActivity extends Activity {
         authIntent.putExtra(PaymentActivity.EXTRA_PUBLIC_KEY,
                 "1234-6666-6789-56");
 // Requested Payment Mode
-        authIntent.putExtra(PaymentActivity.EXTRA_REQUESTED_PAYMENT_MODE,PaymentActivity.PAYMENT_METHOD_NETBANKING);
+        authIntent.putExtra(PaymentActivity.EXTRA_REQUESTED_PAYMENT_MODE,PaymentActivity.PAYMENT_METHOD_DEFAULT);
 
 
 //        calling payment webview

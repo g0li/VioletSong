@@ -159,6 +159,10 @@
         <item name="android:background">@drawable/round_rect</item>
     </style>
 
+    <style name="roundRectNotify">
+        <item name="android:background">@drawable/round_rect_notify</item>
+    </style>
+
     <style name="CardViewBackground" parent="CardView">
         <item name="cardBackgroundColor">@color/white</item>
         <item name="cardCornerRadius">@dimen/CardCorner</item>
