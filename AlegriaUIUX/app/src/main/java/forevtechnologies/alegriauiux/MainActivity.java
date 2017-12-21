@@ -15,12 +15,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toolbar;
+import android.widget.Toast;
 
 import com.imangazaliev.circlemenu.CircleMenu;
 import com.imangazaliev.circlemenu.CircleMenuButton;
 
 public class MainActivity extends AppCompatActivity{
-    boolean doubleBackToExitPressedOnce = false;
     final String home="#2196F3",concert="#4CAF50",events="#F44336",chat="#7B1FA2",whatshot="#FFA000";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity{
 
     };
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +84,17 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+    boolean doubleBackToExitPressedOnce = false;
+
     @Override
     public void onBackPressed() {
-        /*if (doubleBackToExitPressedOnce) {
-            finish();
-            return;
+        if (doubleBackToExitPressedOnce) {
+                ExitApplication.Exit(this);
+//            return;
         }
 
         this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click Back again to exit", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity{
             public void run() {
                 doubleBackToExitPressedOnce=false;
             }
-        }, 2000); */
+        }, 2000);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

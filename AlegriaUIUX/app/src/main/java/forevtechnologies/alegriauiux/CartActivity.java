@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +40,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     Button checkOutButton;
     CartAdapter cartAdapter;
     TextView textView;
+    FirebaseUser user;
 
     public RecyclerView recyclerView;
     @Override
@@ -43,23 +48,41 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_cart);
         setTitle("Cart");
+        user=FirebaseAuth.getInstance().getCurrentUser();
+        final List<CartModel> items=new ArrayList<>(88);
+        final List<TicketCartModel> tItems=new ArrayList<>();
         checkOutButton=(Button)findViewById(R.id.checkout);
+        final SendData sendData=new SendData();
+        b=getIntent();
         checkOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences prefs = getSharedPreferences(
                         getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
                 prefs.edit().putInt("totalPrice",totalPrice).apply();
+
+                if(b.getStringExtra("actName").equals("Reg")){
+                    for(CartModel m : items ){
+                        new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
+
+                    }
+                }
+                else if((b.getStringExtra("actName").equals("Tickets"))){
+                    for(TicketCartModel m: tItems ){
+                        new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
+                        Log.w("EventBeingPosted",m.getName());
+                    }
+                }
+
+
+
                 startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));
             }
         });
         textView=findViewById(R.id.price_display);
-        b=getIntent();
         if(b==null){
             Log.w("Bundle","Empty");
         }
-        final List<CartModel> items=new ArrayList<>(88);
-        final List<TicketCartModel> tItems=new ArrayList<>();
         List<Object> keyNames=new ArrayList<>(88);
         Bundle bundle;
         int numStudent,numPlatinum,numGold;
