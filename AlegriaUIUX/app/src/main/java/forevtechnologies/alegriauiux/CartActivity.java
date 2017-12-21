@@ -73,10 +73,13 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         Log.w("EventBeingPosted",m.getName());
                     }
                 }
+            SharedPreferences spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);
+            if(spuser.contains("NAME")){
 
-
-
-                startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));
+                startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));}
+            else{
+                startActivity(new Intent(CartActivity.this,UserInfoForm.class));
+            }
             }
         });
         textView=findViewById(R.id.price_display);
