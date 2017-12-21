@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
@@ -7,17 +7,31 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="forevtechnologies.alegriauiux.MainActivity">
+
+    <Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_scrollFlags="scroll|enterAlways"
+        android:navigationIcon="@mipmap/ic_launcher_round"
+        android:title="Alegria"
+        android:subtitle="Mumbai - The city of dreams."
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
     <FrameLayout
         android:id="@+id/fragment_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-    <android.support.v4.view.ViewPager
-        android:id="@+id/container"
-        android:background="@drawable/home_bg"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_below="@+id/toolbar2">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/home_bg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
@@ -28,56 +42,4 @@
             app:menu="@menu/navigation" />
     </FrameLayout>
 
-    <com.imangazaliev.circlemenu.CircleMenu
-        android:id="@+id/circleMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_anchor="@+id/container"
-        app:layout_anchorGravity="center|bottom">
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/homeCircleMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#2196F3"
-            app:colorPressed="#1E88E5"
-            app:icon="@drawable/ic_home_white_24dp" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/concertCircleMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#4CAF50"
-            app:colorPressed="#43A047"
-            app:icon="@drawable/ic_confirmation_number_white_24dp" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/eventsCircleMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#F44336"
-            app:colorPressed="#E53935"
-            app:icon="@drawable/ic_events_white_24dp" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/chatCircleMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#7B1FA2"
-            app:colorPressed="#9C27B0"
-            app:icon="@drawable/ic_chat_white_24dp" />
-
-        <com.imangazaliev.circlemenu.CircleMenuButton
-            android:id="@+id/whatshotCircleMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:colorNormal="#FFA000"
-            app:colorPressed="#FFC107"
-            app:icon="@drawable/ic_dashboard_white_24dp" />
-
-
-    </com.imangazaliev.circlemenu.CircleMenu>
-
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

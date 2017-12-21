@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
@@ -410,10 +411,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@color/black"
                             android:text="Brochure"
                             android:textAlignment="center"
-                            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+                            android:textColor="@color/black" />
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
@@ -464,13 +465,25 @@
                 android:id="@+id/T7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1" />
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:alpha=".2"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/fest" />
+
             </TableRow>
+
         </TableLayout>
+
     </LinearLayout>
 </ScrollView>

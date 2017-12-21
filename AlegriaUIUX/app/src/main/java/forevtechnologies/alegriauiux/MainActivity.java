@@ -1,7 +1,5 @@
 package forevtechnologies.alegriauiux;
 
-import android.content.Intent;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.*;
 import android.support.v7.app.AppCompatActivity;
@@ -12,11 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toolbar;
 
 import com.imangazaliev.circlemenu.CircleMenu;
 import com.imangazaliev.circlemenu.CircleMenuButton;
@@ -66,38 +64,8 @@ public class MainActivity extends AppCompatActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-        CircleMenu circleMenu = (CircleMenu) findViewById(R.id.circleMenu);
-
-        circleMenu.setOnItemClickListener(new CircleMenu.OnItemClickListener() {
-            @Override
-            public void onItemClick(CircleMenuButton menuButton) {
-               final CircleMenuButton mx=menuButton;
-                menuButton.postOnAnimationDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        switch (mx.getId())
-                        {
-                            case R.id.homeCircleMenuButton:
-                                startActivity(new Intent(MainActivity.this,MainActivity.class));
-                                break;
-                            case R.id.concertCircleMenuButton:
-
-                                break;
-                            case R.id.eventsImageView:
-                                break;
-                            case R.id.chatCircleMenuButton:
-                                //startActivity(new Intent(EventsActivity.this,.class));
-                                break;
-                            case R.id.whatshotCircleMenuButton:
-                                mViewPager.setCurrentItem(2);
-                                break;
-                        }
-                    }
-                },1000);
-            }
-        });
+        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar2);
+        setActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -137,27 +105,6 @@ public class MainActivity extends AppCompatActivity{
         }, 2000); */
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

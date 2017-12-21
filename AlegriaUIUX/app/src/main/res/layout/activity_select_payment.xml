@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_bg"
     android:orientation="vertical"
     tools:context="forevtechnologies.alegriauiux.SelectPaymentActivity">
 
@@ -89,6 +90,7 @@
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
             app:cardElevation="5dp">
+
             <LinearLayout
                 android:id="@+id/onlineLin"
                 android:layout_width="match_parent"
@@ -134,12 +136,24 @@
     </LinearLayout>
 
     <org.angmarch.views.NiceSpinner
-        android:padding="16dp"
         android:id="@+id/paymentSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardsContainer"
+        android:padding="16dp"
         android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_centerInParent="true"
+        android:alpha=".2"
+        android:scaleType="matrix"
+        app:srcCompat="@drawable/fest" />
 
 
 </RelativeLayout>
