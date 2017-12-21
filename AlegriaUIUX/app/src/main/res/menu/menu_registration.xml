@@ -6,7 +6,6 @@
     app:showAsAction="always"
     android:title="Cart"
     android:actionLayout="@layout/cart_badge"/>
-    <item android:title="Cart" android:id="@+id/cart" android:icon="@drawable/ic_cake"/>
-<item android:title="Brochure" android:id="@+id/broch" android:icon="@drawable/ic_events_black_24dp"/>
+    <item android:title="Brochure" app:showAsAction="always" android:id="@+id/brochure" android:icon="@drawable/ic_brochure_white"/>
 </group>
 </menu>

@@ -111,6 +111,14 @@ public class FullInfoTabFragment extends Fragment {
         //Testing for cart counter
         Menu m=toolbar.getMenu();
         MenuItem mItem=m.findItem(R.id.badge);
+        MenuItem brochureItem=m.findItem(R.id.brochure);
+        brochureItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(getContext(),"BROCHURE",Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
         mItem.setActionView(R.layout.cart_badge);
         mItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
@@ -166,7 +174,6 @@ public class FullInfoTabFragment extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.badge:
-                    case R.id.cart:
                         //before:i.putStringExtra("TEST","ROSHAN HERE");
                         if(bundh==null){
                             Log.w("Bundh","Empty");
@@ -177,7 +184,7 @@ public class FullInfoTabFragment extends Fragment {
                         bundh.putExtra("actName","Reg");
                         startActivity(bundh);
                         return true;
-                    case R.id.broch:
+                    case R.id.brochure:
                         Toast.makeText(getActivity(), "Clear call log", Toast.LENGTH_SHORT).show();
                         return true;
 

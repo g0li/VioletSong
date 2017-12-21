@@ -75,6 +75,12 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         campusImageView=(ImageView)v.findViewById(R.id.chatImageView);
         campusTextView=(TextView)v.findViewById(R.id.chatTextView);
 
+        campusCardView=(CardView)v.findViewById(R.id.campusCardView);
+        campusLayout=(LinearLayout)v.findViewById(R.id.campusLayout);
+        campusImageView=(ImageView)v.findViewById(R.id.campusImageView);
+        campusTextView=(TextView)v.findViewById(R.id.campusTextView);
+
+
         TX=(TableLayout) v.findViewById(R.id.TX);
         TX1=(TableLayout) v.findViewById(R.id.TX1);
 
@@ -102,6 +108,11 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         concertLayout.setOnClickListener(this);
         concertImageView.setOnClickListener(this);
         concertTextView.setOnClickListener(this);
+
+        campusCardView.setOnClickListener(this);
+        campusLayout.setOnClickListener(this);
+        campusImageView.setOnClickListener(this);
+        campusTextView.setOnClickListener(this);
 
         campusCardView.setOnClickListener(this);
         campusLayout.setOnClickListener(this);
