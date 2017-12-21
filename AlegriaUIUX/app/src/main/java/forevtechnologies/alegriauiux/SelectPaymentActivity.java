@@ -33,6 +33,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
 public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener{
@@ -42,11 +43,10 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     CardView offlineCardView, onlineCardView;
     ProSwipeButton payButton;
     NiceSpinner spinner;
-    protected void initUI()
-    {
-        payButton=(ProSwipeButton)findViewById(R.id.payButton);
-        FirebaseAuth mAuth=FirebaseAuth.getInstance();
+    protected void reloadUser()
+    { FirebaseAuth mAuth=FirebaseAuth.getInstance();
         final FirebaseUser user=mAuth.getCurrentUser();
+
         user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -56,6 +56,8 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     if(user.isAnonymous()){
                         payButton.setEnabled(false);
                         payButton.setFocusableInTouchMode(false);
+                        Toast.makeText(SelectPaymentActivity.this, "Please login", Toast.LENGTH_SHORT).show();
+                        //Toasty.custom(SelectPaymentActivity.this, "Please login.", R.mipmap.ic_launcher, Color.WHITE,Toast.LENGTH_SHORT, true, true).show();
                         //add alert box to redirect to profile
                     }
                     else{
@@ -66,6 +68,9 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                                 if(!user.isEmailVerified()){
                                     payButton.setEnabled(false);
                                     payButton.setFocusableInTouchMode(false);
+                                    Toast.makeText(SelectPaymentActivity.this, "Kindly link your account with Google+\nin Profile page", Toast.LENGTH_SHORT).show();
+                                    //Toasty.custom(SelectPaymentActivity.this, "Kindly link your account with Google+ in Profile.", R.mipmap.ic_launcher, Color.BLACK,Toast.LENGTH_SHORT, true, true).show();
+
                                 }
                                 break;
                         }
@@ -79,6 +84,11 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 }
             }
         });
+    }
+    protected void initUI()
+    {
+        payButton=(ProSwipeButton)findViewById(R.id.payButton);
+       reloadUser();
 
         offlineLin=(LinearLayout)findViewById(R.id.offlineLin);
         offlineLin1=(LinearLayout)findViewById(R.id.offlineLin1);

@@ -49,7 +49,7 @@
                             android:layout_weight="5"
                             android:background="@drawable/ic_prof_bg"
                             android:padding="16dp"
-                            app:srcCompat="@drawable/ic_profile" />
+                            app:srcCompat="@drawable/ic_users" />
 
                         <TextView
                             android:id="@+id/profileTextView"
@@ -468,18 +468,33 @@
                 android:layout_weight="1"
                 android:gravity="center">
 
-                <ImageView
-                    android:id="@+id/imageView6"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="false"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignWithParentIfMissing="false"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:alpha=".2"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/fest" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="false"
+                        android:layout_alignParentStart="false"
+                        android:layout_alignWithParentIfMissing="false"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:alpha=".2"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/fest" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="The Festival of Joy"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black_alpha_50"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
             </TableRow>
 
