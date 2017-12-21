@@ -56,16 +56,16 @@ public class EventsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.cart) {
-
-            startActivity(new Intent(EventsActivity.this,CartActivity.class));
-
-
-    }
-       else if (item.getItemId()==R.id.broch){
-
-        }
-        return true;
+//        if(item.getItemId()==R.id.cart) {
+//
+//            startActivity(new Intent(EventsActivity.this,CartActivity.class));
+//
+//
+//    }
+//       else if (item.getItemId()==R.id.broch){
+//
+//        }
+        return false;
     }
 
     @Override

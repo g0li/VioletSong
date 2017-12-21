@@ -68,7 +68,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         final SharedPreferences.Editor editor = sp.edit();
 
         //check if user has provided gender prior
-
+        circUser= (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.circUser);
         if(sp.contains(GENDER)){
             //do nothing
             circUser.setImageResource(getIcon(sp.getString(GENDER,"")));
@@ -112,7 +112,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
         email=(TextView) findViewById(R.id.email);
         events=findViewById(R.id.events);
         eventsTitle=findViewById(R.id.eventsTitle);
-        circUser= (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.circUser);
         gbutton=(Button)findViewById(R.id.gsigninForEmail);
         signInInfo=findViewById(R.id.signInInfo);
         gbutton.setOnClickListener(this);
