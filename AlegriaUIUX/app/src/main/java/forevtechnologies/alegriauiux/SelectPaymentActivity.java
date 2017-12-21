@@ -36,59 +36,36 @@ import java.util.List;
 import es.dmoral.toasty.Toasty;
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
-public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener{
+import static android.view.View.GONE;
+
+public class SelectPaymentActivity extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
     LinearLayout offlineLin, offlineLin1, onlineLin, onlineLin1;
     TextView offlineTextView,offlineTextView1, onlineTextView, onlineTextView1;
     RadioButton offlineRadio, onlineRadio;
     CardView offlineCardView, onlineCardView;
     ProSwipeButton payButton;
     NiceSpinner spinner;
-    protected void reloadUser()
-    { FirebaseAuth mAuth=FirebaseAuth.getInstance();
-        final FirebaseUser user=mAuth.getCurrentUser();
+    Intent payz;
+    FirebaseUser currentUser;
 
-        user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void initUI()
+    {
+
+        payz=new Intent(SelectPaymentActivity.this,CheckoutActivity.class);
+        payButton=(ProSwipeButton)findViewById(R.id.payButton);
+        currentUser=FirebaseAuth.getInstance().getCurrentUser();
+        currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    Log.w("Reload","successful");
-
-                    if(user.isAnonymous()){
-                        payButton.setEnabled(false);
-                        payButton.setFocusableInTouchMode(false);
-                        Toast.makeText(SelectPaymentActivity.this, "Please login", Toast.LENGTH_SHORT).show();
-                        //Toasty.custom(SelectPaymentActivity.this, "Please login.", R.mipmap.ic_launcher, Color.WHITE,Toast.LENGTH_SHORT, true, true).show();
-                        //add alert box to redirect to profile
-                    }
-                    else{
-                        switch (user.getProviders().get(0)){
-                            case "google.com":
-                                break;
-                            case "password":
-                                if(!user.isEmailVerified()){
-                                    payButton.setEnabled(false);
-                                    payButton.setFocusableInTouchMode(false);
-                                    Toast.makeText(SelectPaymentActivity.this, "Kindly link your account with Google+\nin Profile page", Toast.LENGTH_SHORT).show();
-                                    //Toasty.custom(SelectPaymentActivity.this, "Kindly link your account with Google+ in Profile.", R.mipmap.ic_launcher, Color.BLACK,Toast.LENGTH_SHORT, true, true).show();
-
-                                }
-                                break;
-                        }
-                    }
-
+                    checkUserAuth(currentUser);
                 }
                 else{
-                    Log.w("Reload","unsuccessful");
-                    Toast.makeText(SelectPaymentActivity.this,"Try checking your internet connection.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SelectPaymentActivity.this,"Connection failed \n Please try again",Toast.LENGTH_LONG).show();
                     finish();
                 }
             }
         });
-    }
-    protected void initUI()
-    {
-        payButton=(ProSwipeButton)findViewById(R.id.payButton);
-       reloadUser();
 
         offlineLin=(LinearLayout)findViewById(R.id.offlineLin);
         offlineLin1=(LinearLayout)findViewById(R.id.offlineLin1);
@@ -127,18 +104,8 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         spinner=(NiceSpinner)findViewById(R.id.paymentSpinner);
         List<String> payMethod= new LinkedList<>(Arrays.asList("Net Banking","Debit Card", "Paytm"));
         spinner.attachDataSource(payMethod);
-        final Intent payz =new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                payz.putExtra("method",adapterView.getItemAtPosition(i).toString());
-            }
+        spinner.setOnItemSelectedListener(this);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
         payButton.setOnSwipeListener(new ProSwipeButton.OnSwipeListener() {
             @Override
             public void onSwipeConfirm() {
@@ -156,7 +123,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void run() {
                         finish();
-                        if(payz.hasExtra("method")){
+                        if(payz.hasExtra("METHOD")){
                             startActivity(payz);
                         }
                         else
@@ -171,8 +138,26 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         
     }
 
+    private void checkUserAuth(FirebaseUser user) {
+        if(user.isAnonymous()){
+            Toast.makeText(this, "\"Please link your account with Google in the Profile page.\"", Toast.LENGTH_SHORT).show();
+            payButton.setEnabled(false);
+        }
+        else{
+            switch (user.getProviders().get(0)){
+                case "google.com":
+                    payButton.setEnabled(true);
+                    break;
+                case "password":
+                    Toast.makeText(SelectPaymentActivity.this,"Please link your account with Google in the Profile page.",Toast.LENGTH_LONG).show();
+                    payButton.setEnabled(false);
+                    break;
+            }
+        }
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_payment);
         initUI();
@@ -188,6 +173,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 onlineLin.setBackgroundColor(R.color.holo_green_light);
                 offlineLin.setBackgroundColor(Color.TRANSPARENT);
                 payButton.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.VISIBLE);
                 activityChange("Online");
                 break;
             case 1:
@@ -196,6 +182,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 offlineLin.setBackgroundColor(R.color.holo_green_light);
                 onlineLin.setBackgroundColor(Color.TRANSPARENT);
                 payButton.setVisibility(View.VISIBLE);
+                spinner.setVisibility(View.GONE);
                 activityChange("Offline");
                 break;
 
@@ -233,5 +220,35 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     @Override
     public void finish() {
         super.finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.w("Item selected","Pos"+position);
+        switch (position){
+            case 0:
+                Log.w("Item:","NetBanking");
+//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
+                payz.putExtra("METHOD","NetBanking");
+                break;
+            case 1:
+                Log.w("Item:","DebitCard");
+//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
+                payz.putExtra("METHOD","DebitCard");
+                break;
+            case 2:
+                Log.w("Item:","Paytm");
+//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
+                payz.putExtra("METHOD","Paytm");
+                break;
+        }
+
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
