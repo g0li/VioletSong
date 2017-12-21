@@ -14,10 +14,8 @@
         android:id="@+id/wave_head"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        frisson:gradientType="radial"
-        frisson:gradient_endColor="#56455a64"
-        frisson:gradient_startColor="#5660758b"
-        frisson:src="@drawable/appslider"
+        app:tintColor="#00000000"
+        frisson:src="@drawable/proc"
         frisson:tideCount="3"
         frisson:tideHeight="40dp"/>
 

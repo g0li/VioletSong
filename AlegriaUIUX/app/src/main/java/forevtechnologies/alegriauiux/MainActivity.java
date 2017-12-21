@@ -1,5 +1,6 @@
 package forevtechnologies.alegriauiux;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.*;
 import android.support.v7.app.AppCompatActivity;
