@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
@@ -63,6 +65,9 @@ public class TimeLineActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_timeline);
         sp=getSharedPreferences(SharedPreferenceStringTags.USER_NOTIFICATIONS,MODE_PRIVATE);
         editor=sp.edit();
@@ -90,22 +95,27 @@ public class TimeLineActivity extends AppCompatActivity {
                 if(isChecked){
                     if(!sp.contains(mDataList.get(itemPosition).getMessage())){
                         editor.putString(mDataList.get(itemPosition).getMessage(),mDataList.get(itemPosition).getMessage());
+                        Log.w("Preference:","Added");
                         editor.commit();
                     }
                     buttonView.setText("ADDED!");
                 }
                 else{
                     if(sp.contains(mDataList.get(itemPosition).getMessage())){
+                        //put code to remove
                         editor.remove(mDataList.get(itemPosition).getMessage());
                         editor.commit();
+                        buttonView.setText("REMOVED :(");
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                buttonView.setText("NOTIFY ME");
+                            }
+                        }, 1000);
                     }
-                    buttonView.setText("REMOVED :(");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            buttonView.setText("NOITFY ME");
-                        }
-                    }, 1500);
+                    else{
+                        buttonView.setText("NOTIFY ME");
+                    }
                 }
             }
         });
