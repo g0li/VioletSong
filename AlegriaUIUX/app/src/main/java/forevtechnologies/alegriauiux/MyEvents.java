@@ -17,7 +17,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,26 +43,61 @@ public class MyEvents extends AppCompatActivity {
     DayAdapter dayAdapter;
     ImageView backButton;
     List<AthleticModel> items=new ArrayList<>();
+    DatabaseReference mRef;
+    TextView MyEvents;
+
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
+
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        mRef = database.getReference("UserData").child(mRef.getKey());
+
+        mRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String value = dataSnapshot.getValue(String.class);
+                Log.d("TAG","Value = " + value);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
         dayAdapter=new DayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);

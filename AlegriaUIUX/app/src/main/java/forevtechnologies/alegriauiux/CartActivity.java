@@ -30,13 +30,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import forevtechnologies.alegriauiux.adapter.CartAdapter;
 import forevtechnologies.alegriauiux.adapter.TicketCartAdapter;
+import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.TicketCartModel;
+
+import static forevtechnologies.alegriauiux.WHATSHOT.CHAT_REFERENCE;
 
 public class CartActivity extends AppCompatActivity implements View.OnClickListener{
     Intent b;
@@ -46,6 +50,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     TextView textView;
     FirebaseUser user;
     DatabaseReference databaseReference;
+
+    DatabaseReference mFirebaseDatabaseReference;
 
 
     public RecyclerView recyclerView;
@@ -58,10 +64,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.main_cart);
         setTitle("Cart");
 
-        final FirebaseDatabase  database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        databaseReference = FirebaseDatabase.getInstance().getReference("UserData");
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference(user.getUid());
 
         user=FirebaseAuth.getInstance().getCurrentUser();
         final List<CartModel> items=new ArrayList<>(88);
@@ -76,7 +80,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
                 prefs.edit().putInt("totalPrice",totalPrice).apply();
                 if(b.getStringExtra("actName").equals("Reg")){
-                    databaseReference.child(databaseReference.getKey()).child("Unique ID").setValue(user.getUid());
                     for(CartModel m : items ){
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
                         databaseReference.child(databaseReference.push().getKey()).child("Event").setValue(m.getName());
