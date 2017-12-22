@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     CartAdapter cartAdapter;
     TextView textView;
     FirebaseUser user;
+    DatabaseReference databaseReference;
+
 
     public RecyclerView recyclerView;
     @Override
@@ -53,6 +57,12 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_cart);
         setTitle("Cart");
+
+        final FirebaseDatabase  database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+        databaseReference = FirebaseDatabase.getInstance().getReference("UserData");
+
+
         user=FirebaseAuth.getInstance().getCurrentUser();
         final List<CartModel> items=new ArrayList<>(88);
         final List<TicketCartModel> tItems=new ArrayList<>();
@@ -65,11 +75,11 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 SharedPreferences prefs = getSharedPreferences(
                         getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
                 prefs.edit().putInt("totalPrice",totalPrice).apply();
-
                 if(b.getStringExtra("actName").equals("Reg")){
+                    databaseReference.child(databaseReference.getKey()).child("Unique ID").setValue(user.getUid());
                     for(CartModel m : items ){
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
-
+                        databaseReference.child(databaseReference.push().getKey()).child("Event").setValue(m.getName());
                     }
                 }
                 else if((b.getStringExtra("actName").equals("Tickets"))){
