@@ -67,7 +67,7 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     public void onClick(View view) {
        switch (view.getId()){
            case R.id.info_proceed :
-               if((user_name.getText().equals("")) && user_email.getText().equals("") && user_phone.getText().equals("")){
+               if(user_email.getText().toString().equals("") && user_phone.getText().toString().equals("")){
                    Toast.makeText(getBaseContext(),"Please enter the data",Toast.LENGTH_LONG).show();
                 }
                 else
@@ -80,6 +80,7 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
                   Log.w("SPPHONE","Phone entered");
                   editor.commit();
                   startActivity(new Intent(UserInfoForm.this,SelectPaymentActivity.class));
+                  finish();
                }
 
        }
