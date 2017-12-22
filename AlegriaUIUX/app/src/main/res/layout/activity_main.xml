@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_scrollFlags="scroll|enterAlways"
-        android:navigationIcon="@mipmap/ic_launcher_round"
+        android:navigationIcon="@mipmap/tikdedha"
         android:title="Alegria"
         android:subtitle="Mumbai - The city of dreams."
         android:background="?attr/colorPrimary"

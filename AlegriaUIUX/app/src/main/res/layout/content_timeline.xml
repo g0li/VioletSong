@@ -85,41 +85,41 @@
                         android:textStyle="italic" />
                 </LinearLayout>
 
-                <Space
-                    android:id="@+id/space"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_below="@id/locationContainer" />
-
                 <TextView
                     android:id="@+id/eventTime"
-                    android:layout_below="@id/space"
+                    android:layout_below="@id/locationContainer"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:text="The event is going to take place at the Pillai's Alegria campus at given time at so and so date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
-                <com.dd.processbutton.iml.ActionProcessButton
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/switchContainer"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/notifyButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/eventTime"
-                    android:textColor="@color/white"
-                    android:textSize="14dp"
-                    android:layout_margin="16dp"
-                    android:padding="8dp"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    app:pb_cornerRadius="48dp"
-                    app:pb_colorComplete="#aa99cc00"
-                    app:pb_colorNormal="@color/purple"
-                    app:pb_colorPressed="@color/purple"
-                    app:pb_colorProgress="@color/purple"
-                    android:text="Notify me"
-                    app:pb_textProgress="Adding.."
-                    app:pb_textComplete="Done!"
-                    app:pb_textError="Please try again" />
+                    android:layout_margin="9dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardBackgroundColor="@color/purple">
+                    <Switch
+                        android:id="@+id/switchNotify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:layout_margin="8dp"
+                        android:text="Notify Me"
+                        android:textStyle="bold"
+                        android:textOn="Added"
+                        android:textOff="Notify Me"
+                        android:switchPadding="6dp"
+                        android:textColor="@color/white"/>
+                </android.support.v7.widget.CardView>
+
+
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

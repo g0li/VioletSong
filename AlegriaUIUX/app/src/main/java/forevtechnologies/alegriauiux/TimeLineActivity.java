@@ -13,15 +13,20 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 
 import com.dd.processbutton.iml.ActionProcessButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import forevtechnologies.alegriauiux.adapter.RecyclerItemClickListener;
 import forevtechnologies.alegriauiux.models.DayWiseEvents;
@@ -52,10 +57,11 @@ public class TimeLineActivity extends AppCompatActivity {
     ImageView eventPicture;
     int itemPosition;
     TextView eventName,eventLocation,eventDate;
-    ActionProcessButton processButton;
+    Switch aSwitch;
+//    ActionProcessButton processButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
         sp=getSharedPreferences(SharedPreferenceStringTags.USER_NOTIFICATIONS,MODE_PRIVATE);
@@ -69,7 +75,7 @@ public class TimeLineActivity extends AppCompatActivity {
         mOrientation = (Orientation) Orientation.HORIZONTAL;
         mWithLinePadding = true;
 
-        setTitle(mOrientation == Orientation.HORIZONTAL ? getResources().getString(R.string.horizontal_timeline) : getResources().getString(R.string.vertical_timeline));
+        setTitle("Events Schedule");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -77,28 +83,54 @@ public class TimeLineActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
 
         cardView=findViewById(R.id.eventDescription);
-        processButton=findViewById(R.id.notifyButton);
-        processButton.setProgress(0);
-        processButton.setOnClickListener(new View.OnClickListener() {
+        aSwitch=findViewById(R.id.switchNotify);
+        aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if(!sp.contains(mDataList.get(itemPosition).getMessage())){
-                    editor.putString(mDataList.get(itemPosition).getMessage(),mDataList.get(itemPosition).getMessage());
-                    editor.commit();
-                    Log.w("Notify:","Added");
-                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+            public void onCheckedChanged(final CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if(!sp.contains(mDataList.get(itemPosition).getMessage())){
+                        editor.putString(mDataList.get(itemPosition).getMessage(),mDataList.get(itemPosition).getMessage());
+                        editor.commit();
+                    }
+                    buttonView.setText("ADDED!");
                 }
                 else{
-                    Log.w("Notify:","Added");
-                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+                    if(sp.contains(mDataList.get(itemPosition).getMessage())){
+                        editor.remove(mDataList.get(itemPosition).getMessage());
+                        editor.commit();
+                    }
+                    buttonView.setText("REMOVED :(");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            buttonView.setText("NOITFY ME");
+                        }
+                    }, 1500);
                 }
-
-                processButton.setProgress(50);
-                processButton.setProgress(100);
-                processButton.setEnabled(false);
             }
-
         });
+//        processButton=findViewById(R.id.notifyButton);
+//        processButton.setProgress(0);
+//        processButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(!sp.contains(mDataList.get(itemPosition).getMessage())){
+//                    editor.putString(mDataList.get(itemPosition).getMessage(),mDataList.get(itemPosition).getMessage());
+//                    editor.commit();
+//                    Log.w("Notify:","Added");
+//                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+//                }
+//                else{
+//                    Log.w("Notify:","Added");
+//                    Log.w("Data:",mDataList.get(itemPosition).getMessage());
+//                }
+//
+////                processButton.setProgress(50);
+////                processButton.setProgress(100);
+////                processButton.setEnabled(false);
+//            }
+//
+//        });
         cardView.setVisibility(View.GONE);
 
         initView();
@@ -252,13 +284,10 @@ public class TimeLineActivity extends AppCompatActivity {
     public void changeDescriptionModel(int eventPictureId, String eventName, String eventLocation, String eventTime){
         cardView.setVisibility(View.VISIBLE);
         if(sp.contains(eventName)){
-            processButton.setProgress(100);
-            processButton.setEnabled(false);
-            processButton.setText("Already Added");
+            aSwitch.setChecked(true);
         }
         else{
-            processButton.setProgress(0);
-            processButton.setEnabled(true);
+            aSwitch.setChecked(false);
         }
         this.eventName=findViewById(R.id.eventName);
         this.eventName.setText(eventName);

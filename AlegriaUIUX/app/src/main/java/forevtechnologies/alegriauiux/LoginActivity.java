@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity implements
     private ActionProcessButton esignin;
     private TextView guestTextView;
     private FloatingActionButton fab;
-    private ProgressBar pBar;
+    private ProgressBar pBar,googleBar;
     private CoordinatorLayout coordinatorLayout;
     private FirebaseUser currentUser;
     private Button googleButton;
@@ -121,6 +121,8 @@ public class LoginActivity extends AppCompatActivity implements
         findViewById(R.id.fab).setOnClickListener(this);
         pBar=(ProgressBar)findViewById(R.id.progressBarLogin);
         pBar.setMax(100);
+        googleBar=findViewById(R.id.googleProgressBar);
+        googleBar.setMax(100);
         coordinatorLayout=(CoordinatorLayout)findViewById(R.id.content_login_id);
         //end listeners
         //get username and password
@@ -173,6 +175,9 @@ public class LoginActivity extends AppCompatActivity implements
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        coordinatorLayout.setAlpha(0.5f);
+        googleBar.setVisibility(View.VISIBLE);
+        googleBar.setProgress(50);
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
@@ -191,11 +196,16 @@ public class LoginActivity extends AppCompatActivity implements
                             person.setName(mUserName);
                             person.setEmail(mUserEmail);
                             person.setPhoto(mUserPhoto);
+                            googleBar.setProgress(0);
+                            googleBar.setVisibility(View.GONE);
+                            coordinatorLayout.setAlpha(1);
                             startActivity(new Intent(LoginActivity.this,MainActivity.class));
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Log.d(TAG,"Authentication failed.");
-
+                            googleBar.setProgress(0);
+                            googleBar.setVisibility(View.GONE);
+                            coordinatorLayout.setAlpha(1);
                             setInputs(R.id.Gpic,true);
 
                         }
@@ -229,6 +239,9 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d(TAG, "onConnectionFailed:" + connectionResult);
+        googleBar.setProgress(0);
+        googleBar.setVisibility(View.GONE);
+        coordinatorLayout.setAlpha(1);
         setInputs(R.id.Gpic,true);
         Toast.makeText(this, "Google Play Services error.", Toast.LENGTH_SHORT).show();
     }
