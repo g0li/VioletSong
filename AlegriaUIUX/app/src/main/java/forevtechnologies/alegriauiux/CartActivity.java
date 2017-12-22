@@ -50,6 +50,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     TextView textView;
     FirebaseUser user;
     DatabaseReference databaseReference;
+    int i = 0;
 
     DatabaseReference mFirebaseDatabaseReference;
 
@@ -65,9 +66,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setTitle("Cart");
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference(user.getUid());
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
 
-        user=FirebaseAuth.getInstance().getCurrentUser();
+
         final List<CartModel> items=new ArrayList<>(88);
         final List<TicketCartModel> tItems=new ArrayList<>();
         checkOutButton=(Button)findViewById(R.id.checkout);
@@ -82,7 +83,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 if(b.getStringExtra("actName").equals("Reg")){
                     for(CartModel m : items ){
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
-                        databaseReference.push().setValue(m.getName());
+                        databaseReference.child("Event " + i).setValue(m.getName());
+                        i++;
                     }
                 }
                 else if((b.getStringExtra("actName").equals("Tickets"))){
