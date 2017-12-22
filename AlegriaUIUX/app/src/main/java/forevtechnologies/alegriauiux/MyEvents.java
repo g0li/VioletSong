@@ -43,8 +43,7 @@ public class MyEvents extends AppCompatActivity {
     DayAdapter dayAdapter;
     ImageView backButton;
     List<AthleticModel> items=new ArrayList<>();
-    DatabaseReference mRef;
-    TextView MyEvents;
+
 
 
     @Override
@@ -58,46 +57,18 @@ public class MyEvents extends AppCompatActivity {
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        mRef = database.getReference("UserData").child(mRef.getKey());
 
-        mRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("TAG","Value = " + value);
-            }
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+        items.add(new AthleticModel("Lawn", Events.values()[10],23));
         dayAdapter=new DayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);

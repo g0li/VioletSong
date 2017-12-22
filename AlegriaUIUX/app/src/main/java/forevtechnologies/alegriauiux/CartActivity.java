@@ -82,7 +82,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 if(b.getStringExtra("actName").equals("Reg")){
                     for(CartModel m : items ){
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
-                        databaseReference.child(databaseReference.push().getKey()).child("Event").setValue(m.getName());
+                        databaseReference.push().setValue(m.getName());
                     }
                 }
                 else if((b.getStringExtra("actName").equals("Tickets"))){
