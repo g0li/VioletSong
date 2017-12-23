@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,11 +24,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.paynimo.android.payment.model.request.Cart;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +44,7 @@ import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.CartModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.TicketCartModel;
+import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
 
 import static forevtechnologies.alegriauiux.WHATSHOT.CHAT_REFERENCE;
 
@@ -49,9 +55,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     CartAdapter cartAdapter;
     TextView textView;
     FirebaseUser user;
-    DatabaseReference databaseReference;
-    int i = 0;
-
+    DatabaseReference databaseReference,dChild;
+    SharedPreferences userOfflineCartItems;
     DatabaseReference mFirebaseDatabaseReference;
 
 
@@ -64,9 +69,23 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_cart);
         setTitle("Cart");
-
+        userOfflineCartItems=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        final SharedPreferences.Editor userOfflineCartItemsEditor=userOfflineCartItems.edit();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
+        user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
+                }
+                else{
+                    Toast.makeText(CartActivity.this,"Please make sure you're connected to the network",Toast.LENGTH_LONG).show();
+                    Log.w("FirebaseReload:","Failed");
+                    finish();
+                }
+            }
+        });
+
 
 
         final List<CartModel> items=new ArrayList<>(88);
@@ -82,9 +101,26 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 prefs.edit().putInt("totalPrice",totalPrice).apply();
                 if(b.getStringExtra("actName").equals("Reg")){
                     for(CartModel m : items ){
+                        //check if user has already subscribed for this event
+                        if(userOfflineCartItems.contains("Event@"+m.getName()) ||
+                                databaseReference.child("Event@"+m.getName())
+                                        .getKey()
+                                        .equals("Event@"+m.getName()))
+                        {
+                            Log.w("Skipped","Skipped");
+                            Log.w("ChildName:",
+                                    databaseReference.child("Event@"+m.getName()).getKey());
+                            continue;
+                        }
+                        //event into sharedPreference
+                        userOfflineCartItemsEditor.putString("Event@"+m.getName(),m.getName());
+                        userOfflineCartItemsEditor.commit();
+                        //event into google sheet
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
-                        databaseReference.child("Event " + i).setValue(m.getName());
-                        i++;
+                        //event into firebase database
+                        dChild=databaseReference.child("Event@"+m.getName());
+                        dChild.setValue(m.getName());
+                        Log.w("WroteData:","Yes-"+dChild.getKey());
                     }
                 }
                 else if((b.getStringExtra("actName").equals("Tickets"))){
