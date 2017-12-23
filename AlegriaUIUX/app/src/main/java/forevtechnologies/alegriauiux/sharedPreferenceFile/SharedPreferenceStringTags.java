@@ -7,5 +7,6 @@ package forevtechnologies.alegriauiux.sharedPreferenceFile;
 public class SharedPreferenceStringTags {
     public static String USER_NOTIFICATIONS="USER_NOTIFICATION";
     public static String USER_CART_DATABASE="USER_CART_DATABASE";
+    public static String USER_TICKET_DATABASE="USER_TICKET_DATABASE";
 
 }

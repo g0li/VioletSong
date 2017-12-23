@@ -55,9 +55,14 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     CartAdapter cartAdapter;
     TextView textView;
     FirebaseUser user;
-    DatabaseReference databaseReference,dChild;
-    SharedPreferences userOfflineCartItems;
+    DatabaseReference dChild;
+    SharedPreferences userOfflineCartItems,userOfflineTickets;
     DatabaseReference mFirebaseDatabaseReference;
+    DatabaseReference databaseReference,mRefTickets;
+
+
+
+
 
 
     public RecyclerView recyclerView;
@@ -70,28 +75,20 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.main_cart);
         setTitle("Cart");
         userOfflineCartItems=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        userOfflineTickets = getSharedPreferences(SharedPreferenceStringTags.USER_TICKET_DATABASE,MODE_PRIVATE);
         final SharedPreferences.Editor userOfflineCartItemsEditor=userOfflineCartItems.edit();
+        final SharedPreferences.Editor userOfflineTicketsEditor=userOfflineTickets.edit();
         user = FirebaseAuth.getInstance().getCurrentUser();
-        user.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
-                }
-                else{
-                    Toast.makeText(CartActivity.this,"Please make sure you're connected to the network",Toast.LENGTH_LONG).show();
-                    Log.w("FirebaseReload:","Failed");
-                    finish();
-                }
-            }
-        });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
+        mRefTickets = FirebaseDatabase.getInstance().getReference().child("Tickets").child(user.getUid());
 
 
 
         final List<CartModel> items=new ArrayList<>(88);
         final List<TicketCartModel> tItems=new ArrayList<>();
         checkOutButton=(Button)findViewById(R.id.checkout);
-        final SendData sendData=new SendData();
+
         b=getIntent();
         checkOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,17 +97,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
                 prefs.edit().putInt("totalPrice",totalPrice).apply();
                 if(b.getStringExtra("actName").equals("Reg")){
+
                     for(CartModel m : items ){
                         //check if user has already subscribed for this event
-                        if(userOfflineCartItems.contains("Event@"+m.getName()) ||
-                                databaseReference.child("Event@"+m.getName())
-                                        .getKey()
-                                        .equals("Event@"+m.getName()))
+                        if(userOfflineCartItems.contains("Event@"+m.getName()) || databaseReference.child("Event@"+m.getName()).getKey().equals("Event@"+m.getName()))
                         {
                             Log.w("Skipped","Skipped");
                             Log.w("ChildName:",
                                     databaseReference.child("Event@"+m.getName()).getKey());
-                            continue;
+                            //continue;
                         }
                         //event into sharedPreference
                         userOfflineCartItemsEditor.putString("Event@"+m.getName(),m.getName());
@@ -118,15 +113,25 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         //event into google sheet
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
                         //event into firebase database
-                        dChild=databaseReference.child("Event@"+m.getName());
-                        dChild.setValue(m.getName());
-                        Log.w("WroteData:","Yes-"+dChild.getKey());
+//                        Log.w("WroteData:","Yes-"+dChild.getKey());
+                        databaseReference.child("Event@"+m.getName()).setValue(m.getName());
+
                     }
                 }
                 else if((b.getStringExtra("actName").equals("Tickets"))){
                     for(TicketCartModel m: tItems ){
+                       if(userOfflineTickets.contains("Concert@"+m.getName())||mRefTickets.child("Concert@"+m.getName()).getKey().equals("Conert@"+m.getName())){
+                           Log.w("Skipped","Skipped");
+                           Log.w("Child Name",mRefTickets.child("Concert@"+m.getName()).getKey());
+                           continue;
+                       }
+                        userOfflineTicketsEditor.putString("Concert@"+m.getName(),m.getName());
+                        userOfflineTicketsEditor.commit();
+
                         new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
                         Log.w("EventBeingPosted",m.getName());
+                        mRefTickets.child("Concert@"+m.getName()).setValue(m.getName());
+
                     }
                 }
             SharedPreferences spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);

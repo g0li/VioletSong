@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/AlegriaTeamApp.iml" filepath="$PROJECT_DIR$/AlegriaTeamApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/AlegriaTeamApp.iml" filepath="$PROJECT_DIR$/AlegriaTeamApp.iml" />
+      <module fileurl="file://F:\DOCS\violetsong\AlegriaTeamApp\AlegriaTeamApp.iml" filepath="F:\DOCS\violetsong\AlegriaTeamApp\AlegriaTeamApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\DOCS\violetsong\AlegriaTeamApp\app\app.iml" filepath="F:\DOCS\violetsong\AlegriaTeamApp\app\app.iml" />
     </modules>
   </component>
 </project>

@@ -30,9 +30,6 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     SharedPreferences sp;
     Button proceed;
     TextInputEditText user_name,user_phone,user_email;
-    private static final String NAME = "NAME";
-    private static final String EMAIL = "EMAIL";
-    private static final String PHONE = "PHONE";
     SharedPreferences.Editor editor;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

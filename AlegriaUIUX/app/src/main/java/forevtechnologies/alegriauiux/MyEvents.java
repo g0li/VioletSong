@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MyEvents extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     String UID,mEvent;
     DatabaseReference databaseReference;
+    List<String> event_item = new ArrayList<>();
 
 
 
@@ -72,13 +74,13 @@ public class MyEvents extends AppCompatActivity {
         rvAthletics=findViewById(R.id.myEventsRecycler);
 
 
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mEvent = String.valueOf(ds.child(UID).getValue());
-                    Toast.makeText(getBaseContext(), mEvent, Toast.LENGTH_LONG).show();
-
+                    mEvent = String.valueOf(ds.child(UID).child("Event").getValue());
+                    event_item.add(mEvent);
                 }
             }
 
