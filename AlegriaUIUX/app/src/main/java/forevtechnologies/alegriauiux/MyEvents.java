@@ -51,7 +51,7 @@ public class MyEvents extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     String UID,mEvent;
     DatabaseReference databaseReference;
-    
+
 
 
     @Override
@@ -77,7 +77,7 @@ public class MyEvents extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     mEvent = String.valueOf(ds.child(UID).getValue());
-                    //Toast.makeText(getBaseContext(), mEvent, Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), mEvent, Toast.LENGTH_LONG).show();
 
                 }
             }
