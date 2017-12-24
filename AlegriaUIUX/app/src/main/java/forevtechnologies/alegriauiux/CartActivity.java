@@ -57,7 +57,8 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseUser user;
     SharedPreferences userOfflineCartItems,userOfflineTickets;
     DatabaseReference databaseReference,mRefTickets;
-
+    public static String TICKET_EXISTS="TICKET_EXISTS";
+    public static String CART_EXISTS="CART_EXISTS";
 
 
 
@@ -133,7 +134,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 }
             SharedPreferences spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);
             if(spuser.contains("NAME")){
-
                 startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));}
             else{
                 startActivity(new Intent(CartActivity.this,UserInfoForm.class));
