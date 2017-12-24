@@ -55,9 +55,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     CartAdapter cartAdapter;
     TextView textView;
     FirebaseUser user;
-    DatabaseReference dChild;
     SharedPreferences userOfflineCartItems,userOfflineTickets;
-    DatabaseReference mFirebaseDatabaseReference;
     DatabaseReference databaseReference,mRefTickets;
 
 
@@ -113,7 +111,6 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         //event into google sheet
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
                         //event into firebase database
-//                        Log.w("WroteData:","Yes-"+dChild.getKey());
                         databaseReference.child("Event@"+m.getName()).setValue(m.getName());
 
                     }
