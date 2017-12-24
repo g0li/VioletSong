@@ -33,13 +33,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
+import forevtechnologies.alegriauiux.adapter.MyEventsDayAdapter;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.GetEvents;
+import forevtechnologies.alegriauiux.models.MyEventsAthleticModel;
 import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
 
 
@@ -49,17 +52,15 @@ import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceString
 
 public class MyEvents extends AppCompatActivity {
     RecyclerView rvAthletics;
-    DayAdapter dayAdapter;
+    MyEventsDayAdapter dayAdapter;
     ImageView backButton;
-    List<AthleticModel> items=new ArrayList<>();
+    List<MyEventsAthleticModel> items=new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
     String UID,mEvent;
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
     List<String> event_item = new ArrayList<>();
-    String currentEvent;
-    int i;
-
+    SharedPreferences sp;
 
 
     @Override
@@ -75,7 +76,8 @@ public class MyEvents extends AppCompatActivity {
         databaseReference = firebaseDatabase.getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         UID = user.getUid();
-
+        sp=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        Map<String,?> cartItems=sp.getAll();
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
@@ -110,8 +112,7 @@ public class MyEvents extends AppCompatActivity {
 //
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-        dayAdapter=new DayAdapter(this);
+        dayAdapter=new MyEventsDayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
         backButton.setOnClickListener(new View.OnClickListener() {
