@@ -56,11 +56,12 @@ public class MyEvents extends AppCompatActivity {
     ImageView backButton;
     List<MyEventsAthleticModel> items=new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
-    String UID,mEvent;
+    String UID,mEvent,currentEvent;
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
     List<String> event_item = new ArrayList<>();
     SharedPreferences sp;
+    int i;
 
 
     @Override
@@ -70,14 +71,18 @@ public class MyEvents extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
+
         offlineitems = getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        final SharedPreferences.Editor offlineitemsEditor = offlineitems.edit();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        UID = user.getUid();
-        sp=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
-        Map<String,?> cartItems=sp.getAll();
+        if (user != null) {
+            UID = user.getUid();
+        }
+//        sp=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+//        Map<String,?> cartItems=sp.getAll();
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
@@ -87,14 +92,14 @@ public class MyEvents extends AppCompatActivity {
         databaseReference.child("User Data").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Map<String,?> itemsMap = offlineitems.getAll();
-                for (Map.Entry<String, ? > entry : itemsMap.entrySet()){
-                 //   Log.d("map values", entry.getValue().toString());
-                    currentEvent = entry.getValue().toString();
-                    mEvent = dataSnapshot.child("Event@"+currentEvent).getValue(String.class);
-                    Log.d("Data is ",mEvent);
-                    items.add(new AthleticModel("Lawn",,23));
-                }
+                    mEvent = String.valueOf(dataSnapshot.getValue());
+                   if(!offlineitems.contains(mEvent)){
+                       offlineitemsEditor.putString("Event@"+mEvent,mEvent);
+                       offlineitemsEditor.commit();
+                       Log.d("ADDED",mEvent);
+                   }
+
+
             }
 
             @Override
@@ -102,6 +107,7 @@ public class MyEvents extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"Failed read value",Toast.LENGTH_SHORT).show();
             }
         });
+
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
@@ -112,6 +118,17 @@ public class MyEvents extends AppCompatActivity {
 //
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
+
+        Map<String,?> itemsMap = offlineitems.getAll();
+        if(!itemsMap.isEmpty()) {
+            for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
+                //   Log.d("map values", entry.getValue().toString());
+                currentEvent = entry.getValue().toString();
+                items.add(new MyEventsAthleticModel("Lawn", currentEvent, 23));
+            }
+        }
+
+
         dayAdapter=new MyEventsDayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
