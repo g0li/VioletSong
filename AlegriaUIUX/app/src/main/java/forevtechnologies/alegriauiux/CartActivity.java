@@ -127,7 +127,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
                         new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
                         Log.w("EventBeingPosted",m.getName());
-                        mRefTickets.child("Concert@"+m.getName()).setValue(m.getName());
+                        mRefTickets.child("Concert@"+m.getName()+String.valueOf(m.getPrice())).setValue(m.getName());
 
                     }
                 }

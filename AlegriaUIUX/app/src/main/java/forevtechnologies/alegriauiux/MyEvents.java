@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -33,11 +34,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.GetEvents;
+import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
 
 
 /**
@@ -52,7 +55,10 @@ public class MyEvents extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
     String UID,mEvent;
     DatabaseReference databaseReference;
+    SharedPreferences offlineitems;
     List<String> event_item = new ArrayList<>();
+    String currentEvent;
+    int i;
 
 
 
@@ -63,6 +69,7 @@ public class MyEvents extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
+        offlineitems = getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
@@ -75,18 +82,22 @@ public class MyEvents extends AppCompatActivity {
 
 
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child("User Data").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mEvent = String.valueOf(ds.child(UID).child("Event").getValue());
-                    event_item.add(mEvent);
+                Map<String,?> itemsMap = offlineitems.getAll();
+                for (Map.Entry<String, ? > entry : itemsMap.entrySet()){
+                 //   Log.d("map values", entry.getValue().toString());
+                    currentEvent = entry.getValue().toString();
+                    mEvent = dataSnapshot.child("Event@"+currentEvent).getValue(String.class);
+                    Log.d("Data is ",mEvent);
+                    items.add(new AthleticModel("Lawn",,23));
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(getBaseContext(),"Failed read value",Toast.LENGTH_SHORT).show();
             }
         });
 //        items.add(new AthleticModel("Lawn", Events.values()[10],23));
