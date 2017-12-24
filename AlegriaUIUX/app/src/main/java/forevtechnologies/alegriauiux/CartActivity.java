@@ -108,6 +108,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         //event into sharedPreference
                         userOfflineCartItemsEditor.putString("Event@"+m.getName(),m.getName());
+                        if(!userOfflineCartItems.contains(CART_EXISTS)){userOfflineCartItemsEditor.putString(CART_EXISTS,CART_EXISTS);}
                         userOfflineCartItemsEditor.commit();
                         //event into google sheet
                         new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
@@ -124,6 +125,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                            continue;
                        }
                         userOfflineTicketsEditor.putString("Concert@"+m.getName(),m.getName());
+                        if(!userOfflineTickets.contains(TICKET_EXISTS)){userOfflineTicketsEditor.putString(TICKET_EXISTS,TICKET_EXISTS);}
                         userOfflineTicketsEditor.commit();
 
                         new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
@@ -134,8 +136,36 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                 }
             SharedPreferences spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);
             if(spuser.contains("NAME")){
+                //check if EventCart is empty
+                if(items.size()==0){
+                    if(userOfflineCartItems.contains(CART_EXISTS)){
+                        userOfflineCartItemsEditor.remove(CART_EXISTS);
+                        userOfflineCartItemsEditor.commit();
+                    }
+                }
+                //check if TicketCart is empty
+                if(tItems.size()==0){
+                    if(userOfflineTickets.contains(TICKET_EXISTS)){
+                        userOfflineTicketsEditor.remove(TICKET_EXISTS);
+                        userOfflineTicketsEditor.commit();
+                    }
+                }
                 startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));}
             else{
+                //check if EventCart is empty
+                if(items.size()==0){
+                    if(userOfflineCartItems.contains(CART_EXISTS)){
+                        userOfflineCartItemsEditor.remove(CART_EXISTS);
+                        userOfflineCartItemsEditor.commit();
+                    }
+                }
+                //check if TicketCart is empty
+                if(tItems.size()==0){
+                    if(userOfflineTickets.contains(TICKET_EXISTS)){
+                        userOfflineTicketsEditor.remove(TICKET_EXISTS);
+                        userOfflineTicketsEditor.commit();
+                    }
+                }
                 startActivity(new Intent(CartActivity.this,UserInfoForm.class));
             }
             }

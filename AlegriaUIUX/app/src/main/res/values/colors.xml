@@ -38,6 +38,7 @@
     <color name="purple">#7B1FA2</color>
     <color name="purple_form">#7B1FA2</color>
     <color name="blue">#2196f3</color>
+    <color name="blue_form">#2ce2be</color>
     <color name="teal">#00bfa5</color>
     <color name="red">#D50000</color>
     <color name="loginActivityButtons">#559797</color>

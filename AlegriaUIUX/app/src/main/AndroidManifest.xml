@@ -49,6 +49,10 @@
             android:name=".SignUpActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".PaymentSucceededPage"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="Payment Received">
+        </activity>
 
         <activity
             android:name=".SplashActivity"
