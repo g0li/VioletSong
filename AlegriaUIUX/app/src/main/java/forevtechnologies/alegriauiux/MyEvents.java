@@ -92,13 +92,8 @@ public class MyEvents extends AppCompatActivity {
         databaseReference.child("User Data").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                    mEvent = String.valueOf(dataSnapshot.getValue());
-                   if(!offlineitems.contains(mEvent)){
-                       offlineitemsEditor.putString("Event@"+mEvent,mEvent);
-                       offlineitemsEditor.commit();
-                       Log.d("ADDED",mEvent);
-                   }
 
+                                     Log.d("NUMBER:",""+dataSnapshot.getChildrenCount());
 
             }
 
@@ -107,17 +102,6 @@ public class MyEvents extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"Failed read value",Toast.LENGTH_SHORT).show();
             }
         });
-
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
-//        items.add(new AthleticModel("Lawn", Events.values()[10],23));
 
         Map<String,?> itemsMap = offlineitems.getAll();
         if(!itemsMap.isEmpty()) {
