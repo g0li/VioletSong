@@ -119,11 +119,14 @@ public class MyEvents extends AppCompatActivity {
               String mEvent = child.getValue().toString();
               Log.d("data",child.getValue().toString());
               items.add(new MyEventsAthleticModel("Lawn","Hello", 23));
-              Toast.makeText(getBaseContext(),child.getValue().toString(),Toast.LENGTH_SHORT).show();
               itemPos.add(mEvent);
           }
 
-
+               // Toast.makeText(getBaseContext(),String.valueOf(itemPos.size()),Toast.LENGTH_SHORT).show();
+               for(String events : itemPos){
+                   items.add(new MyEventsAthleticModel("Lawn",events,23));
+                   Toast.makeText(getBaseContext(),events,Toast.LENGTH_SHORT).show();
+               }
 
 
       }
@@ -134,22 +137,18 @@ public class MyEvents extends AppCompatActivity {
       }
   });
 
-//       Map<String,?> itemsMap = offlineitems.getAll();
-//               for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
-//                   if (!itemsMap.isEmpty()) {
-//                       currentEvent = entry.getValue().toString();
-//                       if(currentEvent.equals("CART_EXISTS"))
-//                           continue;
-//                       items.add(new MyEventsAthleticModel("Lawn",currentEvent, 23));
-//                       itemPos.add(currentEvent);
-//               }
-//           }
-//        Toast.makeText(getBaseContext(),String.valueOf(EVENTDATA.size()),Toast.LENGTH_SHORT).show();
-//        while(!EVENTDATA.isEmpty()){
-//            items.add(new MyEventsAthleticModel("Lawn",EVENTDATA.get(i),23));
-//            Toast.makeText(getBaseContext(),EVENTDATA.get(i),Toast.LENGTH_SHORT).show();
-//            i++;
-//        }
+//      Map<String,?> itemsMap = offlineitems.getAll();
+//              for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
+//                  if (!itemsMap.isEmpty()) {
+//                      currentEvent = entry.getValue().toString();
+//                      if(currentEvent.equals("CART_EXISTS"))
+//                          continue;
+//                      Toast.makeText(getBaseContext(),currentEvent,Toast.LENGTH_SHORT).show();
+//                     // items.add(new MyEventsAthleticModel("Lawn",currentEvent, 23));
+//                      itemPos.add(currentEvent);
+//              }
+//          }
+
 
 
                 dayAdapter = new MyEventsDayAdapter(this);
