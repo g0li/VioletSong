@@ -46,6 +46,7 @@ public class MyEventsDayAdapter extends RecyclerView.Adapter<MyEventsDayAdapter.
     {
         context=c;
         editor=c.getSharedPreferences(c.getString(R.string.shared_preference_cart),Context.MODE_PRIVATE).edit();
+
     }
 
 

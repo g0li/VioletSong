@@ -47,6 +47,7 @@ import com.vansuita.gaussianblur.GaussianBlur;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -79,10 +80,12 @@ public class MyEvents extends AppCompatActivity {
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
     List<String> itemPos = new ArrayList<>();
+    List<String> EVENTDATA = new ArrayList<>();
     public final static int WIDTH=1000;
     Dialog QRCODE_DISPLAY;
     Button btn_close;
     ImageView qr_image;
+    int i = 0;
 
 
     @Override
@@ -111,33 +114,45 @@ public class MyEvents extends AppCompatActivity {
 
         databaseReference.child("User Data").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Log.d("NUMBER:",""+dataSnapshot.getChildrenCount());
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getBaseContext(),"Failed read value",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-       Map<String,?> itemsMap = offlineitems.getAll();
-               for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
-                   if (!itemsMap.isEmpty()) {
-                       currentEvent = entry.getValue().toString();
-                       if(currentEvent.equals("CART_EXISTS"))
-                           continue;
-                       items.add(new MyEventsAthleticModel("Lawn", currentEvent, 23));
-                       itemPos.add(currentEvent);
-               }
-           }
+      public void onDataChange(DataSnapshot dataSnapshot) {
+          for(DataSnapshot child : dataSnapshot.getChildren()){
+              String mEvent = child.getValue().toString();
+              Log.d("data",child.getValue().toString());
+              items.add(new MyEventsAthleticModel("Lawn","Hello", 23));
+              Toast.makeText(getBaseContext(),child.getValue().toString(),Toast.LENGTH_SHORT).show();
+              itemPos.add(mEvent);
+          }
 
 
 
 
-        dayAdapter=new MyEventsDayAdapter(this);
+      }
+
+      @Override
+      public void onCancelled(DatabaseError databaseError) {
+
+      }
+  });
+
+//       Map<String,?> itemsMap = offlineitems.getAll();
+//               for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
+//                   if (!itemsMap.isEmpty()) {
+//                       currentEvent = entry.getValue().toString();
+//                       if(currentEvent.equals("CART_EXISTS"))
+//                           continue;
+//                       items.add(new MyEventsAthleticModel("Lawn",currentEvent, 23));
+//                       itemPos.add(currentEvent);
+//               }
+//           }
+//        Toast.makeText(getBaseContext(),String.valueOf(EVENTDATA.size()),Toast.LENGTH_SHORT).show();
+//        while(!EVENTDATA.isEmpty()){
+//            items.add(new MyEventsAthleticModel("Lawn",EVENTDATA.get(i),23));
+//            Toast.makeText(getBaseContext(),EVENTDATA.get(i),Toast.LENGTH_SHORT).show();
+//            i++;
+//        }
+
+
+                dayAdapter = new MyEventsDayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -213,7 +228,6 @@ public class MyEvents extends AppCompatActivity {
             btn_close = QRCODE_DISPLAY.findViewById(R.id.close_btn);
             qr_image = QRCODE_DISPLAY.findViewById(R.id.image_qr);
             btn_close.setEnabled(true);
-
             qr_image.setImageBitmap(bitmap);
             btn_close.setOnClickListener(new View.OnClickListener() {
                 @Override
