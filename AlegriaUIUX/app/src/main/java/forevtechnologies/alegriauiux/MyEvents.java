@@ -1,22 +1,27 @@
 package forevtechnologies.alegriauiux;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
@@ -34,6 +39,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.vansuita.gaussianblur.GaussianBlur;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +58,11 @@ import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.GetEvents;
 import forevtechnologies.alegriauiux.models.MyEventsAthleticModel;
 import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
+import jp.wasabeef.blurry.Blurry;
+
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.WHITE;
+import static forevtechnologies.alegriauiux.adapter.DayAdapter.context;
 
 
 /**
@@ -64,6 +79,10 @@ public class MyEvents extends AppCompatActivity {
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
     List<String> itemPos = new ArrayList<>();
+    public final static int WIDTH=1000;
+    Dialog QRCODE_DISPLAY;
+    Button btn_close;
+    ImageView qr_image;
 
 
     @Override
@@ -116,6 +135,8 @@ public class MyEvents extends AppCompatActivity {
            }
 
 
+
+
         dayAdapter=new MyEventsDayAdapter(this);
         dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
@@ -139,12 +160,41 @@ public class MyEvents extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 final int position = viewHolder.getAdapterPosition();
+
                 if(direction == ItemTouchHelper.RIGHT){
-                    Intent qrCode = new Intent(getBaseContext(),QRCode.class);
-                    qrCode.putExtra("Data",itemPos.get(position));
-                    startActivity(qrCode);
-                    finish();
+                    String DATA = itemPos.get(position);
+                    try {
+                        Bitmap bitmap = encodeAsBitmap(DATA);
+                        CustomDialog(bitmap);
+
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
                 }
+
+            }
+
+            Bitmap encodeAsBitmap(String str) throws WriterException {
+                BitMatrix result;
+                try {
+                    result = new MultiFormatWriter().encode(str,
+                            BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
+                } catch (IllegalArgumentException iae) {
+                    // Unsupported format
+                    return null;
+                }
+                int w = result.getWidth();
+                int h = result.getHeight();
+                int[] pixels = new int[w * h];
+                for (int y = 0; y < h; y++) {
+                    int offset = y * w;
+                    for (int x = 0; x < w; x++) {
+                        pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                    }
+                }
+                Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                bitmap.setPixels(pixels, 0,1000, 0, 0, w, h);
+                return bitmap;
             }
         };
 
@@ -153,6 +203,26 @@ public class MyEvents extends AppCompatActivity {
 
 
 
+    }
+
+    public void CustomDialog(Bitmap bitmap){
+            QRCODE_DISPLAY = new Dialog(MyEvents.this);
+            QRCODE_DISPLAY.setContentView(R.layout.qr_dialog);
+            QRCODE_DISPLAY.setTitle("QR CODE");
+
+            btn_close = QRCODE_DISPLAY.findViewById(R.id.close_btn);
+            qr_image = QRCODE_DISPLAY.findViewById(R.id.image_qr);
+            btn_close.setEnabled(true);
+
+            qr_image.setImageBitmap(bitmap);
+            btn_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    QRCODE_DISPLAY.cancel();
+                    finish();
+                }
+            });
+            QRCODE_DISPLAY.show();
     }
 
 
