@@ -16,11 +16,14 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import forevtechnologies.alegriauiux.CartActivity;
 import forevtechnologies.alegriauiux.R;
 import forevtechnologies.alegriauiux.fragments.FullInfoTabFragment;
+import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.MyEventsAthleticModel;
 
 
@@ -33,7 +36,8 @@ public class MyEventsDayAdapter extends RecyclerView.Adapter<MyEventsDayAdapter.
 
     final ArrayList <String> eventsDataList= new ArrayList<String>();
     SharedPreferences.Editor editor;
-
+    Map<String,String> drawableMap= new HashMap<>();
+    String s;
     private Bundle b=new Bundle();
     int BUNDLE_SIZE=0;
     public static     Context context;
@@ -46,6 +50,9 @@ public class MyEventsDayAdapter extends RecyclerView.Adapter<MyEventsDayAdapter.
     {
         context=c;
         editor=c.getSharedPreferences(c.getString(R.string.shared_preference_cart),Context.MODE_PRIVATE).edit();
+        for(Events x: Events.values()){
+            drawableMap.put(x.getEvents(),x.toString());
+        }
 
     }
 
@@ -63,88 +70,11 @@ public class MyEventsDayAdapter extends RecyclerView.Adapter<MyEventsDayAdapter.
         holder.tvAthleticName.setText(item.getLocation());
         holder.tvCountry.setText(item.getEvents());
         holder.tvScore.setText(String.valueOf(item.getScore()));
-         if(0<=position && position>=13)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_tech);
-//            switch (position){
-//                case 0:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 1:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 2:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 3:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 4:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 5:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 6:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 7:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 8:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 9:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 10:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 11:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 12:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                case 13:
-//                    holder.ivAthleticFlag.setImageResource(R.drawable.rc);
-//                    break;
-//                default:
-//
-//            }
-        }
-        else if(14<=position && position>=25)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_pa);
-        }
-        else if(26<=position && position>=33)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_inf);
-        }
-        else if(34<=position && position>=48)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_ws);
-        }
-        else if(49<=position && position>=70)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_ws);
-        }
-        else if(71<=position && position>=79)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_la);
-        }
-        else if(80<=position && position>=86)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_mgmt);
-        }
-        else if(87<=position && position>=93)
-        {
-            holder.ivAthleticFlag.setImageResource(R.drawable.ic_fa);
-        }
-        else
-         {
-             holder.ivAthleticFlag.setImageResource(R.drawable.logo);
-         }
+        s=drawableMap.get(item.getEvents());
+        holder.ivAthleticFlag.setImageResource(context.
+                getResources().
+                getIdentifier(s.toLowerCase(),"drawable", context.getPackageName()));
+
 
         }
 

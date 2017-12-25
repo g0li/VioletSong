@@ -74,7 +74,7 @@ public class MyEvents extends AppCompatActivity {
     RecyclerView rvAthletics;
     MyEventsDayAdapter dayAdapter;
     ImageView backButton;
-    List<MyEventsAthleticModel> items=new ArrayList<>();
+    List<MyEventsAthleticModel> items;
     FirebaseDatabase firebaseDatabase;
     String UID,currentEvent;
     DatabaseReference databaseReference;
@@ -95,10 +95,9 @@ public class MyEvents extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
-
         offlineitems = getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
         final SharedPreferences.Editor offlineitemsEditor = offlineitems.edit();
-
+        items=new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -108,32 +107,69 @@ public class MyEvents extends AppCompatActivity {
 
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
-        rvAthletics=findViewById(R.id.myEventsRecycler);
+        rvAthletics=(RecyclerView) findViewById(R.id.myEventsRecycler);
+        dayAdapter = new MyEventsDayAdapter(getBaseContext());
 
 
 
-        databaseReference.child("User Data").child(UID).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("User Data").child(UID).addValueEventListener(new ValueEventListener() {
             @Override
       public void onDataChange(DataSnapshot dataSnapshot) {
           for(DataSnapshot child : dataSnapshot.getChildren()){
               String mEvent = child.getValue().toString();
-              Log.d("data",child.getValue().toString());
-              items.add(new MyEventsAthleticModel("Lawn","Hello", 23));
+              items.add(new MyEventsAthleticModel("Lawn",mEvent, 23));
               itemPos.add(mEvent);
           }
+          dayAdapter.addItems(items);
+          rvAthletics.setAdapter(dayAdapter);
+          rvAthletics.addOnItemTouchListener(new RecyclerItemClickListener(getBaseContext(), new RecyclerItemClickListener.OnItemClickListener() {
+              @Override
+              public void onItemClick(View view, int position) {
+                  String DATA = items.get(position).getEvents();
+                  try {
+                      Bitmap bitmap = encodeAsBitmap(DATA);
+                      CustomDialog(bitmap);
+
+                  } catch (WriterException e) {
+                      e.printStackTrace();
+                  }
+              }
+              Bitmap encodeAsBitmap(String str) throws WriterException {
+                  BitMatrix result;
+                  try {
+                      result = new MultiFormatWriter().encode(str,
+                              BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
+                  } catch (IllegalArgumentException iae) {
+                      // Unsupported format
+                      return null;
+                  }
+                  int w = result.getWidth();
+                  int h = result.getHeight();
+                  int[] pixels = new int[w * h];
+                  for (int y = 0; y < h; y++) {
+                      int offset = y * w;
+                      for (int x = 0; x < w; x++) {
+                          pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                      }
+                  }
+                  Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+                  bitmap.setPixels(pixels, 0,1000, 0, 0, w, h);
+                  return bitmap;
+              }
+          }));
 
                // Toast.makeText(getBaseContext(),String.valueOf(itemPos.size()),Toast.LENGTH_SHORT).show();
-               for(String events : itemPos){
-                   items.add(new MyEventsAthleticModel("Lawn",events,23));
-                   Toast.makeText(getBaseContext(),events,Toast.LENGTH_SHORT).show();
-               }
+//               for(String events : itemPos){
+//                   items.add(new MyEventsAthleticModel("Lawn",events,23));
+////                   Toast.makeText(getBaseContext(),events,Toast.LENGTH_SHORT).show();
+//               }
 
 
       }
 
       @Override
       public void onCancelled(DatabaseError databaseError) {
-
+        Log.w("Cancelled:","True");
       }
   });
 
@@ -149,10 +185,6 @@ public class MyEvents extends AppCompatActivity {
 //              }
 //          }
 
-
-
-                dayAdapter = new MyEventsDayAdapter(this);
-        dayAdapter.addItems(items);
         rvAthletics.setAdapter(dayAdapter);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,56 +196,6 @@ public class MyEvents extends AppCompatActivity {
         rvAthletics.setLayoutManager(linearLayoutManager);
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(this));
-
-        ItemTouchHelper.SimpleCallback simpleCallBack = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                final int position = viewHolder.getAdapterPosition();
-
-                if(direction == ItemTouchHelper.RIGHT){
-                    String DATA = itemPos.get(position);
-                    try {
-                        Bitmap bitmap = encodeAsBitmap(DATA);
-                        CustomDialog(bitmap);
-
-                    } catch (WriterException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-            Bitmap encodeAsBitmap(String str) throws WriterException {
-                BitMatrix result;
-                try {
-                    result = new MultiFormatWriter().encode(str,
-                            BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
-                } catch (IllegalArgumentException iae) {
-                    // Unsupported format
-                    return null;
-                }
-                int w = result.getWidth();
-                int h = result.getHeight();
-                int[] pixels = new int[w * h];
-                for (int y = 0; y < h; y++) {
-                    int offset = y * w;
-                    for (int x = 0; x < w; x++) {
-                        pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
-                    }
-                }
-                Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-                bitmap.setPixels(pixels, 0,1000, 0, 0, w, h);
-                return bitmap;
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallBack);
-        itemTouchHelper.attachToRecyclerView(rvAthletics);
 
 
 
@@ -232,7 +214,7 @@ public class MyEvents extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     QRCODE_DISPLAY.cancel();
-                    finish();
+//                    finish();
                 }
             });
             QRCODE_DISPLAY.show();

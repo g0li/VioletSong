@@ -1,4 +1,10 @@
 package forevtechnologies.alegriauiux.models;
+
+import android.provider.ContactsContract;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public enum
 Events{
     RC("Robo Challenge (Island Robos)"),
@@ -95,8 +101,11 @@ Events{
 
     private final String event;
 
+    Map<Events,String> map;
+
     Events(String event) {this.event=event;}
 
     public String getEvents(){return event;}
+
 
 }
