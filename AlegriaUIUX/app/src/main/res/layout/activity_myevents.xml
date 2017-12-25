@@ -20,7 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:text="Your Events"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold" />
     <Space
         android:layout_below="@id/MyEventsText"
@@ -33,7 +33,6 @@
         android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/myEventsRecycler"
-        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foregroundGravity="bottom">
