@@ -1,6 +1,7 @@
 package forevtechnologies.alegriauiux;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,6 +42,7 @@ import java.util.Map;
 
 import forevtechnologies.alegriauiux.adapter.DayAdapter;
 import forevtechnologies.alegriauiux.adapter.MyEventsDayAdapter;
+import forevtechnologies.alegriauiux.adapter.RecyclerItemClickListener;
 import forevtechnologies.alegriauiux.models.AthleticModel;
 import forevtechnologies.alegriauiux.models.Events;
 import forevtechnologies.alegriauiux.models.GetEvents;
@@ -56,12 +60,10 @@ public class MyEvents extends AppCompatActivity {
     ImageView backButton;
     List<MyEventsAthleticModel> items=new ArrayList<>();
     FirebaseDatabase firebaseDatabase;
-    String UID,mEvent,currentEvent;
+    String UID,currentEvent;
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
-    List<String> event_item = new ArrayList<>();
-    SharedPreferences sp;
-    int i;
+    List<String> itemPos = new ArrayList<>();
 
 
     @Override
@@ -81,8 +83,7 @@ public class MyEvents extends AppCompatActivity {
         if (user != null) {
             UID = user.getUid();
         }
-//        sp=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
-//        Map<String,?> cartItems=sp.getAll();
+
         Log.w("Act","Running");
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=findViewById(R.id.myEventsRecycler);
@@ -93,7 +94,7 @@ public class MyEvents extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                     Log.d("NUMBER:",""+dataSnapshot.getChildrenCount());
+                Log.d("NUMBER:",""+dataSnapshot.getChildrenCount());
 
             }
 
@@ -103,14 +104,16 @@ public class MyEvents extends AppCompatActivity {
             }
         });
 
-        Map<String,?> itemsMap = offlineitems.getAll();
-        if(!itemsMap.isEmpty()) {
-            for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
-                //   Log.d("map values", entry.getValue().toString());
-                currentEvent = entry.getValue().toString();
-                items.add(new MyEventsAthleticModel("Lawn", currentEvent, 23));
-            }
-        }
+       Map<String,?> itemsMap = offlineitems.getAll();
+               for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
+                   if (!itemsMap.isEmpty()) {
+                       currentEvent = entry.getValue().toString();
+                       if(currentEvent.equals("CART_EXISTS"))
+                           continue;
+                       items.add(new MyEventsAthleticModel("Lawn", currentEvent, 23));
+                       itemPos.add(currentEvent);
+               }
+           }
 
 
         dayAdapter=new MyEventsDayAdapter(this);
@@ -122,10 +125,33 @@ public class MyEvents extends AppCompatActivity {
                 finish();
             }
         });
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getBaseContext(),LinearLayoutManager.VERTICAL,false);
         rvAthletics.setLayoutManager(linearLayoutManager);
         rvAthletics.setItemAnimator(new DefaultItemAnimator());
         rvAthletics.addItemDecoration(new DividerItemDecoration(this));
+
+        ItemTouchHelper.SimpleCallback simpleCallBack = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT){
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                final int position = viewHolder.getAdapterPosition();
+                if(direction == ItemTouchHelper.RIGHT){
+                    Intent qrCode = new Intent(getBaseContext(),QRCode.class);
+                    qrCode.putExtra("Data",itemPos.get(position));
+                    startActivity(qrCode);
+                    finish();
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallBack);
+        itemTouchHelper.attachToRecyclerView(rvAthletics);
+
+
 
     }
 

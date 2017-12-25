@@ -59,12 +59,10 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     DatabaseReference databaseReference,mRefTickets;
     public static String TICKET_EXISTS="TICKET_EXISTS";
     public static String CART_EXISTS="CART_EXISTS";
-
-
-
-
-
     public RecyclerView recyclerView;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
