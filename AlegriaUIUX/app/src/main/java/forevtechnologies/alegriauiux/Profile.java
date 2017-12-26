@@ -270,7 +270,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
                 startActivity(new Intent(Profile.this,MyEvents.class));
                 break;
             case R.id.backview:
-                finish();
+                onBackPressed();
                 break;
             default:
                 break;
@@ -296,8 +296,13 @@ public class Profile extends AppCompatActivity implements View.OnClickListener,G
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void finish() {
         Log.w("OnFinish","True");
-        super.finish();
+        startActivity(new Intent(this,MainActivity.class));
     }
 }

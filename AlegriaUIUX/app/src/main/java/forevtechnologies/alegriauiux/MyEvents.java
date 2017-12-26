@@ -201,6 +201,16 @@ public class MyEvents extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
+    public void finish() {
+        startActivity(new Intent(this,Profile.class));
+    }
+
     public void CustomDialog(Bitmap bitmap){
             QRCODE_DISPLAY = new Dialog(MyEvents.this);
             QRCODE_DISPLAY.setContentView(R.layout.qr_dialog);

@@ -36,6 +36,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+import forevtechnologies.alegriauiux.models.CartModel;
+import forevtechnologies.alegriauiux.models.TicketCartModel;
 import in.shadowfax.proswipebutton.ProSwipeButton;
 
 import static android.view.View.GONE;
@@ -49,11 +51,12 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     NiceSpinner spinner;
     Intent payz;
     FirebaseUser currentUser;
+    Intent toSendForward;
 
     public void initUI()
     {
 
-        payz=new Intent(SelectPaymentActivity.this,CheckoutActivity.class);
+        passDataForward();
         payButton=(ProSwipeButton)findViewById(R.id.payButton);
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
         currentUser.reload().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -125,8 +128,8 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     @Override
                     public void run() {
                         finish();
-                        if(payz.hasExtra("METHOD")){
-                            startActivity(payz);
+                        if(toSendForward.hasExtra("METHOD")){
+                            startActivity(toSendForward);
                         }
                         else
                         {
@@ -166,8 +169,11 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setTitle("Payment");
         setContentView(R.layout.activity_select_payment);
+        toSendForward=new Intent(SelectPaymentActivity.this,CheckoutActivity.class);
         initUI();
     }
+
+
 
     @SuppressLint("ResourceAsColor")
     protected void buttonSceneDecider(int a)
@@ -235,17 +241,17 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
             case 0:
                 Log.w("Item:","NetBanking");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                payz.putExtra("METHOD","NetBanking");
+                toSendForward.putExtra("METHOD","NetBanking");
                 break;
             case 1:
                 Log.w("Item:","DebitCard");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                payz.putExtra("METHOD","DebitCard");
+                toSendForward.putExtra("METHOD","DebitCard");
                 break;
             case 2:
                 Log.w("Item:","Paytm");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                payz.putExtra("METHOD","Paytm");
+                toSendForward.putExtra("METHOD","Paytm");
                 break;
         }
 
@@ -257,4 +263,70 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
+
+    private void passDataForward() {
+        Intent i=getIntent();
+        Bundle b=i.getExtras();
+        if(b.isEmpty()){
+            Log.w("Empty:","TRUE");
+        }
+        switch (i.getStringExtra("DATA_FROM")){
+            case "CART":
+                if(b.getString("DATA_TYPE").equals("Reg")){
+                    handleRegDataFromCart(b);
+                }
+                else if(b.getString("DATA_TYPE").equals("Tickets")){
+                    handleTicketDataFromCart(b);
+                }
+                break;
+            case "FORM":
+                if(b.getString("DATA_TYPE").equals("Reg")){
+                    handleRegDataFromForm(b);
+                }
+                else if(b.getString("DATA_TYPE").equals("Tickets")){
+                    handleTicketDataFromForm(b);
+                }
+                break;
+        }
+
+    }
+
+    private void handleTicketDataFromForm(Bundle b) {
+        Bundle bundh=new Bundle();
+        bundh.putParcelableArrayList("TICKET_DATA",b.getParcelableArrayList("TICKET_DATA"));
+        bundh.putInt("TICKET_PRICE",b.getInt("TICKET_PRICE"));
+        bundh.putString("DATA_TYPE",b.getString("DATA_TYPE"));
+        toSendForward.putExtras(bundh);
+    }
+
+    private void handleRegDataFromForm(Bundle b) {
+        Bundle bundh=new Bundle();
+        ArrayList<CartModel> items=new ArrayList<>();
+        items=b.getParcelableArrayList("REG_DATA");
+        bundh.putParcelableArrayList("REG_DATA",b.getParcelableArrayList("REG_DATA"));
+        bundh.putInt("REG_PRICE",b.getInt("REG_PRICE"));
+        bundh.putString("DATA_TYPE",b.getString("DATA_TYPE"));
+        toSendForward.putExtras(bundh);
+    }
+
+    private void handleTicketDataFromCart(Bundle b) {
+        Bundle bundh=new Bundle();
+        bundh.putParcelableArrayList("TICKET_DATA",b.getParcelableArrayList("TICKET_DATA"));
+        bundh.putInt("TICKET_PRICE",b.getInt("TICKET_PRICE"));
+        bundh.putString("DATA_TYPE",b.getString("DATA_TYPE"));
+        toSendForward.putExtras(bundh);
+    }
+
+    private void handleRegDataFromCart(Bundle b) {
+        Bundle bundh=new Bundle();
+        ArrayList<CartModel> items=new ArrayList<>();
+        items=b.getParcelableArrayList("REG_DATA");
+        bundh.putParcelableArrayList("REG_DATA",items);
+        bundh.putInt("REG_PRICE",b.getInt("REG_PRICE"));
+        bundh.putString("DATA_TYPE",b.getString("DATA_TYPE"));
+        toSendForward.putExtras(bundh);
+    }
+
 }

@@ -18,9 +18,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import forevtechnologies.alegriauiux.models.CartModel;
+import forevtechnologies.alegriauiux.models.TicketCartModel;
 
 /**
  * Created by ABHIJAY on 21-12-2017.
@@ -31,6 +35,7 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     Button proceed;
     TextInputEditText user_name,user_phone,user_email;
     SharedPreferences.Editor editor;
+    Intent toSendForward;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -40,6 +45,7 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
         setContentView(R.layout.user_info_form);
         sp = getSharedPreferences("USER_DATA",MODE_PRIVATE);
         editor = sp.edit();
+        passDataForward();
         user_name = findViewById(R.id.user_name);
         user_email = findViewById(R.id.user_email);
         user_phone = findViewById(R.id.user_phone);
@@ -81,10 +87,45 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
                   editor.putString("PHONE",user_phone.getText().toString());
                   Log.w("SPPHONE","Phone entered");
                   editor.commit();
-                  startActivity(new Intent(UserInfoForm.this,SelectPaymentActivity.class));
+                  startActivity(toSendForward);
                   finish();
                }
 
        }
+    }
+    private void passDataForward() {
+        Intent i=getIntent();
+        Bundle b=i.getExtras();
+        if(b.isEmpty()){
+            Log.w("Empty:","TRUE");
+        }
+
+        if(b.getString("DATA_TYPE").equals("Reg")){
+            ArrayList<CartModel> items=new ArrayList<>();
+            items=b.getParcelableArrayList("REG_DATA");
+            int totalPrice=b.getInt("REG_PRICE");
+            toSendForward=new Intent(this,SelectPaymentActivity.class);
+            Bundle newBundle= new Bundle();
+            newBundle.putParcelableArrayList("REG_DATA",items);
+            newBundle.putInt("REG_PRICE",totalPrice);
+            newBundle.putString("DATA_TYPE","Reg");
+            toSendForward.putExtra("DATA_FROM","FORM");
+            toSendForward.putExtras(newBundle);
+        }
+
+        else if(b.getString("DATA_TYPE").equals("Tickets")){
+            ArrayList<TicketCartModel> tItems=new ArrayList<>();
+            tItems=b.getParcelableArrayList("TICKET_DATA");
+            int totalPrice=b.getInt("TICKET_PRICE");
+            toSendForward=new Intent(this,SelectPaymentActivity.class);
+            Bundle newBundle= new Bundle();
+            newBundle.putParcelableArrayList("TICKET_DATA",tItems);
+            newBundle.putInt("TICKET_PRICE",totalPrice);
+            newBundle.putString("DATA_TYPE","Tickets");
+            toSendForward.putExtra("DATA_FROM","FORM");
+            toSendForward.putExtras(newBundle);
+
+
+        }
     }
 }

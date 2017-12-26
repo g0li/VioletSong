@@ -56,10 +56,15 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
     TextView textView;
     FirebaseUser user;
     SharedPreferences userOfflineCartItems,userOfflineTickets;
+    SharedPreferences spuser;
     DatabaseReference databaseReference,mRefTickets;
+    final ArrayList<CartModel> items=new ArrayList<>(88);
+    final ArrayList<TicketCartModel> tItems=new ArrayList<>();
+    final ArrayList<String> intentData=new ArrayList<>();
     public static String TICKET_EXISTS="TICKET_EXISTS";
     public static String CART_EXISTS="CART_EXISTS";
     public RecyclerView recyclerView;
+    private Intent ticketExtraIntent,registrationExtraIntent;
 
 
 
@@ -79,95 +84,14 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
         mRefTickets = FirebaseDatabase.getInstance().getReference().child("Tickets").child(user.getUid());
+        spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);
 
 
 
-        final List<CartModel> items=new ArrayList<>(88);
-        final List<TicketCartModel> tItems=new ArrayList<>();
         checkOutButton=(Button)findViewById(R.id.checkout);
 
         b=getIntent();
-        checkOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences prefs = getSharedPreferences(
-                        getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
-                prefs.edit().putInt("totalPrice",totalPrice).apply();
-                if(b.getStringExtra("actName").equals("Reg")){
-
-                    for(CartModel m : items ){
-                        //check if user has already subscribed for this event
-                        if(userOfflineCartItems.contains("Event@"+m.getName()) || databaseReference.child("Event@"+m.getName()).getKey().equals("Event@"+m.getName()))
-                        {
-                            Log.w("Skipped","Skipped");
-                            Log.w("ChildName:",
-                                    databaseReference.child("Event@"+m.getName()).getKey());
-                            //continue;
-                        }
-                        //event into sharedPreference
-                        userOfflineCartItemsEditor.putString("Event@"+m.getName(),m.getName());
-                        if(!userOfflineCartItems.contains(CART_EXISTS)){userOfflineCartItemsEditor.putString(CART_EXISTS,CART_EXISTS);}
-                        userOfflineCartItemsEditor.commit();
-                        //event into google sheet
-                        new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
-                        //event into firebase database
-                        databaseReference.child("Event@"+m.getName()).setValue(m.getName());
-
-                    }
-                }
-                else if((b.getStringExtra("actName").equals("Tickets"))){
-                    for(TicketCartModel m: tItems ){
-                       if(userOfflineTickets.contains("Concert@"+m.getName())||mRefTickets.child("Concert@"+m.getName()).getKey().equals("Conert@"+m.getName())){
-                           Log.w("Skipped","Skipped");
-                           Log.w("Child Name",mRefTickets.child("Concert@"+m.getName()).getKey());
-                           continue;
-                       }
-                        userOfflineTicketsEditor.putString("Concert@"+m.getName(),m.getName());
-                        if(!userOfflineTickets.contains(TICKET_EXISTS)){userOfflineTicketsEditor.putString(TICKET_EXISTS,TICKET_EXISTS);}
-                        userOfflineTicketsEditor.commit();
-
-                        new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
-                        Log.w("EventBeingPosted",m.getName());
-                        mRefTickets.child("Concert@"+m.getName()+String.valueOf(m.getPrice())).setValue(m.getName());
-
-                    }
-                }
-            SharedPreferences spuser = getSharedPreferences("USER_DATA",MODE_PRIVATE);
-            if(spuser.contains("NAME")){
-                //check if EventCart is empty
-                if(items.size()==0){
-                    if(userOfflineCartItems.contains(CART_EXISTS)){
-                        userOfflineCartItemsEditor.remove(CART_EXISTS);
-                        userOfflineCartItemsEditor.commit();
-                    }
-                }
-                //check if TicketCart is empty
-                if(tItems.size()==0){
-                    if(userOfflineTickets.contains(TICKET_EXISTS)){
-                        userOfflineTicketsEditor.remove(TICKET_EXISTS);
-                        userOfflineTicketsEditor.commit();
-                    }
-                }
-                startActivity(new Intent(CartActivity.this,SelectPaymentActivity.class));}
-            else{
-                //check if EventCart is empty
-                if(items.size()==0){
-                    if(userOfflineCartItems.contains(CART_EXISTS)){
-                        userOfflineCartItemsEditor.remove(CART_EXISTS);
-                        userOfflineCartItemsEditor.commit();
-                    }
-                }
-                //check if TicketCart is empty
-                if(tItems.size()==0){
-                    if(userOfflineTickets.contains(TICKET_EXISTS)){
-                        userOfflineTicketsEditor.remove(TICKET_EXISTS);
-                        userOfflineTicketsEditor.commit();
-                    }
-                }
-                startActivity(new Intent(CartActivity.this,UserInfoForm.class));
-            }
-            }
-        });
+        checkOutButton.setOnClickListener(this);
         textView=findViewById(R.id.price_display);
         if(b==null){
             Log.w("Bundle","Empty");
@@ -187,9 +111,9 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
             numPlatinum=b.getIntExtra("plaPass",0); //1000
             numGold=b.getIntExtra("goldPass",0); //500
             artistName=b.getStringExtra("artistName");
-            tItems.add(new TicketCartModel(artistName+"(Student)",numStudent*100));
-            tItems.add(new TicketCartModel(artistName+"(Gold)",numGold*500));
-            tItems.add(new TicketCartModel(artistName+"(Platinum)",numPlatinum*1000));
+            if(numStudent!=0){tItems.add(new TicketCartModel(artistName+"(Student)",numStudent*100));}
+            if(numGold!=0){tItems.add(new TicketCartModel(artistName+"(Gold)",numGold*500));}
+            if(numPlatinum!=0){tItems.add(new TicketCartModel(artistName+"(Platinum)",numPlatinum*1000));}
 
 
             final TicketCartAdapter ticketCartAdapter= new TicketCartAdapter(getApplicationContext());
@@ -237,6 +161,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     checkOutButton.setFocusableInTouchMode(false);
                                 }
                                 ticketCartAdapter.cartItem.remove(position);
+                                tItems.remove(position);
                                 ticketCartAdapter.notifyItemRemoved(position);
                                 ticketCartAdapter.notifyItemRangeChanged(position, ticketCartAdapter.getItemCount());
                                 textView.setText("Rs. "+totalPrice+"/-");
@@ -267,6 +192,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     checkOutButton.setFocusableInTouchMode(false);
                                 }
                                 ticketCartAdapter.cartItem.remove(position);
+                                tItems.remove(position);
                                 ticketCartAdapter.notifyItemRemoved(position);
                                 ticketCartAdapter.notifyItemRangeChanged(position, ticketCartAdapter.getItemCount());
                                 textView.setText("Rs. "+totalPrice+"/-");
@@ -658,6 +584,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     checkOutButton.setFocusableInTouchMode(false);
                                 }
                                 cartAdapter.cartItem.remove(position);
+                                items.remove(position);
                                 cartAdapter.notifyItemRemoved(position);
                                 cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
                                 textView.setText("Rs. "+totalPrice+"/-");
@@ -688,6 +615,7 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
                                     checkOutButton.setFocusableInTouchMode(false);
                                 }
                                 cartAdapter.cartItem.remove(position);
+                                items.remove(position);
                                 cartAdapter.notifyItemRemoved(position);
                                 cartAdapter.notifyItemRangeChanged(position, cartAdapter.getItemCount());
                                 textView.setText("Rs. "+totalPrice+"/-");
@@ -730,6 +658,50 @@ public class CartActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.checkout:
+            {
+                //check scene
+                if(b.getStringExtra("actName").equals("Tickets")){
+                    if(spuser.contains("NAME")){
+                        ticketExtraIntent=new Intent(this,SelectPaymentActivity.class);
+                        ticketExtraIntent.putExtra("DATA_FROM","CART");
+                    }
+                    else{
+                        ticketExtraIntent=new Intent(this,UserInfoForm.class);
+                    }
+                    if(tItems.size()>0){
+                        Bundle b=new Bundle();
+                        b.putParcelableArrayList("TICKET_DATA",tItems);
+                        b.putInt("TICKET_PRICE",totalPrice);
+                        b.putString("DATA_TYPE","Tickets");
+                        ticketExtraIntent.putExtras(b);
+                        startActivity(ticketExtraIntent);
+                    }
+                }
+                //check scene
+                else if(b.getStringExtra("actName").equals("Reg")){
+                    if(spuser.contains("NAME")){
+                        registrationExtraIntent=new Intent(this,SelectPaymentActivity.class);
+                        registrationExtraIntent.putExtra("DATA_FROM","CART");
+                    }
+                    else{
+                        registrationExtraIntent=new Intent(this,UserInfoForm.class);
+                    }
+                    if(items.size()>0){
+                        Bundle b=new Bundle();
+                        b.putParcelableArrayList("REG_DATA",items);
+                        b.putInt("REG_PRICE",totalPrice);
+                        b.putString("DATA_TYPE","Reg");
+                        registrationExtraIntent.putExtras(b);
+                        startActivity(registrationExtraIntent);
+
+                    }
+
+                }
+            }
+            break;
+        }
 
     }
 

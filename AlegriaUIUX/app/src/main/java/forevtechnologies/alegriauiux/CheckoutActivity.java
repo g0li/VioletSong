@@ -7,12 +7,33 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.paynimo.android.payment.PaymentActivity;
 import com.paynimo.android.payment.PaymentModesActivity;
 import com.paynimo.android.payment.model.Checkout;
+
+import java.util.ArrayList;
+
+import forevtechnologies.alegriauiux.models.CartModel;
+import forevtechnologies.alegriauiux.models.TicketCartModel;
+import forevtechnologies.alegriauiux.sharedPreferenceFile.SharedPreferenceStringTags;
+
+import static forevtechnologies.alegriauiux.CartActivity.CART_EXISTS;
+import static forevtechnologies.alegriauiux.CartActivity.TICKET_EXISTS;
+
 public class CheckoutActivity extends BaseActivity {
     private static final String TAG = "CheckoutActivity";
     int varun;
+    int transactionAmount;
+    int FLAG;
+    SharedPreferences userOfflineCartItems,userOfflineTickets;
+    ArrayList<CartModel> items=new ArrayList<>();
+    ArrayList<TicketCartModel> tItems=new ArrayList<>();
+    FirebaseUser user;
+    DatabaseReference databaseReference,mRefTickets;
 
     @Override
     protected void onCreate(Bundle savedInstance) {
@@ -21,6 +42,38 @@ public class CheckoutActivity extends BaseActivity {
         SharedPreferences prefs = getSharedPreferences(
                 getApplicationContext().getPackageName()+".cartPrice", Context.MODE_PRIVATE);
         varun=prefs.getInt("totalPrice",0);
+        user= FirebaseAuth.getInstance().getCurrentUser();
+        userOfflineCartItems=getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        userOfflineTickets = getSharedPreferences(SharedPreferenceStringTags.USER_TICKET_DATABASE,MODE_PRIVATE);
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("User Data").child(user.getUid());
+        mRefTickets=FirebaseDatabase.getInstance().getReference().child("Tickets").child(user.getUid());
+        Intent i=getIntent();
+        Bundle b=new Bundle();
+        b=i.getExtras();
+        if(b.isEmpty()){
+            Log.w("EMPTY:","TRUE");
+        }
+        else{
+            Log.w("EMPTY:","FALSE");
+        }
+        if(b.getString("DATA_TYPE").equals("Tickets")){
+            FLAG=1;
+            tItems=b.getParcelableArrayList("TICKET_DATA");
+            transactionAmount=b.getInt("TICKET_PRICE");
+            for(TicketCartModel t:tItems){
+                Log.w("DATA & PRICE:",t.getName()+t.getPrice());
+            }
+        }
+        else if(b.getString("DATA_TYPE").equals("Reg")){
+            FLAG=2;
+            items=b.getParcelableArrayList("REG_DATA");
+            transactionAmount=b.getInt("REG_PRICE");
+            for(CartModel t:items){
+                Log.w("DATA & PRICE:",t.getName()+String.valueOf(PriceMapper.getPrice(t.getName())));
+            }
+
+        }
+
         creatingCheckOutObjects();
     }
 
@@ -125,6 +178,7 @@ public class CheckoutActivity extends BaseActivity {
                                 Log.v("TRANSACTION STATUS=>", "SUCCESS");
                                 finish();
                                 //make a function to push data on sheets+firebase
+                                pushDataToStorages();
                                 startActivity(new Intent(this,MyEvents.class));
 
                                 /**
@@ -220,8 +274,58 @@ public class CheckoutActivity extends BaseActivity {
                 Toast.makeText(getApplicationContext(), "Transaction Aborted by User",
                         Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "User pressed back button");
+                startActivity(new Intent(this,MainActivity.class));
 
             }
+        }
+    }
+
+    private void pushDataToStorages() {
+            switch (FLAG){
+                case 1: //tickets
+                    sendTicketData();
+                    break;
+                case 2: //registration
+                    sendRegistrationData();
+                    break;
+            }
+    }
+
+    private void sendTicketData() {
+        for(TicketCartModel m: tItems ){
+            if(userOfflineTickets.contains("Concert@"+m.getName())||mRefTickets.child("Concert@"+m.getName()).getKey().equals("Conert@"+m.getName())){
+                Log.w("Skipped","Skipped");
+                Log.w("Child Name",mRefTickets.child("Concert@"+m.getName()).getKey());
+                continue;
+            }
+            userOfflineTickets.edit().putString("Concert@"+m.getName(),m.getName()).commit();
+            if(!userOfflineTickets.contains(TICKET_EXISTS)){userOfflineTickets.edit().putString(TICKET_EXISTS,TICKET_EXISTS).commit();}
+
+            new SendData(user.getUid(),"Concert"+m.getName(),String.valueOf(m.getPrice())).execute();
+            Log.w("EventBeingPosted",m.getName());
+            mRefTickets.child("Concert@"+m.getName()+String.valueOf(m.getPrice())).setValue(m.getName());
+
+        }
+    }
+
+    private void sendRegistrationData() {
+        for(CartModel m : items ){
+            //check if user has already subscribed for this event
+            if(userOfflineCartItems.contains("Event@"+m.getName()) || databaseReference.child("Event@"+m.getName()).getKey().equals("Event@"+m.getName()))
+            {
+                Log.w("Skipped","Skipped");
+                Log.w("ChildName:",
+                        databaseReference.child("Event@"+m.getName()).getKey());
+                //continue;
+            }
+            //event into sharedPreference
+            userOfflineCartItems.edit().putString("Event@"+m.getName(),m.getName()).commit();
+            if(!userOfflineCartItems.contains(CART_EXISTS)){userOfflineCartItems.edit().putString(CART_EXISTS,CART_EXISTS).commit();}
+            //event into google sheet
+            new SendData(user.getUid(),m.getName(),String.valueOf(PriceMapper.getPrice(m.getName()))+"/-").execute();
+            //event into firebase database
+            databaseReference.child("Event@"+m.getName()).setValue(m.getName());
+
         }
     }
 
