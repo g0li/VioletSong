@@ -44,8 +44,6 @@
                 android:backgroundTint="@color/white"
                 android:cursorVisible="false"
                 android:ems="10"
-                android:focusable="false"
-                android:focusedByDefault="false"
                 android:hint="email"
                 android:inputType="textEmailAddress"
                 android:shadowColor="@color/white"
@@ -61,10 +59,6 @@
             style="@style/alegriaLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="true"
-            android:focusedByDefault="false"
             android:textColorHint="@color/white">
 
             <android.support.design.widget.TextInputEditText
@@ -73,10 +67,7 @@
                 android:layout_height="wrap_content"
                 android:alpha="0.40"
                 android:backgroundTint="@color/white"
-                android:cursorVisible="false"
                 android:ems="10"
-                android:focusable="false"
-                android:focusedByDefault="false"
                 android:hint="password"
                 android:inputType="textPassword"
                 android:shadowColor="@color/white"

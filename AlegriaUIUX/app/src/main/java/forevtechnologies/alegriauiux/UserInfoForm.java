@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,10 +22,13 @@ import org.angmarch.views.NiceSpinner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import forevtechnologies.alegriauiux.models.CartModel;
+import forevtechnologies.alegriauiux.models.CollegeCodes;
 import forevtechnologies.alegriauiux.models.TicketCartModel;
 
 /**
@@ -36,6 +41,9 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     TextInputEditText user_name,user_phone,user_email;
     SharedPreferences.Editor editor;
     Intent toSendForward;
+    NiceSpinner niceSpinner,categorySpinner;
+    List<String>dataset,category,eng,acs,mng,jr,arch;
+    Map<String,String> names;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -65,9 +73,88 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
         }
 
 
-        NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.college_spinner);
-        List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
-        niceSpinner.attachDataSource(dataset);
+        niceSpinner = (NiceSpinner) findViewById(R.id.college_spinner);
+        niceSpinner.setTextColor(getResources().getColor(R.color.white));
+        createLists();
+
+        categorySpinner = findViewById(R.id.college_category_spinner);
+        categorySpinner.setTextColor(getResources().getColor(R.color.white));
+        category=new ArrayList<String>();
+        category.add("Engineering.");
+        category.add("Arts,Science,Commerce.");
+        category.add("Architecture.");
+        category.add("Management.");
+        category.add("Junior Colleges.");
+
+        categorySpinner.attachDataSource(category);
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                try {
+                    Log.w("Data:","->"+category.get(i));
+                    switch (i){
+                        case 0:
+                            niceSpinner.attachDataSource(eng);
+                            niceSpinner.setVisibility(View.VISIBLE);
+                            break;
+                        case 1:
+                            niceSpinner.attachDataSource(acs);
+                            niceSpinner.setVisibility(View.VISIBLE);
+                            break;
+                        case 2:
+                            niceSpinner.attachDataSource(arch);
+                            niceSpinner.setVisibility(View.VISIBLE);
+                            break;
+                        case 3:
+                            niceSpinner.attachDataSource(mng);
+                            niceSpinner.setVisibility(View.VISIBLE);
+                            break;
+                        case 4:
+                            niceSpinner.attachDataSource(jr);
+                            niceSpinner.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(UserInfoForm.this,"Nothing Selected",Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private void createLists() {
+        eng=new ArrayList<>();
+        acs=new ArrayList<>();
+        mng=new ArrayList<>();
+        arch=new ArrayList<>();
+        jr=new ArrayList<>();
+        for(int i=0;i<=58;i++){
+
+            eng.add(CollegeCodes.values()[i].getName());
+        }
+        for(int i=60;i<=208;i++){
+
+            acs.add(CollegeCodes.values()[i].getName());
+        }
+        for(int i=210;i<=258;i++){
+
+            mng.add(CollegeCodes.values()[i].getName());
+        }
+        for(int i=260;i<=280;i++){
+
+            arch.add(CollegeCodes.values()[i].getName());
+        }
+        for(int i=282;i<=328;i++){
+
+            jr.add(CollegeCodes.values()[i].getName());
+        }
 
     }
 
@@ -76,7 +163,7 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
        switch (view.getId()){
            case R.id.info_proceed :
                if(user_email.getText().toString().equals("") && user_phone.getText().toString().equals("")){
-                   Toast.makeText(getBaseContext(),"Please enter the data",Toast.LENGTH_LONG).show();
+                   Toast.makeText(getBaseContext(),"Please enter the required data.",Toast.LENGTH_LONG).show();
                 }
                 else
                {

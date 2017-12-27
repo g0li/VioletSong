@@ -141,6 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cardsContainer"
         android:padding="16dp"
+        android:hint="Select a payment method."
         android:visibility="gone" />
 
     <ImageView

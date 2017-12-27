@@ -50,6 +50,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     ProSwipeButton payButton;
     NiceSpinner spinner;
     Intent payz;
+    List<String> payMethod;
     FirebaseUser currentUser;
     Intent toSendForward;
 
@@ -107,8 +108,10 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         onlineCardView.setOnClickListener(this);
 
         spinner=(NiceSpinner)findViewById(R.id.paymentSpinner);
-        List<String> payMethod= new LinkedList<>(Arrays.asList("Net Banking","Debit Card", "Paytm"));
+        payMethod= new LinkedList<>(Arrays.asList("Net Banking","Debit Card", "Paytm"));
+        spinner.setHint("Choose a payment Method.");
         spinner.attachDataSource(payMethod);
+        spinner.setHint("Choose a payment Method.");
         spinner.setOnItemSelectedListener(this);
 
         payButton.setOnSwipeListener(new ProSwipeButton.OnSwipeListener() {
@@ -127,9 +130,10 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        finish();
+//                        finish();
                         if(toSendForward.hasExtra("METHOD")){
-                            startActivity(toSendForward);
+//                            startActivity(toSendForward);
+                            Toast.makeText(SelectPaymentActivity.this,"We're sorry.\n Payment is currently unavailable.",Toast.LENGTH_LONG).show();
                         }
                         else
                         {
@@ -241,17 +245,17 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
             case 0:
                 Log.w("Item:","NetBanking");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD","NetBanking");
+                toSendForward.putExtra("METHOD",payMethod.get(0));
                 break;
             case 1:
                 Log.w("Item:","DebitCard");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD","DebitCard");
+                toSendForward.putExtra("METHOD",payMethod.get(1));
                 break;
             case 2:
                 Log.w("Item:","Paytm");
 //                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD","Paytm");
+                toSendForward.putExtra("METHOD",payMethod.get(2));
                 break;
         }
 

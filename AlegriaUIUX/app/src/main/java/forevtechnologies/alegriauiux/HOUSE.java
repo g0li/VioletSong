@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fujiyuu75.sequent.Sequent;
 
@@ -140,8 +141,9 @@ public class HOUSE extends Fragment implements View.OnClickListener {
         case R.id.campusLayout:
         case R.id.campusImageView:
         case R.id.campusTextView:
-            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
-            startActivity(new Intent(getActivity(),TimeLineActivity.class));
+//            getActivity().overridePendingTransition(R.anim.scale_in,R.anim.scale_out);
+//            startActivity(new Intent(getActivity(),TimeLineActivity.class));
+            Toast.makeText(getContext(),"We're sorry. \n The schedule hasn't been finalised yet.",Toast.LENGTH_LONG).show();
             break;
         case R.id.eventsCardView:
         case R.id.eventsLayout:
