@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -76,16 +78,16 @@ public class MyEvents extends AppCompatActivity {
     ImageView backButton;
     List<MyEventsAthleticModel> items;
     FirebaseDatabase firebaseDatabase;
-    String UID,currentEvent;
+    String UID;
     DatabaseReference databaseReference;
     SharedPreferences offlineitems;
     List<String> itemPos = new ArrayList<>();
-    List<String> EVENTDATA = new ArrayList<>();
-    public final static int WIDTH=1000;
+    public final static int WIDTH=512;
     Dialog QRCODE_DISPLAY;
     Button btn_close;
     ImageView qr_image;
     int i = 0;
+    ViewGroup viewGroup;
 
 
     @Override
@@ -96,6 +98,7 @@ public class MyEvents extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_myevents);
         offlineitems = getSharedPreferences(SharedPreferenceStringTags.USER_CART_DATABASE,MODE_PRIVATE);
+        viewGroup = findViewById(R.id.myevents_view);
         final SharedPreferences.Editor offlineitemsEditor = offlineitems.edit();
         items=new ArrayList<>();
         firebaseDatabase = FirebaseDatabase.getInstance();
@@ -109,6 +112,8 @@ public class MyEvents extends AppCompatActivity {
         backButton=(ImageView) findViewById(R.id.backButton);
         rvAthletics=(RecyclerView) findViewById(R.id.myEventsRecycler);
         dayAdapter = new MyEventsDayAdapter(getBaseContext());
+
+
 
 
 
@@ -140,7 +145,6 @@ public class MyEvents extends AppCompatActivity {
                       result = new MultiFormatWriter().encode(str,
                               BarcodeFormat.QR_CODE, WIDTH, WIDTH, null);
                   } catch (IllegalArgumentException iae) {
-                      // Unsupported format
                       return null;
                   }
                   int w = result.getWidth();
@@ -149,20 +153,14 @@ public class MyEvents extends AppCompatActivity {
                   for (int y = 0; y < h; y++) {
                       int offset = y * w;
                       for (int x = 0; x < w; x++) {
-                          pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                          pixels[offset + x] = result.get(x, y) ? BLACK : Color.parseColor("#00aaffff");
                       }
                   }
                   Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-                  bitmap.setPixels(pixels, 0,1000, 0, 0, w, h);
+                  bitmap.setPixels(pixels, 0,512, 0, 0, w, h);
                   return bitmap;
               }
           }));
-
-               // Toast.makeText(getBaseContext(),String.valueOf(itemPos.size()),Toast.LENGTH_SHORT).show();
-//               for(String events : itemPos){
-//                   items.add(new MyEventsAthleticModel("Lawn",events,23));
-////                   Toast.makeText(getBaseContext(),events,Toast.LENGTH_SHORT).show();
-//               }
 
 
       }
@@ -173,17 +171,6 @@ public class MyEvents extends AppCompatActivity {
       }
   });
 
-//      Map<String,?> itemsMap = offlineitems.getAll();
-//              for (Map.Entry<String, ?> entry : itemsMap.entrySet()) {
-//                  if (!itemsMap.isEmpty()) {
-//                      currentEvent = entry.getValue().toString();
-//                      if(currentEvent.equals("CART_EXISTS"))
-//                          continue;
-//                      Toast.makeText(getBaseContext(),currentEvent,Toast.LENGTH_SHORT).show();
-//                     // items.add(new MyEventsAthleticModel("Lawn",currentEvent, 23));
-//                      itemPos.add(currentEvent);
-//              }
-//          }
 
         rvAthletics.setAdapter(dayAdapter);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -215,6 +202,8 @@ public class MyEvents extends AppCompatActivity {
             QRCODE_DISPLAY = new Dialog(MyEvents.this);
             QRCODE_DISPLAY.setContentView(R.layout.qr_dialog);
             QRCODE_DISPLAY.setTitle("QR CODE");
+            QRCODE_DISPLAY.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
             btn_close = QRCODE_DISPLAY.findViewById(R.id.close_btn);
             qr_image = QRCODE_DISPLAY.findViewById(R.id.image_qr);
@@ -224,10 +213,13 @@ public class MyEvents extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     QRCODE_DISPLAY.cancel();
+                    Blurry.delete(viewGroup);
 //                    finish();
                 }
             });
+            Blurry.with(getBaseContext()).radius(25).sampling(2).onto(viewGroup);
             QRCODE_DISPLAY.show();
+
     }
 
 
