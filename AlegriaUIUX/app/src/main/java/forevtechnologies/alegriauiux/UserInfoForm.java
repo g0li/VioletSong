@@ -43,7 +43,10 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     Intent toSendForward;
     NiceSpinner niceSpinner,categorySpinner;
     List<String>dataset,category,eng,acs,mng,jr,arch;
-    Map<String,String> names;
+    List<String> currentDataset=new ArrayList<>();
+    Map<String,String> lookupTable=new HashMap<>();
+    int flag;
+    boolean containsCollege=false;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -96,22 +99,27 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
                     switch (i){
                         case 0:
                             niceSpinner.attachDataSource(eng);
+                            flag=i;
                             niceSpinner.setVisibility(View.VISIBLE);
                             break;
                         case 1:
                             niceSpinner.attachDataSource(acs);
+                            flag=i;
                             niceSpinner.setVisibility(View.VISIBLE);
                             break;
                         case 2:
                             niceSpinner.attachDataSource(arch);
+                            flag=i;
                             niceSpinner.setVisibility(View.VISIBLE);
                             break;
                         case 3:
                             niceSpinner.attachDataSource(mng);
+                            flag=i;
                             niceSpinner.setVisibility(View.VISIBLE);
                             break;
                         case 4:
                             niceSpinner.attachDataSource(jr);
+                            flag=i;
                             niceSpinner.setVisibility(View.VISIBLE);
                             break;
                     }
@@ -126,6 +134,42 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
                 Toast.makeText(UserInfoForm.this,"Nothing Selected",Toast.LENGTH_LONG).show();
             }
         });
+        niceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                try{
+                    switch (flag){
+                        case 0:
+                            currentDataset=eng;
+                            break;
+                        case 1:
+                            currentDataset=acs;
+                            break;
+                        case 2:
+                            currentDataset=arch;
+                            break;
+                        case 3:
+                            currentDataset=mng;
+                            break;
+                        case 4:
+                            currentDataset=jr;
+                            break;
+                    }
+                    sp.edit().putString("COLLEGE_CODE",lookupTable.get(currentDataset.get(i))).commit();
+                    containsCollege=true;
+                    Log.w("Code added:",lookupTable.get(currentDataset.get(i)));
+
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 
@@ -135,6 +179,10 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
         mng=new ArrayList<>();
         arch=new ArrayList<>();
         jr=new ArrayList<>();
+        for(CollegeCodes c : CollegeCodes.values()){
+            lookupTable.put(c.getName(),c.toString());
+        }
+
         for(int i=0;i<=58;i++){
 
             eng.add(CollegeCodes.values()[i].getName());
@@ -162,8 +210,9 @@ public class UserInfoForm extends Activity implements View.OnClickListener {
     public void onClick(View view) {
        switch (view.getId()){
            case R.id.info_proceed :
-               if(user_email.getText().toString().equals("") && user_phone.getText().toString().equals("")){
+               if(user_email.getText().toString().equals("") || user_phone.getText().toString().equals("") || !containsCollege){
                    Toast.makeText(getBaseContext(),"Please enter the required data.",Toast.LENGTH_LONG).show();
+
                 }
                 else
                {

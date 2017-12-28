@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import es.dmoral.toasty.Toasty;
 import forevtechnologies.alegriauiux.models.CartModel;
@@ -53,6 +54,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     List<String> payMethod;
     FirebaseUser currentUser;
     Intent toSendForward;
+    boolean containsMethod=false;
 
     public void initUI()
     {
@@ -117,30 +119,46 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
         payButton.setOnSwipeListener(new ProSwipeButton.OnSwipeListener() {
             @Override
             public void onSwipeConfirm() {
-                // user has swiped the btn. Perform your async operation now
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // task success! show TICK icon in ProSwipeButton
-                        payButton.showResultIcon(true); // false if task failed
-                    }
-                }, 2000);
-                payButton.updateBackground();
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-//                        finish();
-                        if(toSendForward.hasExtra("METHOD")){
-//                            startActivity(toSendForward);
-                            Toast.makeText(SelectPaymentActivity.this,"We're sorry.\n Payment is currently unavailable.",Toast.LENGTH_LONG).show();
+                if(containsMethod){
+                    payButton.updateBackground();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            payButton.showResultIcon(true);
+//                            Toast.makeText(getBaseContext(),"ContainsMethod",Toast.LENGTH_SHORT).show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startActivity(toSendForward);
+                                }
+                            }, 2500);
                         }
-                        else
-                        {
-                            Toast.makeText(SelectPaymentActivity.this, "Select a method", Toast.LENGTH_SHORT).show();
+                    }, 2000);
+
+
+
+                }
+
+                else{
+                    payButton.updateBackground();
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            payButton.showResultIcon(false);
+                            Toast.makeText(getBaseContext(),"Please select a payment method.",Toast.LENGTH_SHORT).show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    payButton.init();
+                                }
+                            }, 3000);
                         }
-                    }
-                }, 5000);
+                    }, 2000);
+
+
+
+                }
 
             }
         });
@@ -150,7 +168,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
     private void checkUserAuth(FirebaseUser user) {
         if(user.isAnonymous()){
             Toast.makeText(this, "\"Please link your account with Google in the Profile page.\"", Toast.LENGTH_SHORT).show();
-            payButton.setEnabled(false);
+            startActivity(new Intent(SelectPaymentActivity.this,Profile.class));
         }
         else{
             switch (user.getProviders().get(0)){
@@ -159,7 +177,7 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
                     break;
                 case "password":
                     Toast.makeText(SelectPaymentActivity.this,"Please link your account with Google in the Profile page.",Toast.LENGTH_LONG).show();
-                    payButton.setEnabled(false);
+                    startActivity(new Intent(SelectPaymentActivity.this,Profile.class));
                     break;
             }
         }
@@ -240,23 +258,12 @@ public class SelectPaymentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.w("Item selected","Pos"+position);
-        switch (position){
-            case 0:
-                Log.w("Item:","NetBanking");
-//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD",payMethod.get(0));
-                break;
-            case 1:
-                Log.w("Item:","DebitCard");
-//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD",payMethod.get(1));
-                break;
-            case 2:
-                Log.w("Item:","Paytm");
-//                payz=new Intent(SelectPaymentActivity.this,SelectPaymentActivity.class);
-                toSendForward.putExtra("METHOD",payMethod.get(2));
-                break;
+        try{
+            toSendForward.putExtra("METHOD",payMethod.get(position));
+            containsMethod=true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
 
 

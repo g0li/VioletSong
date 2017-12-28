@@ -75,7 +75,7 @@
         <activity
             android:name=".UserInfoForm"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".EventsActivity"
             android:label="Events"
